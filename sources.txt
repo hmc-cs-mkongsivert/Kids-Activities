@@ -1,16 +1,14 @@
 Things to Do in Washington, DC
 
-Arthur M. Sackler and Freer Galleries
-Blind Whino (art annex)
-Discovery Theater
-Franklin Delano Roosevelt Memorial
-Fredrick Douglass National Historic Site
-German-American Heritage Museum
-Hirshorn Museum and Sculpture Garden
-Holocaust Memorial Museum
+Arthur M. Sackler and Freer Galleries - strange calendar format
+Blind Whino (art annex) - retrieved
+Discovery Theater - rejected me?
+Hirshorn Museum and Sculpture Garden - retrieved
+Holocaust Memorial Museum - exhibitions rather than events; 
 International Spy Museum
 Jefferson Memorial
 Kennedy Center
+Koshland Science Center
 Lincoln Memorial
 Lincoln Park
 Meridian Hill Park
@@ -23,7 +21,7 @@ National Museum of African Art
 National Museum of the American Indian
 National Museum of Women in the Arts
 National Portrait Gallery
-Newseum
+Newseum - retrieved
 Phillips Collection
 Politics and Prose Bookstore
 Renwick Gallery
@@ -32,6 +30,13 @@ Tudor Place Historic House and Garden
 Washington Monument
 White House
 Wolf Trap
+
+No events, just visits:
+
+Franklin Delano Roosevelt Memorial
+Frederick Douglass National Historic Site
+German-American Heritage Museum
+
 
 Sources:
 various subpages of washington.org
