@@ -19,7 +19,7 @@ while True:
 	newI = siteText.find(searchTerm, s)
 	if newI == -1:
 		break
-	s += len(searchTerm)
+	s = newI + len(searchTerm)
 	indices.append(newI)
 
 table = []
@@ -29,6 +29,7 @@ for i in [0]+indices[:-1]:
 	table.append([title, location])
 
 print(table)
+
 '''
 	TODO: I think there is a bug where I don't consider multiple instances of
 	the end tag, so I need to fix that in the between function. I also need to
