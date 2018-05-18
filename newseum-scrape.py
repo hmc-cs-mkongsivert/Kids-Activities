@@ -10,8 +10,8 @@ def between(string, start, beginTag, endTag):
 
 #remove whitespace
 siteText = site.text
-siteText.replace("\t", "")
-siteText.replace("\n", "")
+siteText = siteText.replace("\t", "")
+siteText = siteText.replace("\n", "")
 
 s = 0
 indices = []
