@@ -1,12 +1,16 @@
 import requests
 
-site = requests.get("http://www.newseum.org/events-programs/")
-searchTerm = '"ai1ec-event"'
+site = requests.get("https://www.politics-prose.com/events")
+searchTerm = 'views-field-field-date'
 
 def between(string, start, beginTag, endTag):
 	begin = string.find(beginTag, start) + len(beginTag)
 	end = string.find(endTag, begin)
 	return string[begin:end]
+
+def removeTag(string, tag):
+	pass
+	#removes extraneous tags
 
 #remove whitespace
 siteText = site.text
@@ -24,11 +28,9 @@ while True:
 
 table = []
 for i in [0]+indices[:-1]:
-	title = between(siteText, i, '<span class="ai1ec-event-title">', '</span>')
-	time = between(siteText, i, '<div class="ai1ec-event-time">', '</div>')
-	location = between(siteText, i, '<span class="ai1ec-event-location">', '</span>')
-	details = between(siteText, i, '<div class="ai1ec-popup-excerpt">', '</div>')
-	table.append([title, location, details])
+	title = between(siteText, i, '<div class="views-field views-field-title">', '</div>')
+	time = between(siteText, i, '<div class="views-field views-field-field-date-1">', '</div>')
+	table.append([title, time])
 
 print(table)
 
