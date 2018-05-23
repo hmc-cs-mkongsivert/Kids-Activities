@@ -11,3 +11,16 @@ def makeTable():
 			table+= "\n</tr>"
 	table += "\n</tbody>"
 	return table
+
+def writeHTML():
+	with open('activities-list.html', newline='') as htmlFile:
+		oldText = htmlFile.read()
+		beginTag = "<!-- Table Begins Here -->"
+		endTag = "<!-- Table Ends Here -->"
+		table = makeTable()
+		beforeTable = oldText.find(beginTag) + len(beginTag)
+		afterTable = oldText.find(endTag)
+		newText = oldText[:beforeTable] + table + oldText[afterTable:]
+		htmlFile.write(newText)
+
+writeHTML()
