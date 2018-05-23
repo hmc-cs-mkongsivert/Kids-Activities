@@ -1,7 +1,7 @@
 import csv
 
 def makeTable():
-	table = "<tbody>"
+	table = "\n<tbody>"
 	with open('events.csv', newline='') as csvFile:
 		dataReader = csv.reader(csvFile)
 		for row in dataReader:
@@ -9,18 +9,19 @@ def makeTable():
 			for item in row:
 				table += "\n<th>" + item + "</th>"
 			table+= "\n</tr>"
-	table += "\n</tbody>"
+	table += "\n</tbody>\n"
 	return table
 
 def writeHTML():
-	with open('activities-list.html', newline='') as htmlFile:
-		oldText = htmlFile.read()
+	with open('activities-list.html', 'r', newline='') as htmlRead:
+		oldText = htmlRead.read()
 		beginTag = "<!-- Table Begins Here -->"
 		endTag = "<!-- Table Ends Here -->"
 		table = makeTable()
 		beforeTable = oldText.find(beginTag) + len(beginTag)
 		afterTable = oldText.find(endTag)
 		newText = oldText[:beforeTable] + table + oldText[afterTable:]
-		htmlFile.write(newText)
+	with open('activities-list.html', 'w', newline='') as htmlWrite:
+		htmlWrite.write(newText)
 
 writeHTML()

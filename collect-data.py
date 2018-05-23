@@ -24,7 +24,6 @@ def removeTag(string, tag, middle = True, neg = False):
 
 def makeIndicesList(siteText, searchTerm, ):
 	#remove whitespace
-	siteText = site.text
 	siteText = siteText.replace("\t", "")
 	siteText = siteText.replace("\n", "")
 
@@ -66,9 +65,9 @@ def politicsProseScrape():
 		time = between(siteText, i, '<div class="views-field views-field-field-date-1">', '</div>')
 		time = removeTag(time, "span") #not sure if this will do anything
 		location = "Politics and Prose Bookstore"
-		details = '<a href = "https://www.politics-prose.com/event' + between(title, 0, '<a href="', '>') + '>Click here for details'
+		details = '<a href = "https://www.politics-prose.com' + between(title, 0, '<a href="', '>') + '>Click here for details</a>'
 		title = removeTag(title, "a", False, True)
-		table.append([title, time, location])
+		table.append([title, time, location, details])
 
 	return table
 
@@ -83,12 +82,19 @@ def phillipsScrape():
 		title = removeTag(title, "strong")
 		time = between(siteText, i, '<div class="field-event-date-range">', '</div>')
 		location = "The Phillips Collection"
-		details = 
+		details = 'a href = "https://www.phillipscollection' + between(title, 0, '<a href="', '>') + '>Click here for more details</a>'
+		title = removeTag(title, "a", False, True)
+		table.append([title, time, location, details])
+	
+	return table
 
 def writeCSV():
 	with open('events.csv', 'w', newline='') as csvfile:
 		eventFile = csv.writer(csvfile)
 		eventTable = newseumScrape()
 		eventTable += politicsProseScrape()
+		eventTable += phillipsScrape()
 		for event in eventTable:
 			eventFile.writerow(event)
+
+writeCSV()
