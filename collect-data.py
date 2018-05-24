@@ -38,6 +38,21 @@ def makeIndicesList(siteText, searchTerm, ):
 
 	return indices
 
+def dateTime(dtString):
+	pass
+
+def blindWhinoScrape():
+	site = requests.get("https://www.swartsclub.org/art-annex/")
+	siteText = site.text
+	indices = makeIndicesList(siteText, 'sqs-block html-block sqs-block-html')
+
+	table = []
+	for i in [0]+indices[:-1]:
+		title = between(siteText, i, '<h3>', '</h3>')
+		time = ''
+		location = "The Blind Whino Art Annex"
+		details = between(siteText, i, '<p>', '</p>')
+
 def newseumScrape():
 	site = requests.get("http://www.newseum.org/events-programs/")
 	siteText = site.text
@@ -52,6 +67,23 @@ def newseumScrape():
 		details = between(siteText, i, '<div class="ai1ec-popup-excerpt">', '</div>')
 		table.append([title, time, location, details])
 
+	return table
+
+def phillipsScrape():
+	site = requests.get("http://www.phillipscollection.org/events?type=all")
+	siteText = site.text
+	indices = makeIndicesList(siteText, '<div class="field-event-date-range">')
+
+	table = []
+	for i in [0]+indices[:-1]:
+		title = between(siteText, i, '<h2 class="delta a">', '</h2>')
+		title = removeTag(title, "strong")
+		time = between(siteText, i, '<div class="field-event-date-range">', '</div>')
+		location = "The Phillips Collection"
+		details = '<a href = "https://www.phillipscollection' + between(title, 0, '<a href="', '>') + '>Click here for more details</a>'
+		title = removeTag(title, "a", False, True)
+		table.append([title, time, location, details])
+	
 	return table
 
 def politicsProseScrape():
@@ -71,22 +103,17 @@ def politicsProseScrape():
 
 	return table
 
-def phillipsScrape():
-	site = requests.get("http://www.phillipscollection.org/events?type=all")
+def tudorScrape():
+	site = requests.get("https://www.tudorplace.org/programs/")
 	siteText = site.text
-	indices = makeIndicesList(siteText, '<div class="field-event-date-range">')
+	indices = makeIndicesList(siteText, '<td class="thumb">')
 
 	table = []
 	for i in [0]+indices[:-1]:
-		title = between(siteText, i, '<h2 class="delta a">', '</h2>')
-		title = removeTag(title, "strong")
-		time = between(siteText, i, '<div class="field-event-date-range">', '</div>')
-		location = "The Phillips Collection"
-		details = 'a href = "https://www.phillipscollection' + between(title, 0, '<a href="', '>') + '>Click here for more details</a>'
-		title = removeTag(title, "a", False, True)
-		table.append([title, time, location, details])
-	
-	return table
+		title = ''
+		time = ''
+		location = "Tudor Place Historic House and Garden"
+		details = '<a href = https://www.tudorplace.org/programs' + between(siteText, i, '<a href="', '>') + '>Click here for more details</a>'
 
 def writeCSV():
 	with open('events.csv', 'w', newline='') as csvfile:
