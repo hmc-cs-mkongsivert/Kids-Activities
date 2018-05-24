@@ -9,6 +9,7 @@ def between(string, start, beginTag, endTag):
 	return string[begin:end]
 
 def removeWhitespace(string):
+	'''as one might expect, removes all the whitespace from a given string'''
 	newString = ''.join([i for i in string if (i != '\t' and i != '\n')])
 	return newString
 
@@ -28,6 +29,7 @@ def removeTag(string, tag, middle = True, neg = False):
 		return string[leftEnd+1:right]
 
 def makeIndicesList(siteText, searchTerm):
+	'''returns a list of indices of events in a given site text'''
 	s = 0
 	indices = []
 	while True:
@@ -39,7 +41,17 @@ def makeIndicesList(siteText, searchTerm):
 
 	return indices
 
+def exhibitions(schedule, begDate, endDate):
+	'''takes in a museum schedule and starting and ending dates for an
+	exhibition and returns a list of the dates and times when the exhibition
+	will be open'''
+	date = begDate
+	while date <= endDate:
+		date += datetime.timedelta(days=1)
+
 def parseDate(dString):
+	'''takes in a string representing a date and returns a datetime object
+	representing that same date'''
 	months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
 	now = datetime.datetime.now()
 	year = 0
@@ -62,6 +74,8 @@ def parseDate(dString):
 	return datetime.date(year, month, date)
 
 def parseTime(tString):
+	'''takes in a string representing a time and returns a datetine object
+	representing that same date'''
 	clean = ''.join([i for i in tString if (i.isdigit() or i.isalpha())])
 
 def sortByDate(table):
@@ -155,22 +169,25 @@ def tudorScrape():
 	for i in [0]+indices[:-1]:
 		if i > moIndices[mo+1]:
 			mo += 1
-		month = betwen(siteText, moIndices, moMarker, '</h5>')
+		month = between(siteText, moIndices[mo], moMarker, '</h5>')
 		date = between(siteText, i, '</small><big>', '</big>')
 		title = between(siteText, i, '<h4>', '</h4>')
 		title = removeTag(title, "a")
 		time = date + month #TODO: add time of day
 		location = "Tudor Place Historic House and Garden"
 		details = '<a href = https://www.tudorplace.org/programs' + between(siteText, i, '<a href="', '>') + '>Click here for more details</a>'
+		table.append([title, time, location, details])
 	return table
 
 def writeCSV():
+	'''gathers all of the data and packs it into a CSV file'''
 	with open('events.csv', 'w', newline='') as csvfile:
 		eventFile = csv.writer(csvfile)
 		eventTable = newseumScrape()
-		eventTable += politicsProseScrape()
-		eventTable += phillipsScrape()
+		#eventTable += politicsProseScrape()
+		#eventTable += phillipsScrape()
+		eventTable += tudorScrape()
 		for event in eventTable:
 			eventFile.writerow(event)
 
-#writeCSV()
+writeCSV()
