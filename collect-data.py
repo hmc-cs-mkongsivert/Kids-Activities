@@ -8,6 +8,10 @@ def between(string, start, beginTag, endTag):
 	end = string.find(endTag, begin)
 	return string[begin:end]
 
+def removeWhitespace(string):
+	newString = ''.join([i for i in string if (i != '\t' and i != '\n')])
+	return newString
+
 def removeTag(string, tag, middle = True, neg = False):
 	'''removes extraneous tags'''
 	leftBeg = string.find("<" + tag)
@@ -24,10 +28,6 @@ def removeTag(string, tag, middle = True, neg = False):
 		return string[leftEnd+1:right]
 
 def makeIndicesList(siteText, searchTerm):
-	#remove whitespace
-	siteText = siteText.replace("\t", "")
-	siteText = siteText.replace("\n", "")
-
 	s = 0
 	indices = []
 	while True:
@@ -39,7 +39,7 @@ def makeIndicesList(siteText, searchTerm):
 
 	return indices
 
-def dateTime(dtString):
+def parseDate(dString):
 	months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
 	now = datetime.datetime.now()
 	year = 0
@@ -61,9 +61,29 @@ def dateTime(dtString):
 		year = now.year
 	return datetime.date(year, month, date)
 
+def parseTime(tString):
+	clean = ''.join([i for i in tString if (i.isdigit() or i.isalpha())])
+
+def sortByDate(table):
+	'''merge sort of a table by date'''
+	if len(table) <= 1:
+		return table
+	half = len(table)/2
+	firstHalf = sortByDate(table[0:half])
+	secondHalf = sortByDate(table[half:])
+	sortedL = []
+	for i in range(len(table)):
+		if firstHalf[0][1] <= secondHalf[0][1]:
+			sortedL += [firstHalf[0]]
+			firstHalf = firstHalf[1:]
+		else:
+			sortedL +=[secondHalf[0]]
+			secondHalf = secondHalf[1:]
+	return sortedL
+
 def blindWhinoScrape():
 	site = requests.get("https://www.swartsclub.org/art-annex/")
-	siteText = site.text
+	siteText = removeWhitespace(site.text)
 	indices = makeIndicesList(siteText, 'sqs-block html-block sqs-block-html')
 
 	table = []
@@ -75,7 +95,7 @@ def blindWhinoScrape():
 
 def newseumScrape():
 	site = requests.get("http://www.newseum.org/events-programs/")
-	siteText = site.text
+	siteText = removeWhitespace(site.text)
 	indices = makeIndicesList(siteText, '"ai1ec-event"')
 
 	table = []
@@ -91,7 +111,7 @@ def newseumScrape():
 
 def phillipsScrape():
 	site = requests.get("http://www.phillipscollection.org/events?type=all")
-	siteText = site.text
+	siteText = removeWhitespace(site.text)
 	indices = makeIndicesList(siteText, '<div class="field-event-date-range">')
 
 	table = []
@@ -108,7 +128,7 @@ def phillipsScrape():
 
 def politicsProseScrape():
 	site = requests.get("https://www.politics-prose.com/events")
-	siteText = site.text
+	siteText = removeWhitespace(site.text)
 	indices = makeIndicesList(siteText, 'views-field-field-date')
 
 	table = []
@@ -125,15 +145,24 @@ def politicsProseScrape():
 
 def tudorScrape():
 	site = requests.get("https://www.tudorplace.org/programs/")
-	siteText = site.text
+	siteText = removeWhitespace(site.text)
 	indices = makeIndicesList(siteText, '<td class="thumb">')
+	moMarker = '<td colspan="3"><h5>'
+	moIndices = makeIndicesList(siteText, moMarker)
 
 	table = []
+	mo = 0
 	for i in [0]+indices[:-1]:
-		title = ''
-		time = ''
+		if i > moIndices[mo+1]:
+			mo += 1
+		month = betwen(siteText, moIndices, moMarker, '</h5>')
+		date = between(siteText, i, '</small><big>', '</big>')
+		title = between(siteText, i, '<h4>', '</h4>')
+		title = removeTag(title, "a")
+		time = date + month #TODO: add time of day
 		location = "Tudor Place Historic House and Garden"
 		details = '<a href = https://www.tudorplace.org/programs' + between(siteText, i, '<a href="', '>') + '>Click here for more details</a>'
+	return table
 
 def writeCSV():
 	with open('events.csv', 'w', newline='') as csvfile:
