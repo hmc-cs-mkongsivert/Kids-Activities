@@ -1,5 +1,6 @@
 import requests
 import csv
+import datetime
 
 def between(string, start, beginTag, endTag):
 	'''resturns a substring between two tags'''
@@ -22,7 +23,7 @@ def removeTag(string, tag, middle = True, neg = False):
 		#remove everything but the tagged material
 		return string[leftEnd+1:right]
 
-def makeIndicesList(siteText, searchTerm, ):
+def makeIndicesList(siteText, searchTerm):
 	#remove whitespace
 	siteText = siteText.replace("\t", "")
 	siteText = siteText.replace("\n", "")
@@ -39,7 +40,26 @@ def makeIndicesList(siteText, searchTerm, ):
 	return indices
 
 def dateTime(dtString):
-	pass
+	months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
+	now = datetime.datetime.now()
+	year = 0
+	month = 0
+	date = 0
+	for i in range(len(months)):
+		if months[i] in dtString.lower():
+			month = i + 1
+			break
+	nums = ''.join([i for i in dtString if i.isdigit()])
+	if len(nums) <= 2:
+		date = int(nums)
+		year = now.year if (month >= now.month) else (now.year + 1)
+	elif str(now.year) in nums:
+		date = int(nums.replace(str(now.year), ''))
+		year = now.year
+	elif str(now.year+1) in nums:
+		date = int(nums.replace(str(now.year+1), ''))
+		year = now.year
+	return datetime.date(year, month, date)
 
 def blindWhinoScrape():
 	site = requests.get("https://www.swartsclub.org/art-annex/")
@@ -124,4 +144,4 @@ def writeCSV():
 		for event in eventTable:
 			eventFile.writerow(event)
 
-writeCSV()
+#writeCSV()
