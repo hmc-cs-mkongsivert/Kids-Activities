@@ -1,6 +1,6 @@
 import requests
 import csv
-import datetime
+import datetime as dt
 
 def between(string, start, beginTag, endTag):
 	'''resturns a substring between two tags'''
@@ -45,23 +45,29 @@ def exhibitions(schedule, begDate, endDate):
 	'''takes in a museum schedule and starting and ending dates for an
 	exhibition and returns a list of the dates and times when the exhibition
 	will be open'''
+	allDates = []
 	date = begDate
 	while date <= endDate:
-		date += datetime.timedelta(days=1)
+		if schedule[date.weekday()] != None:
+			begTime = dt.combine(date, schedule[date.weekday()][0])
+			endTime = dt.combine(date, schedule[date.weekday()][1])
+			allDates.append((begTime, endTime))
+		date += dt.timedelta(days=1)
+	return allDates
 
 def parseDate(dString):
 	'''takes in a string representing a date and returns a datetime object
 	representing that same date'''
 	months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
-	now = datetime.datetime.now()
+	now = dt.datetime.now()
 	year = 0
 	month = 0
 	date = 0
 	for i in range(len(months)):
-		if months[i] in dtString.lower():
+		if months[i] in dString.lower():
 			month = i + 1
 			break
-	nums = ''.join([i for i in dtString if i.isdigit()])
+	nums = ''.join([i for i in dString if i.isdigit()])
 	if len(nums) <= 2:
 		date = int(nums)
 		year = now.year if (month >= now.month) else (now.year + 1)
@@ -70,8 +76,11 @@ def parseDate(dString):
 		year = now.year
 	elif str(now.year+1) in nums:
 		date = int(nums.replace(str(now.year+1), ''))
-		year = now.year
-	return datetime.date(year, month, date)
+		year = now.year+1
+	elif str(now.year-1) in nums:
+		date = int(nums.replace(str(now.year-1), ''))
+		year = now.year-1
+	return dt.date(year, month, date)
 
 def parseTime(tString):
 	'''takes in a string representing a time and returns a datetine object
@@ -100,12 +109,21 @@ def blindWhinoScrape():
 	siteText = removeWhitespace(site.text)
 	indices = makeIndicesList(siteText, 'sqs-block html-block sqs-block-html')
 
+	BWSchedule = [None, None, (dt.time(17), dt.time(20)), None, None, (dt.time(12), dt.time(17)), (dt.time(12), dt.time(17))]
+
 	table = []
 	for i in [0]+indices[:-1]:
 		title = between(siteText, i, '<h3>', '</h3>')
-		time = ''
+		timeRough = between(siteText, i, '</h3><h3>', '</h3>')
+		interval = timeRough.split('-')
+		sepYear = interval[1].split(',')
+		interval[0] += sepYear[1]
+		dates = (parseDate(interval[0]), parseDate(interval[1]))
 		location = "The Blind Whino Art Annex"
 		details = between(siteText, i, '<p>', '</p>')
+		table.append([title, dates, location, details])
+
+	return table
 
 def newseumScrape():
 	site = requests.get("http://www.newseum.org/events-programs/")
@@ -180,13 +198,14 @@ def tudorScrape():
 	return table
 
 def writeCSV():
-	'''gathers all of the data and packs it into a CSV file'''
+	'''gathers all of the data and packs them into a CSV file'''
 	with open('events.csv', 'w', newline='') as csvfile:
 		eventFile = csv.writer(csvfile)
-		eventTable = newseumScrape()
-		#eventTable += politicsProseScrape()
-		#eventTable += phillipsScrape()
-		eventTable += tudorScrape()
+		eventTable = blindWhinoScrape()
+#		eventTable += newseumScrape()
+#		eventTable += politicsProseScrape()
+#		eventTable += phillipsScrape()
+#		eventTable += tudorScrape()
 		for event in eventTable:
 			eventFile.writerow(event)
 
