@@ -92,9 +92,23 @@ def parseDate(dString):
 	return dt.date(year, month, date)
 
 def parseTime(tString):
-	'''takes in a string representing a time and returns a datetine object
+	'''takes in a string representing a time and returns a datetime object
 	representing that same date'''
-	clean = ''.join([i for i in tString if (i.isdigit() or i.isalpha())])
+	if '-' in tString:
+		interval = tString.split('-')
+		for item in interval:
+			num = ''.join([i for i in tString if i.isdigit()])
+			if len(num) <= 2:
+				item = dt.time(int(num))
+			else:
+				item = dt.time(int(num[0:2]), int(num[2:4]))
+			let = ''.join([i for i in tString if i.isalpha()])
+			if let = 'pm':
+				item += dt.timedelta(hours=12)
+		return interval
+	else:
+		print("get hecked")
+		return None
 
 def sortByDate(table):
 	'''merge sort of a table by date'''
@@ -141,6 +155,24 @@ def blindWhinoScrape():
 
 	return table
 
+def hirshhornScrape():
+	site = requests.get("https://hirshhorn.si.edu/exhibitions-events/")
+	siteText = removeWhitespace(site.text)
+	exhibs = makeIndicesList(siteText, 'class="list-item-title balance-text"')
+	events = makeIndicesList(siteText, 'class="tribe-events-title list-item-title balance-text"')
+
+	table = []
+	for i in [0]+exhibs[:-1]:
+		title = between(siteText, i, '<h4 class="list-item-title balance-text">', '</h4>')
+		time = 'time!'
+		location = 'The Hirshhorn Museum and Sculpture Garden'
+		details = ''
+	for i in [0]+events[:-1]:
+		title = between(siteText, i, '<h4 class="tribe-events-title list-item-title balance-text">', '</h4>')
+		time = 'time!'
+		location = 'The Hirshhorn Museum and Sculpture Garden'
+		details = ''
+
 def newseumScrape():
 	site = requests.get("http://www.newseum.org/events-programs/")
 	siteText = removeWhitespace(site.text)
@@ -149,11 +181,21 @@ def newseumScrape():
 	table = []
 	for i in [0]+indices[:-1]:
 		title = between(siteText, i, '<span class="ai1ec-event-title">', '</span>')
-		time = between(siteText, i, '<div class="ai1ec-event-time">', '</div>')
-		time = removeTag(time, "span", middle = False)
-		location = "Newseum, " + between(siteText, i, '<span class="ai1ec-event-location">', '</span>')
+		dtString = between(siteText, i, '<div class="ai1ec-event-time">', '</div>')
+		dtString = removeTag(dtString, "span", middle = False)
+		where = "Newseum, " + between(siteText, i, '<span class="ai1ec-event-location">', '</span>')
 		details = between(siteText, i, '<div class="ai1ec-popup-excerpt">', '</div>')
-		table.append([title, time, location, details])
+
+		date, time = None
+		if '@' in dtString:
+			dtList = dtString.split('@')
+			date = parseDate(dtList[0])
+			time = parseTime(dtList[1])
+		else:
+			date = parseDate(dtString)
+			time = (dt.time(9), dt.time(17))
+		when = (dt.combine(date, time[0]), dt.combine(date, time[1]))
+		table.append([title, when, where, details])
 
 	return table
 
@@ -182,7 +224,7 @@ def politicsProseScrape():
 	table = []
 	for i in [0]+indices[:-1]:
 		title = between(siteText, i, '<div class="views-field views-field-title">', '</div>')
-		time = between(siteText, i, '<div class="views-field views-field-field-date-1">', '</div>')
+		time = removeTag(between(siteText, i, '<div class="views-field views-field-field-date-1">', '</div>'), "span")
 		time = removeTag(time, "span") #not sure if this will do anything
 		location = "Politics and Prose Bookstore"
 		details = '<a href = "https://www.politics-prose.com' + between(title, 0, '<a href="', '>') + '>Click here for details</a>'
@@ -218,7 +260,7 @@ def writeCSV():
 	with open('events.csv', 'w', newline='') as csvfile:
 		eventFile = csv.writer(csvfile)
 		eventTable = blindWhinoScrape()
-#		eventTable += newseumScrape()
+		eventTable += newseumScrape()
 #		eventTable += politicsProseScrape()
 #		eventTable += phillipsScrape()
 #		eventTable += tudorScrape()
