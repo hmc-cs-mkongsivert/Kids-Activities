@@ -50,8 +50,8 @@ def exhibitions(schedule, begDate, endDate):
 	date = begDate
 	while date <= endDate:
 		if schedule[date.weekday()] != None:
-			begTime = dt.combine(date, schedule[date.weekday()][0])
-			endTime = dt.combine(date, schedule[date.weekday()][1])
+			begTime = dt.datetime.combine(date, schedule[date.weekday()][0])
+			endTime = dt.datetime.combine(date, schedule[date.weekday()][1])
 			allDates.append((begTime, endTime))
 		date += dt.timedelta(days=1)
 	return allDates
@@ -91,21 +91,26 @@ def parseDate(dString):
 		year = now.year-1
 	return dt.date(year, month, date)
 
+def parseTimeHelper(tString):
+	num = ''.join([i for i in tString if i.isdigit()])
+	time = None
+	if len(num) <= 2:
+		time = dt.time(int(num))
+	else:
+		time = dt.time(int(num[:-2]), int(num[-2:]))
+		time
+	#TODO: add a.m. and p.m.
+	return time
+
 def parseTime(tString):
 	'''takes in a string representing a time and returns a datetime object
 	representing that same date'''
-	if '-' in tString:
-		interval = tString.split('-')
-		for item in interval:
-			num = ''.join([i for i in tString if i.isdigit()])
-			if len(num) <= 2:
-				item = dt.time(int(num))
-			else:
-				item = dt.time(int(num[0:2]), int(num[2:4]))
-			let = ''.join([i for i in tString if i.isalpha()])
-			if let = 'pm':
-				item += dt.timedelta(hours=12)
-		return interval
+	tString
+	if "–" in tString:
+		interval = tString.split('–')
+		begin = parseTimeHelper(interval[0])
+		end = parseTimeHelper(interval[1])
+		return (begin, end)
 	else:
 		print("get hecked")
 		return None
@@ -186,7 +191,8 @@ def newseumScrape():
 		where = "Newseum, " + between(siteText, i, '<span class="ai1ec-event-location">', '</span>')
 		details = between(siteText, i, '<div class="ai1ec-popup-excerpt">', '</div>')
 
-		date, time = None
+		date = None
+		time = None
 		if '@' in dtString:
 			dtList = dtString.split('@')
 			date = parseDate(dtList[0])
@@ -194,7 +200,7 @@ def newseumScrape():
 		else:
 			date = parseDate(dtString)
 			time = (dt.time(9), dt.time(17))
-		when = (dt.combine(date, time[0]), dt.combine(date, time[1]))
+		when = (dt.datetime.combine(date, time[0]), dt.datetime.combine(date, time[1]))
 		table.append([title, when, where, details])
 
 	return table
@@ -261,7 +267,7 @@ def writeCSV():
 		eventFile = csv.writer(csvfile)
 		eventTable = blindWhinoScrape()
 		eventTable += newseumScrape()
-#		eventTable += politicsProseScrape()
+		eventTable += politicsProseScrape()
 #		eventTable += phillipsScrape()
 #		eventTable += tudorScrape()
 		for event in eventTable:
