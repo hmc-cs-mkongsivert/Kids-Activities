@@ -1,6 +1,7 @@
 import requests
 import csv
 import datetime as dt
+import calendar as cal
 
 def between(string, start, beginTag, endTag):
 	'''resturns a substring between two tags'''
@@ -55,18 +56,26 @@ def exhibitions(schedule, begDate, endDate):
 		date += dt.timedelta(days=1)
 	return allDates
 
-def parseDate(dString):
-	'''takes in a string representing a date and returns a datetime object
-	representing that same date'''
+def findMonth(dString):
+	'''takes in a string representing a date and returns the month that
+	that date is in'''
 	months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
-	now = dt.datetime.now()
-	year = 0
+	
 	month = 0
-	date = 0
 	for i in range(len(months)):
 		if months[i] in dString.lower():
 			month = i + 1
 			break
+	return month
+
+def parseDate(dString):
+	'''takes in a string representing a date and returns a datetime object
+	representing that same date'''
+	now = dt.datetime.now()
+	year = 0
+	date = 0
+	
+	month = findMonth(dString)
 	nums = ''.join([i for i in dString if i.isdigit()])
 	if len(nums) <= 2:
 		date = int(nums)
@@ -116,9 +125,16 @@ def blindWhinoScrape():
 		title = between(siteText, i, '<h3>', '</h3>')
 		timeRough = between(siteText, i, '</h3><h3>', '</h3>')
 		interval = timeRough.split('-')
-		sepYear = interval[1].split(',')
-		interval[0] += sepYear[1]
-		dates = (parseDate(interval[0]), parseDate(interval[1]))
+		if len(interval) == 1:
+			month = findMonth(timeRough)
+			year = int(''.join([i for i in timeRough if i.isdigit()]))
+			#the first and last days of that particular month
+			firstDay = dt.date(year, month, 1)
+			lastDay = dt.date(year, month, cal.monthrange(year,month)[1])
+			dates = (firstDay, lastDay)
+		else:
+			interval[0] += interval[1][-4:]
+			dates = (parseDate(interval[0]), parseDate(interval[1]))
 		location = "The Blind Whino Art Annex"
 		details = between(siteText, i, '<p>', '</p>')
 		table.append([title, dates, location, details])
