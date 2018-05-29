@@ -71,6 +71,7 @@ def findMonth(dString):
 def parseDate(dString):
 	'''takes in a string representing a date and returns a datetime object
 	representing that same date'''
+	print(dString)
 	now = dt.datetime.now()
 	year = 0
 	date = 0
@@ -114,10 +115,10 @@ def parseTime(tString):
 		interval = tString.split('–')
 		begin = parseTimeHelper(interval[0])
 		end = parseTimeHelper(interval[1])
-		return (begin, end)
 	else:
-		print("get hecked")
-		return None
+		begin = parseTimeHelper(tString)
+		end = dt.time(hour = begin.hour+2, minute = begin.minute)
+	return (begin, end)
 
 def sortByDate(table):
 	'''merge sort of a table by date'''
@@ -141,6 +142,17 @@ def sortByDate(table):
 			sortedL +=[secondHalf[0]]
 			secondHalf = secondHalf[1:]
 	return sortedL
+
+def formatDates(event):
+	'''TODO: fix this'''
+	months = ['January', 'Febrary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+	date = event[1][0]
+	newDate = months[date.month+1]
+	newDate += " " + str(event.date) + ", " + str(event.year)
+	newDate += " at " + str(event.hour%12) + ":" + str(event.minute)
+	newDate += " a.m." if event.hour > 12 else " p.m."
+	newEvent = [event[0]] + [newDate] + event[2:]
+	return newEvent
 
 def blindWhinoScrape():
 	site = requests.get("https://www.swartsclub.org/art-annex/")
@@ -177,20 +189,28 @@ def blindWhinoScrape():
 def hirshhornScrape():
 	site = requests.get("https://hirshhorn.si.edu/exhibitions-events/")
 	siteText = removeWhitespace(site.text)
-	exhibs = makeIndicesList(siteText, 'class="list-item-title balance-text"')
+#	exhibs = makeIndicesList(siteText, 'class="list-item-title balance-text"')
 	events = makeIndicesList(siteText, 'class="tribe-events-title list-item-title balance-text"')
 
 	table = []
-	for i in [0]+exhibs[:-1]:
-		title = between(siteText, i, '<h4 class="list-item-title balance-text">', '</h4>')
-		time = 'time!'
-		location = 'The Hirshhorn Museum and Sculpture Garden'
-		details = ''
+#	for i in [0]+exhibs[:-1]:
+#		title = between(siteText, i, '<h4 class="list-item-title balance-text">', '</h4>')
+#		time = 'time!'
+#		location = 'The Hirshhorn Museum and Sculpture Garden'
+#		details = ''
 	for i in [0]+events[:-1]:
 		title = between(siteText, i, '<h4 class="tribe-events-title list-item-title balance-text">', '</h4>')
-		time = 'time!'
-		location = 'The Hirshhorn Museum and Sculpture Garden'
-		details = ''
+		title = removeTag(title, 'a')
+		dtString = between(siteText, i, '<div class="tribe-events-duration list-item-date">', '</div>')
+		where = 'The Hirshhorn Museum and Sculpture Garden'
+		details = '<a href = "' + between(siteText, i, '<a href="', '"') + '>click here for details</a>'
+		dtList = dtString.split('|')
+		date = parseDate(dtList[0])
+		time = parseTime(dtList[1])
+		when = (dt.datetime.combine(date, time[0]), dt.datetime.combine(date, time[1]))
+		table.append([title, when, where, details])
+
+	return table
 
 def newseumScrape():
 	site = requests.get("http://www.newseum.org/events-programs/")
@@ -291,4 +311,4 @@ def writeCSV():
 			if event[1][1] >= dt.datetime.now():
 				eventFile.writerow(event)
 
-writeCSV()
+#writeCSV()
