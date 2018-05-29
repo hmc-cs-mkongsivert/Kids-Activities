@@ -1,7 +1,7 @@
 import csv
 
 def makeTable():
-	table = "\n<tbody>"
+	table = "\n<table>"
 	with open('events.csv', newline='') as csvFile:
 		dataReader = csv.reader(csvFile)
 		for row in dataReader:
@@ -9,7 +9,7 @@ def makeTable():
 			for item in row:
 				table += "\n<th>" + item + "</th>"
 			table+= "\n</tr>"
-	table += "\n</tbody>\n"
+	table += "\n</table>\n"
 	return table
 
 def writeHTML():

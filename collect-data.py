@@ -98,7 +98,11 @@ def parseTimeHelper(tString):
 		time = dt.time(int(num))
 	else:
 		time = dt.time(int(num[:-2]), int(num[-2:]))
-		time
+
+	if time < dt.time(7):
+		dTime = dt.datetime.combine(dt.datetime.now(), time)
+		dTime += dt.timedelta(hours = 12)
+		time = dTime.time()
 	#TODO: add a.m. and p.m.
 	return time
 
@@ -119,12 +123,18 @@ def sortByDate(table):
 	'''merge sort of a table by date'''
 	if len(table) <= 1:
 		return table
-	half = len(table)/2
+	half = len(table)//2
 	firstHalf = sortByDate(table[0:half])
 	secondHalf = sortByDate(table[half:])
 	sortedL = []
 	for i in range(len(table)):
-		if firstHalf[0][1] <= secondHalf[0][1]:
+		if len(firstHalf) == 0:
+			sortedL += [secondHalf[0]]
+			secondHalf = secondHalf[1:]
+		elif len(secondHalf) == 0:
+			sortedL += [firstHalf[0]]
+			firstHalf = firstHalf[1:]
+		elif firstHalf[0][1][0] <= secondHalf[0][1][0]:
 			sortedL += [firstHalf[0]]
 			firstHalf = firstHalf[1:]
 		else:
@@ -142,7 +152,9 @@ def blindWhinoScrape():
 	table = []
 	for i in [0]+indices[:-1]:
 		title = between(siteText, i, '<h3>', '</h3>')
-		timeRough = between(siteText, i, '</h3><h3>', '</h3>')
+		timeRough = between(siteText, i, '</h3><h3>', '</h3><p>')
+		if 'h3' in timeRough:
+			timeRough = timeRough.split('<h3>')[1]
 		interval = timeRough.split('-')
 		if len(interval) == 1:
 			month = findMonth(timeRough)
@@ -150,13 +162,15 @@ def blindWhinoScrape():
 			#the first and last days of that particular month
 			firstDay = dt.date(year, month, 1)
 			lastDay = dt.date(year, month, cal.monthrange(year,month)[1])
-			dates = (firstDay, lastDay)
+			opening = (firstDay, lastDay)
 		else:
 			interval[0] += interval[1][-4:]
-			dates = (parseDate(interval[0]), parseDate(interval[1]))
+			opening = (parseDate(interval[0]), parseDate(interval[1]))
+		dates = exhibitions(BWSchedule, opening[0], opening[1])
 		location = "The Blind Whino Art Annex"
 		details = between(siteText, i, '<p>', '</p>')
-		table.append([title, dates, location, details])
+		for day in dates:
+			table.append([title, day, location, details])
 
 	return table
 
@@ -267,9 +281,13 @@ def writeCSV():
 		eventFile = csv.writer(csvfile)
 		eventTable = blindWhinoScrape()
 		eventTable += newseumScrape()
-		eventTable += politicsProseScrape()
 #		eventTable += phillipsScrape()
+#		eventTable += politicsProseScrape()
 #		eventTable += tudorScrape()
+		
+		print("total table:", len(eventTable))
+		sortedTable = sortByDate(eventTable)
+		
 		for event in eventTable:
 			eventFile.writerow(event)
 
