@@ -129,11 +129,11 @@ def sortByDate(table):
 	sortedL = []
 	for i in range(len(table)):
 		if len(firstHalf) == 0:
-			sortedL += [secondHalf[0]]
-			secondHalf = secondHalf[1:]
+			sortedL += secondHalf
+			break
 		elif len(secondHalf) == 0:
-			sortedL += [firstHalf[0]]
-			firstHalf = firstHalf[1:]
+			sortedL += firstHalf
+			break
 		elif firstHalf[0][1][0] <= secondHalf[0][1][0]:
 			sortedL += [firstHalf[0]]
 			firstHalf = firstHalf[1:]
@@ -285,10 +285,10 @@ def writeCSV():
 #		eventTable += politicsProseScrape()
 #		eventTable += tudorScrape()
 		
-		print("total table:", len(eventTable))
 		sortedTable = sortByDate(eventTable)
 		
-		for event in eventTable:
-			eventFile.writerow(event)
+		for event in sortedTable:
+			if event[1][1] >= dt.datetime.now():
+				eventFile.writerow(event)
 
 writeCSV()
