@@ -147,7 +147,7 @@ def formatDates(event):
 	months = ['January', 'Febrary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 	begin = event[1][0]
 	end = event[1][1]
-	newDate = months[begin.month+1]
+	newDate = months[begin.month]
 	newDate += " " + str(begin.day) + ", " + str(begin.year)
 	newDate += " at " + str(begin.hour%12) + ":" + str(begin.minute)
 	newDate += " a.m." if begin.hour < 12 else " p.m."
