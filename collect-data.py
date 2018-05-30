@@ -71,7 +71,6 @@ def findMonth(dString):
 def parseDate(dString):
 	'''takes in a string representing a date and returns a datetime object
 	representing that same date'''
-	print(dString)
 	now = dt.datetime.now()
 	year = 0
 	date = 0
@@ -146,11 +145,12 @@ def sortByDate(table):
 def formatDates(event):
 	'''TODO: fix this'''
 	months = ['January', 'Febrary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-	date = event[1][0]
-	newDate = months[date.month+1]
-	newDate += " " + str(event.date) + ", " + str(event.year)
-	newDate += " at " + str(event.hour%12) + ":" + str(event.minute)
-	newDate += " a.m." if event.hour > 12 else " p.m."
+	begin = event[1][0]
+	end = event[1][1]
+	newDate = months[begin.month+1]
+	newDate += " " + str(begin.day) + ", " + str(begin.year)
+	newDate += " at " + str(begin.hour%12) + ":" + str(begin.minute)
+	newDate += " a.m." if begin.hour < 12 else " p.m."
 	newEvent = [event[0]] + [newDate] + event[2:]
 	return newEvent
 
@@ -203,7 +203,7 @@ def hirshhornScrape():
 		title = removeTag(title, 'a')
 		dtString = between(siteText, i, '<div class="tribe-events-duration list-item-date">', '</div>')
 		where = 'The Hirshhorn Museum and Sculpture Garden'
-		details = '<a href = "' + between(siteText, i, '<a href="', '"') + '>click here for details</a>'
+		details = ''#'<a href = "' + between(siteText, i, '<a href="', '"') + '">click here for details</a>'
 		dtList = dtString.split('|')
 		date = parseDate(dtList[0])
 		time = parseTime(dtList[1])
@@ -300,6 +300,7 @@ def writeCSV():
 	with open('events.csv', 'w', newline='') as csvfile:
 		eventFile = csv.writer(csvfile)
 		eventTable = blindWhinoScrape()
+		eventTable += hirshhornScrape()
 		eventTable += newseumScrape()
 #		eventTable += phillipsScrape()
 #		eventTable += politicsProseScrape()
@@ -309,6 +310,6 @@ def writeCSV():
 		
 		for event in sortedTable:
 			if event[1][1] >= dt.datetime.now():
-				eventFile.writerow(event)
+				eventFile.writerow(formatDates(event))
 
-#writeCSV()
+writeCSV()
