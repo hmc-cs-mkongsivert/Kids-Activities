@@ -1,4 +1,4 @@
-#import tensorflow as tf
+import tensorflow as tf
 #import tensorflow_hub as hub
 import matplotlib.pyplot as plt
 import numpy as np
@@ -22,5 +22,3 @@ def load_data(file):
 	return pd.DataFrame.from_dict(data)
 
 #build one training and one testing dataset
-
-def 
