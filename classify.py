@@ -27,8 +27,8 @@ def load_dataset(filename):
 	mid_df = load_data(filename + "-mid.csv")
 	old_df = load_data(filename + "-old.csv")
 	young_df["polarity"] = 0
-	mid_df = ["polarity"] = 0.5
-	old_df = ["polarity"] = 1
+	mid_df["polarity"] = 0.5
+	old_df["polarity"] = 1
 	return pd.concat([young_df, mid_df, old_df]).sample(frac=1).reset_index(drop=True)
 
 def dowload_and_load_datasets(force_download=False):
@@ -36,4 +36,20 @@ def dowload_and_load_datasets(force_download=False):
 	test_df = load_dataset("test")
 
 	return train_df, test_df
+
+def split_sets(filename):
+	'''splits sample sets into training and testing sets'''
+	with open(filename, newline='') as csvFile:
+		dataReader = csv.reader(csvFile)
+		with open('train-'+filename, 'w') as train:
+			with open('test-'+filename, 'w') as test:
+				trainFile = csv.writer(train)
+				testFile = csv.writer(test)
+				count = 0
+				for row in dataReader:
+					if count%2 == 0:
+						trainFile.writerow(row)
+					else:
+						testFile.writerow(row)
+					count += 1
 
