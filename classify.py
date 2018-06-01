@@ -7,7 +7,9 @@ import pandas as pd
 import seaborn as sns
 import csv
 
-#code modified from code taken from TensorFlow website
+#code modified from code taken from TensorFlow website:
+#https://www.tensorflow.org/tutorials/text_classification_with_tf_hub
+
 #load all files from a directory in a DataFrame
 def load_data(file):
 	data = {}
@@ -30,7 +32,7 @@ def load_dataset(filename):
 	old_df["polarity"] = 1
 	return pd.concat([young_df, mid_df, old_df]).sample(frac=1).reset_index(drop=True)
 
-def dowload_and_load_datasets(force_download=False):
+def download_and_load_datasets(force_download=False):
 	train_df = load_dataset("train")
 	test_df = load_dataset("test")
 
@@ -52,3 +54,41 @@ def split_sets(filename):
 						testFile.writerow(row)
 					count += 1
 
+
+# Reduce logging output.
+tf.logging.set_verbosity(tf.logging.ERROR)
+
+train_df, test_df = download_and_load_datasets()
+train_df.head()
+
+# Training input on the whole training set with no limit on training epochs.
+train_input_fn = tf.estimator.inputs.pandas_input_fn(
+    train_df, train_df["polarity"], num_epochs=None, shuffle=True)
+
+# Prediction on the whole training set.
+predict_train_input_fn = tf.estimator.inputs.pandas_input_fn(
+    train_df, train_df["polarity"], shuffle=False)
+# Prediction on the test set.
+predict_test_input_fn = tf.estimator.inputs.pandas_input_fn(
+    test_df, test_df["polarity"], shuffle=False)
+
+embedded_text_feature_column = hub.text_embedding_column(
+    key="sentence", 
+    module_spec="https://tfhub.dev/google/nnlm-en-dim128/1")
+
+estimator = tf.estimator.DNNClassifier(
+    hidden_units=[500, 100],
+    feature_columns=[embedded_text_feature_column],
+    n_classes=2,
+    optimizer=tf.train.AdagradOptimizer(learning_rate=0.003))
+
+# Training for 1,000 steps means 128,000 training examples with the default
+# batch size. This is roughly equivalent to 5 epochs since the training dataset
+# contains 25,000 examples.
+estimator.train(input_fn=train_input_fn, steps=1000);
+
+train_eval_result = estimator.evaluate(input_fn=predict_train_input_fn)
+test_eval_result = estimator.evaluate(input_fn=predict_test_input_fn)
+
+print("Training set accuracy: {accuracy}".format(**train_eval_result))
+print("Test set accuracy: {accuracy}".format(**test_eval_result))
