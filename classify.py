@@ -92,3 +92,25 @@ test_eval_result = estimator.evaluate(input_fn=predict_test_input_fn)
 
 print("Training set accuracy: {accuracy}".format(**train_eval_result))
 print("Test set accuracy: {accuracy}".format(**test_eval_result))
+
+def get_predictions(estimator, input_fn):
+  return [x["class_ids"][0] for x in estimator.predict(input_fn=input_fn)]
+
+LABELS = [
+    "Young", "Middle", "Old"
+]
+
+# Create a confusion matrix on training data.
+with tf.Graph().as_default():
+  cm = tf.confusion_matrix(train_df["polarity"], 
+                           get_predictions(estimator, predict_train_input_fn))
+  with tf.Session() as session:
+    cm_out = session.run(cm)
+
+# Normalize the confusion matrix so that each row sums to 1.
+cm_out = cm_out.astype(float) / cm_out.sum(axis=1)[:, np.newaxis]
+
+sns.heatmap(cm_out, annot=True, xticklabels=LABELS, yticklabels=LABELS);
+plt.xlabel("Predicted");
+plt.ylabel("True");
+plt.show()
