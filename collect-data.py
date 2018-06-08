@@ -71,6 +71,7 @@ def findMonth(dString):
 def parseDate(dString):
 	'''takes in a string representing a date and returns a datetime object
 	representing that same date'''
+
 	now = dt.datetime.now()
 	year = 0
 	date = 0
@@ -112,6 +113,10 @@ def parseTime(tString):
 	tString
 	if "–" in tString:
 		interval = tString.split('–')
+		begin = parseTimeHelper(interval[0])
+		end = parseTimeHelper(interval[1])
+	elif '-' in tString:
+		interval = tString.split('-')
 		begin = parseTimeHelper(interval[0])
 		end = parseTimeHelper(interval[1])
 	else:
@@ -222,20 +227,34 @@ def newseumScrape():
 		title = between(siteText, i, '<span class="ai1ec-event-title">', '</span>')
 		dtString = between(siteText, i, '<div class="ai1ec-event-time">', '</div>')
 		dtString = removeTag(dtString, "span", middle = False)
-		where = "Newseum, " + between(siteText, i, '<span class="ai1ec-event-location">', '</span>')
+		where = "The Newseum"
 		details = between(siteText, i, '<div class="ai1ec-popup-excerpt">', '</div>')
 
 		date = None
 		time = None
+
+		#parse time(s)
 		if '@' in dtString:
 			dtList = dtString.split('@')
-			date = parseDate(dtList[0])
 			time = parseTime(dtList[1])
+			dtString = dtList[0]
+		else:
+			time = (dt.time(9), dt.time(17))
+
+		#parse date(s)
+		if '–' in dtString:
+			dates = dtString.split('–')
+			begDate = parseDate(dates[0])
+			endDate = parseDate(dates[1])
+			current = begDate
+			while current <= endDate:
+				when = (dt.datetime.combine(current, time[0]), dt.datetime.combine(current, time[1]))
+				table.append([title, when, where, details])
+				current += dt.timedelta(days = 1)
 		else:
 			date = parseDate(dtString)
-			time = (dt.time(9), dt.time(17))
-		when = (dt.datetime.combine(date, time[0]), dt.datetime.combine(date, time[1]))
-		table.append([title, when, where, details])
+			when = (dt.datetime.combine(date, time[0]), dt.datetime.combine(date, time[1]))
+			table.append([title, when, where, details])
 
 	return table
 
@@ -248,11 +267,39 @@ def phillipsScrape():
 	for i in [0]+indices[:-1]:
 		title = between(siteText, i, '<h2 class="delta a">', '</h2>')
 		title = removeTag(title, "strong")
-		time = between(siteText, i, '<div class="field-event-date-range">', '</div>')
-		location = "The Phillips Collection"
+		dtString = between(siteText, i, '<div class="field-event-date-range">', '</div>')
+		dtString = removeTag(removeTag(dtString, "span"), "span")
+		dtString = removeTag(dtString, "p")
+		where = "The Phillips Collection"
 		details = '<a href = "https://www.phillipscollection' + between(title, 0, '<a href="', '>') + '>Click here for more details</a>'
 		title = removeTag(title, "a", False, True)
-		table.append([title, time, location, details])
+
+		date = None
+		time = None
+
+		#parse time(s)
+		if 'am' in dtString or 'pm' in dtString:
+			dtList = dtString.split(',')
+			time = parseTime(dtList[2])
+			dtString = dtList[0] + ", " + dtList[1]
+		else:
+			#not quite accurate, maybe fix later
+			time = (dt.time(10), dt.time(17))
+
+		#parse date(s)
+		if '–' in dtString:
+			dates = dtString.split('–')
+			begDate = parseDate(dates[0])
+			endDate = parseDate(dates[1])
+			current = begDate
+			while current <= endDate:
+				when = (dt.datetime.combine(current, time[0]), dt.datetime.combine(current, time[1]))
+				table.append([title, when, where, details])
+				current += dt.timedelta(days = 1)
+		else:
+			date = parseDate(dtString)
+			when = (dt.datetime.combine(date, time[0]), dt.datetime.combine(date, time[1]))
+			table.append([title, when, where, details])
 	
 	return table
 
@@ -302,7 +349,7 @@ def writeCSV():
 		eventTable = blindWhinoScrape()
 		eventTable += hirshhornScrape()
 		eventTable += newseumScrape()
-#		eventTable += phillipsScrape()
+		eventTable += phillipsScrape()
 #		eventTable += politicsProseScrape()
 #		eventTable += tudorScrape()
 		
