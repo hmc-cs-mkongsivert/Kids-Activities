@@ -360,6 +360,24 @@ def tudorScrape():
 		table.append([title, when, where, details])
 	return table
 
+def usbgScrape():
+	site = requests.get("https://www.usbg.gov/programs-and-events")
+	siteText = removeWhitespace(site.text)
+	indices = makeIndicesList(siteText, '<div class="fullcalendar-event">')
+
+	table = []
+	for i in [0]+indices[:-1]:
+		dtString = between(siteText, i, '<div class="fullcalendar-instance">', '</div>')
+		dtString = removeTag(dtString, "span", False, True)
+		title = between(siteText, i, '<h3 class="title">', '</h3>')
+		title = removeTag(title, 'a')
+		where = "United States Botanical Garden"
+		details = ''#TODO add this
+
+		when = dtString#TODO: write this
+		table.append([title, when, where, details])
+	return table
+
 def writeCSV():
 	'''gathers all of the data and packs them into a CSV file'''
 	with open('events.csv', 'w', newline='') as csvfile:
@@ -378,4 +396,4 @@ def writeCSV():
 				eventFile.writerow(event)
 				#eventFile.writerow(formatDates(event))
 
-writeCSV()
+print(usbgScrape())
