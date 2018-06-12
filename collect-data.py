@@ -109,7 +109,6 @@ def parseTimeHelper(tString):
 def parseTime(tString):
 	'''takes in a string representing a time and returns a datetime object
 	representing that same date'''
-	print(tString)
 	if "–" in tString:
 		interval = tString.split('–')
 		begin = parseTimeHelper(interval[0])
@@ -354,7 +353,7 @@ def tudorScrape():
 		details = '<a href = https://www.tudorplace.org/programs' + between(siteText, i, '<a href="', '>') + '>Click here for more details</a>'
 		
 		date = parseDate(day + ' ' + month) #TODO: add time of day
-		tString = between(siteText, i, '<br /><small>', "&#183;")
+		tString = between(siteText, i, '</a></h4><small>', "&#183;")
 		times = parseTime(tString)
 		when = (dt.datetime.combine(date,times[0]),dt.datetime.combine(date,times[1]))
 
@@ -370,12 +369,13 @@ def writeCSV():
 		eventTable += newseumScrape()
 		eventTable += phillipsScrape()
 		eventTable += politicsProseScrape()
-#		eventTable += tudorScrape()
+		eventTable += tudorScrape()
 		
 		sortedTable = sortByDate(eventTable)
 		
 		for event in sortedTable:
 			if event[1][1] >= dt.datetime.now():
-				eventFile.writerow(formatDates(event))
+				eventFile.writerow(event)
+				#eventFile.writerow(formatDates(event))
 
-tudorScrape()
+writeCSV()
