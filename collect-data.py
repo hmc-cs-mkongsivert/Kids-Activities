@@ -91,13 +91,29 @@ def mtVernonScrape():
 		url += str(date.year)+'-'+str(date.month)+'-'+str(date.day)+'/'
 		site = requests.get(url)
 		siteText = removeWhitespace(site.text)
-		indices = makeIndicesList(siteText, '<time')
+		indices = makeIndicesList(siteText, '</h3>')
 
-		for i in [0]+indices[:-1]:
-			title = ''
+		for i in indices[:-6]:
+			title = between(siteText, i, '<h3>', '</h3>')
 			tString = between(siteText, i, '<time class="date">', '</time>')
 			where = "Mount Vernon"
 			details = between(siteText, i, '<p>', '</p>')
+			if 'All Day' in tString:
+				time = (dt.time(hour = 9), dt.time(hour = 17))
+				when = (dt.datetime.combine(date, time[0]), dt.datetime.combine(date, time[1]))
+				table.append([title, when, where, details])
+			elif ',' in tString:
+				strings = tString.split(',')
+				for string in strings:
+					time = parseTime(string)
+					when = (dt.datetime.combine(date, time[0]), dt.datetime.combine(date, time[1]))
+					table.append([title, when, where, details])
+			else:
+				time = parseTime(tString)
+				when = (dt.datetime.combine(date, time[0]), dt.datetime.combine(date, time[1]))
+				table.append([title, when, where, details])
+
+	return table
 
 def newseumScrape():
 	site = requests.get("http://www.newseum.org/events-programs/")
@@ -269,6 +285,7 @@ def writeCSV():
 		eventTable = blindWhinoScrape()
 		eventTable += hirshhornScrape()
 		eventTable += intlSpyScrape()
+		eventTable += mtVernonScrape()
 		eventTable += newseumScrape()
 		eventTable += phillipsScrape()
 		eventTable += politicsProseScrape()
