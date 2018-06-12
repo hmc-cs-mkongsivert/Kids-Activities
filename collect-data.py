@@ -63,6 +63,42 @@ def hirshhornScrape():
 
 	return table
 
+def intlSpyScrape():
+	site = requests.get("https://www.spymuseum.org/calendar/upcoming/1/")
+	siteText = removeWhitespace(site.text)
+	indices = makeIndicesList(siteText, '<div class="contain">')
+
+	table = []
+	for i in [0]+indices[:-1]:
+		title = between(siteText, i, '<div class="contain">', '<time')
+		title = removeTag(removeTag(title, 'a'), 'h3')
+		dtString = between(siteText, i, '<time datetime="', '">')
+		when = fromDatetime(dtString)
+		where = 'The International Spy Museum'
+		details = '<a href="' + between(siteText, i, '<a href="', '">') + '">Click here for details</a>'
+		table.append([title, when, where, details])
+
+	return table
+
+def mtVernonScrape():
+	#url should contain today's date
+	table = []
+
+	#loop over next week
+	for i in range(7):
+		date = dt.datetime.now() + dt.timedelta(days = i)
+		url = "https://www.mountvernon.org/plan-your-visit/calendar/"
+		url += str(date.year)+'-'+str(date.month)+'-'+str(date.day)+'/'
+		site = requests.get(url)
+		siteText = removeWhitespace(site.text)
+		indices = makeIndicesList(siteText, '<time')
+
+		for i in [0]+indices[:-1]:
+			title = ''
+			tString = between(siteText, i, '<time class="date">', '</time>')
+			where = "Mount Vernon"
+			details = between(siteText, i, '<p>', '</p>')
+
 def newseumScrape():
 	site = requests.get("http://www.newseum.org/events-programs/")
 	siteText = removeWhitespace(site.text)
@@ -220,7 +256,9 @@ def usbgScrape():
 
 		dtString = dtString.split(',')[1]#remove day of week
 		dtList = dtString.split('-')
-		when = dtList
+		time = parseTime(dtList[1])
+		date = parseDate(dtList[0], True)
+		when = (dt.datetime.combine(date,time[0]),dt.datetime.combine(date,time[1]))
 		table.append([title, when, where, details])
 	return table
 
@@ -230,10 +268,12 @@ def writeCSV():
 		eventFile = csv.writer(csvfile)
 		eventTable = blindWhinoScrape()
 		eventTable += hirshhornScrape()
+		eventTable += intlSpyScrape()
 		eventTable += newseumScrape()
 		eventTable += phillipsScrape()
 		eventTable += politicsProseScrape()
 		eventTable += tudorScrape()
+		eventTable += usbgScrape()
 		
 		sortedTable = sortByDate(eventTable)
 		
@@ -242,4 +282,4 @@ def writeCSV():
 				eventFile.writerow(event)
 				#eventFile.writerow(formatDates(event))
 
-print(usbgScrape())
+writeCSV()

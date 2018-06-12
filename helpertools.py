@@ -1,3 +1,7 @@
+import datetime as dt
+
+months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
+
 def between(string, start, beginTag, endTag):
 	'''resturns a substring between two tags'''
 	begin = string.find(beginTag, start) + len(beginTag)
@@ -54,7 +58,6 @@ def exhibitions(schedule, begDate, endDate):
 def findMonth(dString):
 	'''takes in a string representing a date and returns the month that
 	that date is in'''
-	months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
 	
 	month = 0
 	for i in range(len(months)):
@@ -63,14 +66,19 @@ def findMonth(dString):
 			break
 	return month
 
-def parseDate(dString):
+def parseDate(dString, allNums = False):
 	'''takes in a string representing a date and returns a datetime object
 	representing that same date'''
+	dString = dString.replace(' ', '')
 	now = dt.datetime.now()
 	year = 0
 	date = 0
 	
-	month = findMonth(dString)
+	if allNums:
+		month = int(dString[:2])
+		dString = dString[2:]
+	else:
+		month = findMonth(dString)
 	nums = ''.join([i for i in dString if i.isdigit()])
 	if len(nums) <= 2:
 		date = int(nums)
@@ -121,6 +129,24 @@ def parseTime(tString):
 		end = dt.time(hour = begin.hour+2, minute = begin.minute)
 	return (begin, end)
 
+def fromDatetime(dtString):
+	'''instead of parsing the date from text, read the date from a datetime
+	format'''
+	dtString = dtString.replace(' ', '')
+	dString, tString = dtString.split('T')
+
+	year = int(dString[:4])
+	month = int(dString[5:7])
+	date = int(dString[8:10])
+
+	beg, end = tString.split('-')
+	begHour, begMin = beg.split(':')[0:2]
+	endHour, endMin = end.split(':')[0:2]
+
+	begTime = dt.datetime(year, month, date, int(begHour), int(begMin))
+	endTime = dt.datetime(year, month, date, int(endHour), int(endMin))
+	return(begTime, endTime)
+
 def sortByDate(table):
 	'''merge sort of a table by date'''
 	if len(table) <= 1:
@@ -146,10 +172,10 @@ def sortByDate(table):
 
 def formatDates(event):
 	'''TODO: fix this'''
-	months = ['January', 'Febrary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+	Months = ['January', 'Febrary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 	begin = event[1][0]
 	end = event[1][1]
-	newDate = months[begin.month]
+	newDate = Months[begin.month]
 	newDate += " " + str(begin.day) + ", " + str(begin.year)
 	newDate += " at " + str(begin.hour%12) + ":" + str(begin.minute)
 	newDate += " a.m." if begin.hour < 12 else " p.m."
