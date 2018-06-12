@@ -71,7 +71,6 @@ def findMonth(dString):
 def parseDate(dString):
 	'''takes in a string representing a date and returns a datetime object
 	representing that same date'''
-
 	now = dt.datetime.now()
 	year = 0
 	date = 0
@@ -110,13 +109,17 @@ def parseTimeHelper(tString):
 def parseTime(tString):
 	'''takes in a string representing a time and returns a datetime object
 	representing that same date'''
-	tString
+	print(tString)
 	if "–" in tString:
 		interval = tString.split('–')
 		begin = parseTimeHelper(interval[0])
 		end = parseTimeHelper(interval[1])
 	elif '-' in tString:
 		interval = tString.split('-')
+		begin = parseTimeHelper(interval[0])
+		end = parseTimeHelper(interval[1])
+	elif '&ndash;' in tString:
+		interval = tString.split('&ndash;')
 		begin = parseTimeHelper(interval[0])
 		end = parseTimeHelper(interval[1])
 	else:
@@ -309,14 +312,24 @@ def politicsProseScrape():
 	indices = makeIndicesList(siteText, 'views-field-field-date')
 
 	table = []
-	for i in [0]+indices[:-1]:
+	for i in [0]+indices[:-1:2]:
 		title = between(siteText, i, '<div class="views-field views-field-title">', '</div>')
-		time = removeTag(between(siteText, i, '<div class="views-field views-field-field-date-1">', '</div>'), "span")
-		time = removeTag(time, "span") #not sure if this will do anything
-		location = "Politics and Prose Bookstore"
+		dtString = between(siteText, i, '<span class="date-display-single">', '</span>')
+		#not sure if this will do anything
+		where = "Politics and Prose Bookstore"
 		details = '<a href = "https://www.politics-prose.com' + between(title, 0, '<a href="', '>') + '>Click here for details</a>'
 		title = removeTag(title, "a", False, True)
-		table.append([title, time, location, details])
+		dtList = dtString.split(',')
+		
+		date = 0
+		time = 0
+
+		time = parseTime(dtList[2])
+		date = parseDate(dtList[0] + ", " + dtList[1])
+		start = dt.datetime.combine(date, time[0])
+		when = (start, start + dt.timedelta(hours = 1))
+		
+		table.append([title, when, where, details])
 
 	return table
 
@@ -330,16 +343,22 @@ def tudorScrape():
 	table = []
 	mo = 0
 	for i in [0]+indices[:-1]:
-		if i > moIndices[mo+1]:
-			mo += 1
+		if mo+1 < len(moIndices):
+			if i > moIndices[mo+1]:
+				mo += 1
 		month = between(siteText, moIndices[mo], moMarker, '</h5>')
-		date = between(siteText, i, '</small><big>', '</big>')
+		day = between(siteText, i, '</small><big>', '</big>')
 		title = between(siteText, i, '<h4>', '</h4>')
 		title = removeTag(title, "a")
-		time = date + month #TODO: add time of day
-		location = "Tudor Place Historic House and Garden"
+		where = "Tudor Place Historic House and Garden"
 		details = '<a href = https://www.tudorplace.org/programs' + between(siteText, i, '<a href="', '>') + '>Click here for more details</a>'
-		table.append([title, time, location, details])
+		
+		date = parseDate(day + ' ' + month) #TODO: add time of day
+		tString = between(siteText, i, '<br /><small>', "&#183;")
+		times = parseTime(tString)
+		when = (dt.datetime.combine(date,times[0]),dt.datetime.combine(date,times[1]))
+
+		table.append([title, when, where, details])
 	return table
 
 def writeCSV():
@@ -350,7 +369,7 @@ def writeCSV():
 		eventTable += hirshhornScrape()
 		eventTable += newseumScrape()
 		eventTable += phillipsScrape()
-#		eventTable += politicsProseScrape()
+		eventTable += politicsProseScrape()
 #		eventTable += tudorScrape()
 		
 		sortedTable = sortByDate(eventTable)
@@ -359,4 +378,4 @@ def writeCSV():
 			if event[1][1] >= dt.datetime.now():
 				eventFile.writerow(formatDates(event))
 
-writeCSV()
+tudorScrape()

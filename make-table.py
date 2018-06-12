@@ -3,7 +3,8 @@ import csv
 coords = {'The Blind Whino Art Annex': [38.88041, -77.01192],
 	'The Hirshhorn Museum and Sculpture Garden': [38.88816, -77.02304],	
 	'The Newseum': [38.89312, -77.0192],
-	'The Phillips Collection': [38.9115020, -77.0468522]}
+	'The Phillips Collection': [38.9115020, -77.0468522],
+	'Politics and Prose Bookstore': [38.9554465, -77.0696419]}
 
 def makeTable():
 	table = "\n<table>"
