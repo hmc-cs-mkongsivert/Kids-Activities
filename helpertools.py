@@ -1,4 +1,5 @@
 import datetime as dt
+import math
 
 months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
 
@@ -181,3 +182,14 @@ def formatDates(event):
 	newDate += " a.m." if begin.hour < 12 else " p.m."
 	newEvent = [event[0]] + [newDate] + event[2:]
 	return newEvent
+
+def hexagon(center, coeff, r=20.0):
+	vert = coeff*r/2
+	horiz = coeff*r*math.sqrt(3)/2
+	deg030 = [center[0]+vert, center[1]+horiz]
+	deg090 = [center[0]+coeff*r, center[1]]
+	deg150 = [center[0]+vert, center[1]-horiz]
+	deg210 = [center[0]-vert, center[1]-horiz]
+	deg270 = [center[0]-coeff*r, center[1]]
+	deg330 = [center[0]-vert, center[1]+horiz]
+	return [deg030, deg090, deg150, deg210, deg270, deg330]

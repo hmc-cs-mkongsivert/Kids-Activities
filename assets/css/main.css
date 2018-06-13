@@ -2589,4 +2589,22 @@
 
 	}
 
-	#mapid { height: 180px; }
+	.sidenav {
+    height: 100%;
+    width: 100px;
+    position: fixed;
+    z-index: 1;
+    top: 183px;
+    right: 0;
+    background-color: #F2F3F4;
+    font-family: 'Open Sans', sans-serif;
+    overflow-x: hidden;
+    position: absolute;
+    padding-top: 60px;
+    padding-left: 30px;
+    transition: 0.8s;
+	}
+
+	.sidenav:hover{
+	   width: 550px;
+	}
