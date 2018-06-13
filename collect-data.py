@@ -206,12 +206,26 @@ def natlMallScrape():
 	siteText = removeWhitespace(site.text)
 	indices = makeIndicesList(siteText, '<h3 class="ListingResults-title">')
 
-	table[]
+	table = []
 	for i in [0]+indices[:-1:2]:
 		title = between(siteText, i, '<h3 class="ListingResults-title">', '</h3>')
-		dtString = ''
+		tString = between(siteText, i, '<span class="ListingMeta-label">Time:</span>', '</li>')
+		dString = between(siteText, i, '<span class="ListingEvent-date">', '</span>')
 		where = "National Mall"
-		details = ''
+		details = '<a href="'+between(siteText, i, '<a href="', '"')+'">Click here for details</a>'
+
+		date = parseDate(dString)
+		if ',' in tString:
+			tList = tString.split(',')
+			for tItem in tList:
+				time = parseTime(tItem)
+				when = (dt.datetime.combine(date, time[0]),dt.datetime.combine(date, time[1]))
+				table.append([title, when, where, details])
+		else:
+			time = parseTime(tString)
+			when = (dt.datetime.combine(date, time[0]),dt.datetime.combine(date, time[1]))
+			table.append([title, when, where, details])
+	return table
 
 def politicsProseScrape():
 	site = requests.get("https://www.politics-prose.com/events")
@@ -224,7 +238,7 @@ def politicsProseScrape():
 		dtString = between(siteText, i, '<span class="date-display-single">', '</span>')
 		#not sure if this will do anything
 		where = "Politics and Prose Bookstore"
-		details = '<a href = "https://www.politics-prose.com' + between(title, 0, '<a href="', '>') + '>Click here for details</a>'
+		details = '<a href = "https://www.politics-prose.com'+between(title, 0, '<a href="', '>')+'>Click here for details</a>'
 		title = removeTag(title, "a", False, True)
 		dtList = dtString.split(',')
 		
@@ -298,6 +312,7 @@ def writeCSV():
 		eventTable += hirshhornScrape()
 		eventTable += intlSpyScrape()
 		eventTable += mtVernonScrape()
+		eventTable += natlMallScrape()
 		eventTable += newseumScrape()
 		eventTable += phillipsScrape()
 		eventTable += politicsProseScrape()
