@@ -103,7 +103,7 @@ def parseTimeHelper(tString):
 	else:
 		time = dt.time(int(num[:-2]), int(num[-2:]))
 
-	if time < dt.time(7):
+	if 'pm' in ''.join([i for i in tString if i.isalpha()]).lower():
 		dTime = dt.datetime.combine(dt.datetime.now(), time)
 		dTime += dt.timedelta(hours = 12)
 		time = dTime.time()
@@ -123,6 +123,10 @@ def parseTime(tString):
 		end = parseTimeHelper(interval[1])
 	elif '&ndash;' in tString:
 		interval = tString.split('&ndash;')
+		begin = parseTimeHelper(interval[0])
+		end = parseTimeHelper(interval[1])
+	elif 'to' in tString:
+		interval = tString.split('to')
 		begin = parseTimeHelper(interval[0])
 		end = parseTimeHelper(interval[1])
 	else:
