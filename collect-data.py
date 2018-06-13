@@ -201,6 +201,18 @@ def phillipsScrape():
 	
 	return table
 
+def natlMallScrape():
+	site = requests.get("https://www.nps.gov/nama/planyourvisit/calendar.htm")
+	siteText = removeWhitespace(site.text)
+	indices = makeIndicesList(siteText, '<h3 class="ListingResults-title">')
+
+	table[]
+	for i in [0]+indices[:-1:2]:
+		title = between(siteText, i, '<h3 class="ListingResults-title">', '</h3>')
+		dtString = ''
+		where = "National Mall"
+		details = ''
+
 def politicsProseScrape():
 	site = requests.get("https://www.politics-prose.com/events")
 	siteText = removeWhitespace(site.text)
