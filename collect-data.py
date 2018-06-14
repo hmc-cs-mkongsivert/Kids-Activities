@@ -30,7 +30,7 @@ def blindWhinoScrape():
 			interval[0] += interval[1][-4:]
 			opening = (parseDate(interval[0]), parseDate(interval[1]))
 		dates = exhibitions(BWSchedule, opening[0], opening[1])
-		location = "The Blind Whino Art Annex"
+		location = "Blind Whino Art Annex"
 		details = between(siteText, i, '<p>', '</p>')
 		for day in dates:
 			table.append([title, day, location, details])
@@ -47,13 +47,13 @@ def hirshhornScrape():
 #	for i in [0]+exhibs[:-1]:
 #		title = between(siteText, i, '<h4 class="list-item-title balance-text">', '</h4>')
 #		time = 'time!'
-#		location = 'The Hirshhorn Museum and Sculpture Garden'
+#		location = 'Hirshhorn Museum and Sculpture Garden'
 #		details = ''
 	for i in [0]+events[:-1]:
 		title = between(siteText, i, '<h4 class="tribe-events-title list-item-title balance-text">', '</h4>')
 		title = removeTag(title, 'a')
 		dtString = between(siteText, i, '<div class="tribe-events-duration list-item-date">', '</div>')
-		where = 'The Hirshhorn Museum and Sculpture Garden'
+		where = 'Hirshhorn Museum and Sculpture Garden'
 		details = ''#'<a href = "' + between(siteText, i, '<a href="', '"') + '">click here for details</a>'
 		dtList = dtString.split('|')
 		date = parseDate(dtList[0])
@@ -74,7 +74,7 @@ def intlSpyScrape():
 		title = removeTag(removeTag(title, 'a'), 'h3')
 		dtString = between(siteText, i, '<time datetime="', '">')
 		when = fromDatetime(dtString)
-		where = 'The International Spy Museum'
+		where = 'International Spy Museum'
 		details = '<a href="' + between(siteText, i, '<a href="', '">') + '">Click here for details</a>'
 		table.append([title, when, where, details])
 
@@ -125,7 +125,7 @@ def newseumScrape():
 		title = between(siteText, i, '<span class="ai1ec-event-title">', '</span>')
 		dtString = between(siteText, i, '<div class="ai1ec-event-time">', '</div>')
 		dtString = removeTag(dtString, "span", middle = False)
-		where = "The Newseum"
+		where = "Newseum"
 		details = between(siteText, i, '<div class="ai1ec-popup-excerpt">', '</div>')
 
 		date = None
@@ -168,7 +168,7 @@ def phillipsScrape():
 		dtString = between(siteText, i, '<div class="field-event-date-range">', '</div>')
 		dtString = removeTag(removeTag(dtString, "span"), "span")
 		dtString = removeTag(dtString, "p")
-		where = "The Phillips Collection"
+		where = "Phillips Collection"
 		details = '<a href = "https://www.phillipscollection' + between(title, 0, '<a href="', '>') + '>Click here for more details</a>'
 		title = removeTag(title, "a", False, True)
 

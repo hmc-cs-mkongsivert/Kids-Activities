@@ -1,29 +1,20 @@
 import csv
+from helpertools import *
 
-coords = {'The Blind Whino Art Annex': [38.88041, -77.01192],
-	'The Hirshhorn Museum and Sculpture Garden': [38.88816, -77.02304],
-	'The International Spy Museum': [38.8970326, -77.0233503],
+coords = {'Blind Whino Art Annex': [38.88041, -77.01192],
+	'Hirshhorn Museum and Sculpture Garden': [38.88816, -77.02304],
+	'International Spy Museum': [38.8970326, -77.0233503],
 	'Mount Vernon': [38.71029, -77.08644],
 	'National Mall': [38.88994, -77.02698],	
-	'The Newseum': [38.89312, -77.0192],
-	'The Phillips Collection': [38.9115020, -77.0468522],
+	'Newseum': [38.89312, -77.0192],
+	'Phillips Collection': [38.9115020, -77.0468522],
 	'Politics and Prose Bookstore': [38.9554465, -77.0696419],
 	'Tudor Place Historic House and Garden': [38.91146, -77.06304],
 	'United States Botanical Garden': [38.8882478, -77.0129011]}
 
-def makeTable():
-	table = "\n<table>"
-	with open('events.csv', newline='') as csvFile:
-		dataReader = csv.reader(csvFile)
-		for row in dataReader:
-			table += "\n<tr>"
-			for item in row:
-				table += "\n<th>" + item + "</th>"
-			table+= "\n</tr>"
-	table += "\n</table>\n"
-	return table
-
-def makeMap():
+def makeDict():
+	'''reads events from a CSV file and formats them into a dictionary
+	separated by location'''
 	mapLabels = {}
 	with open('events.csv', newline='') as csvFile:
 		dataReader = csv.reader(csvFile)
@@ -32,19 +23,43 @@ def makeMap():
 				mapLabels[row[2]].append(row)
 			else:
 				mapLabels[row[2]] = [row]
+	return mapLabels
 
+def makeTable(mapLabels):
+	'''takes in a dictionary of events separated by location and returns an
+	HTML-formatted table displaying event times and titles'''
+	lb = '\n' + '\t'*11 #indenting to match the rest
+	tableStr = lb+'<table>'
+	for key in mapLabels.keys():
+		tableStr += lb+'<div id="'+key[:5].lower()'">'+lb+'<h3>'+key+'</h3>'
+		tableStr += lb+'<table>'
+		for item in mapLabels[key]:
+			tableStr += lb+'<tr>'
+			tableStr += lb+'<th>' + item[1] + '</th>'#time
+			tableStr += lb+'<th>' + item[0] + '</th>'#title
+			tableStr += lb+'</tr>'
+		tableStr += lb+'</table>'+lb
+	return tableStr
+
+#OVERHAUL
+def makeMap(mapLabels):
+	'''takes in a dictionary of events separated by location and returns a
+	GeoJSON file to indicate location and quantity of events on a map'''
 	labelString = "\n"
 	for key in mapLabels.keys():
 		num = len(mapLabels[key])#events
 		labelString += "\n\nvar circle= L.circle(" + str(coords[key])
-		labelString += ", { \ncolor: '#00ffdf', \nfillColor: '#00ffdf', \nfillOpacity: 0.5, \nradius:"
+		labelString += ", { \ncolor: '#00ffdf', \nfillColor: '#00ffdf',"
+		labelString += "\nfillOpacity: 0.5, \nradius:"
 		labelString += str(20*num) + "\n}).addTo(mymap);"
 	return labelString
 
 def writeHTML(beginTag, endTag, filename, function):
+	'''inserts what a given function indicates should be inserted in filename
+	between beginTag and endTag'''
 	with open(filename, 'r', newline='') as htmlRead:
 		oldText = htmlRead.read()
-		table = function()
+		table = function(mapLabels)
 		beforeTable = oldText.find(beginTag) + len(beginTag)
 		afterTable = oldText.find(endTag)
 		newText = oldText[:beforeTable] + table + oldText[afterTable:]
@@ -53,7 +68,7 @@ def writeHTML(beginTag, endTag, filename, function):
 
 begTable = "<!-- Table Begins Here -->"
 endTable = "<!-- Table Ends Here -->"
-#writeHTML(begTable, endTable, 'activities-list.html', makeTable)
+#writeHTML(begTable, endTable, 'map.html', makeTable)
 
 begMap = "//begin labels"
 endMap = "//end labels"

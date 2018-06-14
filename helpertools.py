@@ -96,6 +96,8 @@ def parseDate(dString, allNums = False):
 	return dt.date(year, month, date)
 
 def parseTimeHelper(tString):
+	'''helper function for parseTime, which takes in a string that only
+	represents one time and interprets it'''
 	num = ''.join([i for i in tString if i.isdigit()])
 	time = None
 	if len(num) <= 2:
@@ -187,15 +189,15 @@ def formatDates(event):
 	newEvent = [event[0]] + [newDate] + event[2:]
 	return newEvent
 
-def hexagon(center, coeff, r=0.0002):
-	vert = coeff*r*math.sin(math.pi/4)*0.75
-	horiz = coeff*r*math.cos(math.pi/4)*1.5
-	pt0 = [center[1]+horiz, center[0]+vert]
-	pt1 = [center[1], center[0]+coeff*r]
-	pt2 = [center[1]-horiz, center[0]+vert]
-	pt3 = [center[1]-horiz, center[0]-vert]
-	pt4 = [center[1], center[0]-coeff*r]
-	pt5 = [center[1]+horiz, center[0]-vert]
-	return [pt0, pt1, pt2, pt3, pt4, pt5]
+def polygon(center, coeff, n, r=0.0002):
+	'''creates the map coordinates for a regular n-gon scaled by a factor of
+	coeff, centered on a given center'''
+	points = [] 
+	rad = 2*math.pi/n
+	for i in range(n):
+		vert = coeff*r*math.sin(i*rad)
+		horiz = coeff*r*math.cos(i*rad)
+		points.append([center[1]+horiz, center[0]+vert])
+	return points
 
-print(hexagon([38.88994, -77.02698], 51))
+print(polygon([38.88994, -77.02698], 51, 6))
