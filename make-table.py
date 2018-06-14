@@ -25,6 +25,7 @@ def makeDict():
 				mapLabels[row[2]] = [row]
 	return mapLabels
 
+#TODO: add javascript
 def makeTable(mapLabels):
 	'''takes in a dictionary of events separated by location and returns an
 	HTML-formatted table displaying event times and titles'''
@@ -41,19 +42,24 @@ def makeTable(mapLabels):
 		tableStr += lb+'</table>'+lb
 	return tableStr
 
-#OVERHAUL
 def makeMap(mapLabels):
 	'''takes in a dictionary of events separated by location and returns a
 	GeoJSON file to indicate location and quantity of events on a map'''
-	labelString = "\n"
+	jsonStr = ""
 	for key in mapLabels.keys():
-		num = len(mapLabels[key])#events
-		labelString += "\n\nvar circle= L.circle(" + str(coords[key])
-		labelString += ", { \ncolor: '#00ffdf', \nfillColor: '#00ffdf',"
-		labelString += "\nfillOpacity: 0.5, \nradius:"
-		labelString += str(20*num) + "\n}).addTo(mymap);"
-	return labelString
+		jsonStr += 'var '+key[:4].lower()+'events = {\n"type": "Feature",\n'
+		jsonStr += 'properties": {\n"popupContent": "'+key+'",\n"style": {\n'
+		jsonStr += 'weight: 0,\nopacity: 0,\nfillColor: "#00ffdf",\n'
+		jsonStr += 'fillOpacity: 0.5\n}\n},\n"geometry": {\n'
+		jsonStr += '"type": "MultiPolygon",\n"coordinates": [\n[\n[\n'
+		
+		scale = len(mapLabels[key])#events
+		shape = polygon(coords[key], scale, 6)
+		
+		jsonStr += str(shape)+']\n]\n]\n}\n};\n\n'
+	return jsonStr
 
+#OVERHAUL
 def writeHTML(beginTag, endTag, filename, function):
 	'''inserts what a given function indicates should be inserted in filename
 	between beginTag and endTag'''

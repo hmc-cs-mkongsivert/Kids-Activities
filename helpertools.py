@@ -21,10 +21,10 @@ def removeTag(string, tag, middle = True, neg = False):
 	right = string.find("</" + tag + ">", leftEnd)
 	if middle:
 		#just remove the tags
-		return string[0:leftBeg] + string[leftEnd+1:right] + string[right+len(tag)+3:]
+		return string[0:leftBeg]+string[leftEnd+1:right]+string[right+len(tag)+3:]
 	elif (not neg):
 		#remove the tags and tagged material
-		return string[0:leftBeg] + string[right+len(tag)+3:]
+		return string[0:leftBeg]+string[right+len(tag)+3:]
 	else:
 		#remove everything but the tagged material
 		return string[leftEnd+1:right]
@@ -189,14 +189,14 @@ def formatDates(event):
 	newEvent = [event[0]] + [newDate] + event[2:]
 	return newEvent
 
-def polygon(center, coeff, n, r=0.0002):
-	'''creates the map coordinates for a regular n-gon scaled by a factor of
-	coeff, centered on a given center'''
+def polygon(center, scale, n, r=0.0002):
+	'''creates the map coordinates for a regular n-gon scaled by given factor,
+	centered on a given center'''
 	points = [] 
 	rad = 2*math.pi/n
 	for i in range(n):
-		vert = coeff*r*math.sin(i*rad)
-		horiz = coeff*r*math.cos(i*rad)
+		vert = scale*r*math.sin(i*rad)
+		horiz = scale*r*math.cos(i*rad)
 		points.append([center[1]+horiz, center[0]+vert])
 	return points
 
