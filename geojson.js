@@ -1,26 +1,27 @@
-var markers = {
-	"type": "FeatureCollection",
-	"features": [
-		{
-			"type": "Feature",
-			"geometry": {
-				"type": "Polygon",
-				"coordinates": [
-					[
-						[38.9809465, -77.02547460440698],
-						[39.0064465, -77.0696419],
-						[38.9809465, -77.113809195593],
-						[38.9299465, -77.113809195593],
-						[38.9044465, -77.0696419],
-						[38.9299465, -77.02547460440698]
-					]
-				]
-			},
-			"layout": {},
-			"paint": {
-				'fill-color': '#00ffdf',
-				'fill-opacity': 0.6
-			}
-		}
-	]
+var events = {
+    "type": "Feature",
+    "properties": {
+        "popupContent": "This is the Auraria West Campus",
+        "style": {
+            weight: 2,
+            opacity: 0,
+            fillColor: "#00ffdf",
+            fillOpacity: 0.5
+        }
+    },
+    "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+            [
+                [
+                    [-77.0197675108319, 38.89715248916811],
+                    [-77.02698, 38.90014],
+                    [-77.03419248916809, 38.89715248916811],
+                    [-77.03419248916809, 38.8827275108319],
+                    [-77.02698, 38.879740000000005],
+                    [-77.0197675108319, 38.8827275108319]
+                ]
+            ]
+        ]
+    }
 };

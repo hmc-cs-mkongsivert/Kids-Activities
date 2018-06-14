@@ -188,12 +188,14 @@ def formatDates(event):
 	return newEvent
 
 def hexagon(center, coeff, r=0.0002):
-	vert = coeff*r/2
-	horiz = coeff*r*math.sqrt(3)/2
-	deg030 = [center[1]+horiz, center[0]+vert]
-	deg090 = [center[1], center[0]+coeff*r]
-	deg150 = [center[1]-horiz, center[0]+vert]
-	deg210 = [center[1]-horiz, center[0]-vert]
-	deg270 = [center[1], center[0]-coeff*r]
-	deg330 = [center[1]+horiz, center[0]-vert]
-	return [deg030, deg090, deg150, deg210, deg270, deg330]
+	vert = coeff*r*math.sin(math.pi/4)
+	horiz = coeff*r*math.cos(math.pi/4)
+	pt0 = [center[1]+horiz, center[0]+vert]
+	pt1 = [center[1], center[0]+coeff*r]
+	pt2 = [center[1]-horiz, center[0]+vert]
+	pt3 = [center[1]-horiz, center[0]-vert]
+	pt4 = [center[1], center[0]-coeff*r]
+	pt5 = [center[1]+horiz, center[0]-vert]
+	return [pt0, pt1, pt2, pt3, pt4, pt5]
+
+print(hexagon([38.88994, -77.02698], 51))
