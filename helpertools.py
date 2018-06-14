@@ -187,13 +187,13 @@ def formatDates(event):
 	newEvent = [event[0]] + [newDate] + event[2:]
 	return newEvent
 
-def hexagon(center, coeff, r=20.0):
+def hexagon(center, coeff, r=0.0002):
 	vert = coeff*r/2
 	horiz = coeff*r*math.sqrt(3)/2
-	deg030 = [center[0]+vert, center[1]+horiz]
-	deg090 = [center[0]+coeff*r, center[1]]
-	deg150 = [center[0]+vert, center[1]-horiz]
-	deg210 = [center[0]-vert, center[1]-horiz]
-	deg270 = [center[0]-coeff*r, center[1]]
-	deg330 = [center[0]-vert, center[1]+horiz]
+	deg030 = [center[1]+horiz, center[0]+vert]
+	deg090 = [center[1], center[0]+coeff*r]
+	deg150 = [center[1]-horiz, center[0]+vert]
+	deg210 = [center[1]-horiz, center[0]-vert]
+	deg270 = [center[1], center[0]-coeff*r]
+	deg330 = [center[1]+horiz, center[0]-vert]
 	return [deg030, deg090, deg150, deg210, deg270, deg330]
