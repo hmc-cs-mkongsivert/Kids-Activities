@@ -177,16 +177,22 @@ def sortByDate(table):
 			secondHalf = secondHalf[1:]
 	return sortedL
 
+def formatTimes(time):
+	'''formats a datetime time object as a string'''
+	newDate = str(time.hour%12)+':'+str(time.minute)
+	newDate += '0' if len(str(time.minute))==1 else ''
+	newDate += " a.m." if time.hour < 12 else " p.m."
+	return newDate
+
 def formatDates(event):
-	'''TODO: fix this'''
+	'''formats a datetime object as a string'''
 	Months = ['January', 'Febrary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 	begin = event[1][0]
 	end = event[1][1]
 	newDate = Months[begin.month]
-	newDate += " " + str(begin.day) + ", " + str(begin.year)
-	newDate += " at " + str(begin.hour%12) + ":" + str(begin.minute)
-	newDate += " a.m." if begin.hour < 12 else " p.m."
-	newEvent = [event[0]] + [newDate] + event[2:]
+	newDate += " "+str(begin.day)+", "+str(begin.year)+" from "
+	newDate += formatTimes(begin)+' to '+formatTimes(end)
+	newEvent = [event[0]]+[newDate]+event[2:]
 	return newEvent
 
 def polygon(center, scale, n, r=0.0002):
@@ -199,5 +205,3 @@ def polygon(center, scale, n, r=0.0002):
 		horiz = scale*r*math.cos(i*rad)
 		points.append([center[1]+horiz, center[0]+vert])
 	return points
-
-print(polygon([38.88994, -77.02698], 51, 6))
