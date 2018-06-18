@@ -101,13 +101,18 @@ def parseTimeHelper(tString):
 	'''helper function for parseTime, which takes in a string that only
 	represents one time and interprets it'''
 	num = ''.join([i for i in tString if i.isdigit()])
+	alph = ''.join([i for i in tString if i.isalpha()]).lower()
+
+	if alph == 'noon':
+		return dt.time(12)
+
 	time = None
 	if len(num) <= 2:
 		time = dt.time(int(num))
 	else:
 		time = dt.time(int(num[:-2]), int(num[-2:]))
 
-	if 'pm' in ''.join([i for i in tString if i.isalpha()]).lower():
+	if 'pm' in alph:
 		dTime = dt.datetime.combine(dt.datetime.now(), time)
 		dTime += dt.timedelta(hours = 12)
 		time = dTime.time()
@@ -192,7 +197,7 @@ def formatDates(event):
 		'August', 'September', 'October', 'November', 'December']
 	begin = event[1][0]
 	end = event[1][1]
-	newDate = Months[begin.month]
+	newDate = Months[begin.month-1]
 	newDate += " "+str(begin.day)+", "+str(begin.year)+" from "
 	newDate += formatTimes(begin)+' to '+formatTimes(end)
 	newEvent = [event[0]]+[newDate]+event[2:]

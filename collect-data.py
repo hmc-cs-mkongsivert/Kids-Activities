@@ -309,7 +309,7 @@ def main():
 	with open('events.csv', 'w', newline='') as csvfile:
 		eventFile = csv.writer(csvfile)
 		eventTable = blindWhinoScrape()
-		'''eventTable += hirshhornScrape()
+		eventTable += hirshhornScrape()
 		eventTable += intlSpyScrape()
 		eventTable += mtVernonScrape()
 		eventTable += natlMallScrape()
@@ -317,7 +317,7 @@ def main():
 		eventTable += phillipsScrape()
 		eventTable += politicsProseScrape()
 		eventTable += tudorScrape()
-		eventTable += usbgScrape()'''
+		eventTable += usbgScrape()
 		
 		sortedTable = sortByDate(eventTable)
 		
