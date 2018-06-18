@@ -30,9 +30,9 @@ def makeTable(mapLabels):
 	'''takes in a dictionary of events indexed by location and returns an
 	HTML-formatted table displaying event times and titles'''
 	lb = '\n' + '\t'*7 #indenting to match the rest
-	tableStr = lb+'<table>'
+	tableStr = ''
 	for key in mapLabels.keys():
-		tableStr += lb+'<div id="'+key[:5].lower()'">'+lb+'<h3>'+key+'</h3>'
+		tableStr += lb+'<div id="'+key[:5].lower()+'">'+lb+'<h3>'+key+'</h3>'
 		tableStr += lb+'<table>'
 		for item in mapLabels[key]:
 			tableStr += lb+'<tr>'
@@ -50,11 +50,11 @@ def makeJS(mapLabels):
 	#construct map
 	scriptStr="<script>"+lb+"var map = L.map('map').setView([38.89, -77.0261"+\
 		"48], 11);"+lb+"L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z"+\
-		"/{x}/{y}.png?access_token={accessToken}', {"+lb+"attribution: 'Map "+\
-		"data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMa"+\
-		"p</a> contributors, <a href=\"https://creativecommons.org/licenses/"+\
-		"by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.c"+\
-		"om/\">Mapbox</a>',"+lb+"maxZoom: 20,"+lb+"id: 'mapbox.streets',"+lb+\
+		"}/{x}/{y}.png?access_token={accessToken}', {"+lb+"attribution: 'Map"+\
+		" data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetM"+\
+		"ap</a> contributors, <a href=\"https://creativecommons.org/licenses"+\
+		"/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox."+\
+		"com/\">Mapbox</a>',"+lb+"maxZoom: 20,"+lb+"id: 'mapbox.streets',"+lb+\
 		"accessToken: 'pk.eyJ1IjoibWtvbmdzaXZlcnQiLCJhIjoiY2ppNHljYTZlMGViYT"+\
 		"NybzY1ODBrZHFteiJ9.cryeQAatX8rCKMgGo8rRNw'"+lb+"}).addTo(map);"
 	featFun="function onEachFeature(feature, layer) {"+lb+"if (feature.prope"+\
@@ -64,28 +64,28 @@ def makeJS(mapLabels):
 	for key in mapLabels.keys():
 		keyID = key[:5].lower()
 		#set the table's visibility to hidden initially
-		scriptStr+=ls*2+"var "+keyID+"Table = document.getElementById('"+keyID\
-			+"');"+lb+keyID"Table.style.visibility = 'hidden';"
+		scriptStr+=lb*2+"var "+keyID+"Table = document.getElementById('"+keyID\
+			+"');"+lb+keyID+"Table.style.visibility = 'hidden';"
 		#create functions to change tables' visibilities
-		scriptStr+=ls*2+"function "+keyID+"In(e) {"+lb+keyID+"Table.style."+\
+		scriptStr+=lb*2+"function "+keyID+"In(e) {"+lb+keyID+"Table.style."+\
 			"visibility = 'visible';"+lb+"}"+lb+"function "+keyID+"Out(e) {"+\
 			lb+keyID+"Table.style.visibility = 'hidden';"+lb+"}"
 		#add interaction
-		scriptStr+=lb+"if (feature.properties.popupContent == '"+key+"'){"+\
-			"layer.on({"+lb+"mouseover: "+layerID+"In,"+lb+"mouseout: "+\
-			layerID+"Out"+lb+scriptStr+="});"+lb+"}"
-	featFun+=lb+"}"
+		featFun+=lb+"if (feature.properties.popupContent == '"+key+"'){"+\
+			"layer.on({"+lb+"mouseover: "+keyID+"In,"+lb+"mouseout: "+\
+			keyID+"Out"+lb+"});"+lb+"}"
+	featFun+=lb+"}"+lb+"</script>"+lb
+	return scriptStr+featFun
 
 def makeJSON(mapLabels):
 	'''takes in a dictionary of events indexed by location and returns a
 	GeoJSON file to indicate location and quantity of events on a map'''
 	jsonStr = ""
 	for key in mapLabels.keys():
-		jsonStr += 'var '+key[:4].lower()+'events = {\n"type": "Feature",\n'
-		jsonStr += 'properties": {\n"popupContent": "'+key+'",\n"style": {\n'
-		jsonStr += 'weight: 0,\nopacity: 0,\nfillColor: "#00ffdf",\n'
-		jsonStr += 'fillOpacity: 0.5\n}\n},\n"geometry": {\n'
-		jsonStr += '"type": "MultiPolygon",\n"coordinates": [\n[\n[\n'
+		jsonStr += 'var '+key[:4].lower()+'events = {\n"type": "Feature",\n"'+\
+			'properties": {\n"popupContent": "'+key+'",\n"style": {\nweight:'+\
+			' 0,\nopacity: 0,\nfillColor: "#00ffdf",\nfillOpacity: 0.5\n}\n}'+\
+			',\n"geometry": {\n"type": "MultiPolygon",\n"coordinates": [\n[\n[\n'
 		
 		scale = len(mapLabels[key])#events
 		shape = polygon(coords[key], scale, 6)
@@ -104,10 +104,13 @@ def main():
 		jsonWrite.write(jsonStr)
 	with open('map.html', 'r', newline='') as htmlRead:
 		oldText = htmlRead.read()
-		tables = makeTable(mapLabels)
-		script = makeJS(mapLabels)
+		tables = makeTable(eventDict)
+		script = makeJS(eventDict)
 		beforeTable = oldText.find(beginTag)+len(beginTag)
 		afterTable = oldText.find(endTag)
 		newText = oldText[:beforeTable]+tables+script+oldText[afterTable:]
 	with open('map.html', 'w', newline='') as htmlWrite:
 		htmlWrite.write(newText)
+
+if __name__ == "__main__":
+	main()

@@ -1,22 +1,22 @@
-var events = {
-    "type": "Feature",
-    "properties": {
-        "popupContent": "This is the Auraria West Campus",
-        "style": {
-            weight: 2,
-            opacity: 0,
-            fillColor: "#00ffdf",
-            fillOpacity: 0.5
-        }
-    },
-    "geometry": {
-        "type": "MultiPolygon",
-        "coordinates": [
-            [
-                [
-                    [-77.01616126624783, 38.89534936687608], [-77.02698, 38.90014], [-77.03779873375215, 38.89534936687608], [-77.03779873375215, 38.88453063312392], [-77.02698, 38.879740000000005], [-77.01616126624783, 38.88453063312392]
-                ]
-            ]
-        ]
-    }
+var blinevents = {
+"type": "Feature",
+"properties": {
+"popupContent": "Blind Whino Art Annex",
+"style": {
+weight: 0,
+opacity: 0,
+fillColor: "#00ffdf",
+fillOpacity: 0.5
+}
+},
+"geometry": {
+"type": "MultiPolygon",
+"coordinates": [
+[
+[
+[[-77.00832, 38.88041], [-77.01012, 38.88352769145362], [-77.01372, 38.88352769145362], [-77.01552000000001, 38.88041], [-77.01372, 38.87729230854637], [-77.01012, 38.87729230854637]]]
+]
+]
+}
 };
+
