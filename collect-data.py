@@ -304,7 +304,7 @@ def usbgScrape():
 		table.append([title, when, where, details])
 	return table
 
-def writeCSV():
+def main():
 	'''gathers all of the data and packs them into a CSV file'''
 	with open('events.csv', 'w', newline='') as csvfile:
 		eventFile = csv.writer(csvfile)
@@ -323,7 +323,8 @@ def writeCSV():
 		
 		for event in sortedTable:
 			if event[1][1] >= dt.datetime.now():
-				eventFile.writerow(event)
-				#eventFile.writerow(formatDates(event))
+				#eventFile.writerow(event)
+				eventFile.writerow(formatDates(event))
 
-writeCSV()
+if __name__ == "__main__":
+	main()

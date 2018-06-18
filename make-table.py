@@ -48,19 +48,18 @@ def makeJS(mapLabels):
 	lb = '\n'+'\t'*7
 
 	#construct map
-	scriptStr="<script>"+lb+"var map = L.map('map').setView([38.89, -77.0261"+\
-		"48], 11);"+lb+"L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z"+\
-		"}/{x}/{y}.png?access_token={accessToken}', {"+lb+"attribution: 'Map"+\
-		" data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetM"+\
-		"ap</a> contributors, <a href=\"https://creativecommons.org/licenses"+\
-		"/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox."+\
-		"com/\">Mapbox</a>',"+lb+"maxZoom: 20,"+lb+"id: 'mapbox.streets',"+lb+\
-		"accessToken: 'pk.eyJ1IjoibWtvbmdzaXZlcnQiLCJhIjoiY2ppNHljYTZlMGViYT"+\
-		"NybzY1ODBrZHFteiJ9.cryeQAatX8rCKMgGo8rRNw'"+lb+"}).addTo(map);"
-	featFun="function onEachFeature(feature, layer) {"+lb+"if (feature.prope"+\
-		"rties && feature.properties.popupContent) {"+lb+"popupContent = fea"+\
-		"ture.properties.popupContent;"+lb+"}"+lb+"layer.bindPopup(popupContent);"
-	eventVars=[]
+	scriptStr="<script>"+lb+"var map = L.map('map').setView([38.89, -77.026148\
+], 11);"+lb+"L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png\
+?access_token={accessToken}', {"+lb+"attribution: 'Map data &copy; <a href=\"h\
+ttps://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"http\
+s://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\
+\"https://www.mapbox.com/\">Mapbox</a>',"+lb+"maxZoom: 20,"+lb+"id: 'mapbox.st\
+reets',"+lb+"accessToken: 'pk.eyJ1IjoibWtvbmdzaXZlcnQiLCJhIjoiY2ppNHljYTZlMGVi\
+YTNybzY1ODBrZHFteiJ9.cryeQAatX8rCKMgGo8rRNw'"+lb+"}).addTo(map);"
+	featFun="function onEachFeature(feature, layer) {"+lb+"if (feature.propert\
+ies && feature.properties.popupContent) {"+lb+"popupContent = feature.properti\
+es.popupContent;"+lb+"}"+lb+"layer.bindPopup(popupContent);"
+	eventVars=""
 
 	for key in mapLabels.keys():
 		keyID = key[:5].lower()
@@ -68,16 +67,16 @@ def makeJS(mapLabels):
 		scriptStr+=lb*2+"var "+keyID+"Table = document.getElementById('"+keyID\
 			+"');"+lb+keyID+"Table.style.visibility = 'hidden';"
 		#create functions to change tables' visibilities
-		scriptStr+=lb*2+"function "+keyID+"In(e) {"+lb+keyID+"Table.style."+\
-			"visibility = 'visible';"+lb+"}"+lb+"function "+keyID+"Out(e) {"+\
-			lb+keyID+"Table.style.visibility = 'hidden';"+lb+"}"
+		scriptStr+=lb*2+"function "+keyID+"In(e) {"+lb+keyID+"Table.style.visi\
+bility = 'visible';"+lb+"}"+lb+"function "+keyID+"Out(e) {"+lb+keyID+"Table.st\
+yle.visibility = 'hidden';"+lb+"}"
 		#add interaction
-		featFun+=lb+"if (feature.properties.popupContent == '"+key+"'){"+\
-			"layer.on({"+lb+"mouseover: "+keyID+"In,"+lb+"mouseout: "+\
-			keyID+"Out"+lb+"});"+lb+"}"
-	featFun+=lb+"}"+lb+"L.geoJSON([blinevents], {"+lb+"style: function (feature) {"+\
-		lb+"return feature.properties && feature.properties.style;"+lb+"},"+\
-		"onEachFeature: onEachFeature"+lb+"}).addTo(map);"+lb+"</script>"+lb
+		featFun+=lb+"if (feature.properties.popupContent == '"+key+"'){layer.o\
+n({"+lb+"mouseover: "+keyID+"In,"+lb+"mouseout: "+keyID+"Out"+lb+"});"+lb+"}"
+		eventVars+=key[:4].lower()+'events, '
+	featFun+=lb+"}"+lb+"L.geoJSON(["+eventVars[:-2]+"], {"+lb+"style: function \
+(feature) {"+lb+"return feature.properties && feature.properties.style;"+lb+"},\
+onEachFeature: onEachFeature"+lb+"}).addTo(map);"+lb+"</script>"+lb
 	return scriptStr+featFun
 
 def makeJSON(mapLabels):
@@ -85,10 +84,10 @@ def makeJSON(mapLabels):
 	GeoJSON file to indicate location and quantity of events on a map'''
 	jsonStr = ""
 	for key in mapLabels.keys():
-		jsonStr += 'var '+key[:4].lower()+'events = {\n"type": "Feature",\n"'+\
-			'properties": {\n"popupContent": "'+key+'",\n"style": {\nweight:'+\
-			' 0,\nopacity: 0,\nfillColor: "#00ffdf",\nfillOpacity: 0.5\n}\n}'+\
-			',\n"geometry": {\n"type": "MultiPolygon",\n"coordinates": \n[\n[\n'
+		jsonStr += 'var '+key[:4].lower()+'events = {\n"type": "Feature",\n"pr\
+operties": {\n"popupContent": "'+key+'",\n"style": {\nweight: 0,\nopacity: 0,\
+\nfillColor: "#00ffdf",\nfillOpacity: 0.5\n}\n},\n"geometry": {\n"type": "Mult\
+iPolygon",\n"coordinates": \n[\n[\n'
 		
 		scale = len(mapLabels[key])#events
 		shape = polygon(coords[key], scale, 6)
