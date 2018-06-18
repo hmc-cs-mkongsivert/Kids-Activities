@@ -48,33 +48,33 @@ def makeJS(mapLabels):
 	lb = '\n'+'\t'*7
 
 	#construct map
-	scriptStr="<script>"+lb+"var map = L.map('map').setView([38.89,"
-	scriptStr+=" -77.026148], 11);"+lb+"L.tileLayer('https://api.tiles.mapbox"
-	scriptStr+=".com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {"+lb
-	scriptStr+="attribution: 'Map data &copy; <a href=\"https://www."
-	scriptStr+="openstreetmap.org/\">OpenStreetMap</a> contributors, <a href="
-	scriptStr+="\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA"
-	scriptStr+="</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>"
-	scriptStr+="',"+lb+"maxZoom: 20,"+lb+"id: 'mapbox.streets',"+lb+"access"
-	scriptStr+="Token: 'pk.eyJ1IjoibWtvbmdzaXZlcnQiLCJhIjoiY2ppNHljYTZlMGViYTN"
-	scriptStr+="ybzY1ODBrZHFteiJ9.cryeQAatX8rCKMgGo8rRNw'"+lb+"}).addTo(map);"
+	scriptStr="<script>"+lb+"var map = L.map('map').setView([38.89, -77.0261"+\
+		"48], 11);"+lb+"L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z"+\
+		"/{x}/{y}.png?access_token={accessToken}', {"+lb+"attribution: 'Map "+\
+		"data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMa"+\
+		"p</a> contributors, <a href=\"https://creativecommons.org/licenses/"+\
+		"by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.c"+\
+		"om/\">Mapbox</a>',"+lb+"maxZoom: 20,"+lb+"id: 'mapbox.streets',"+lb+\
+		"accessToken: 'pk.eyJ1IjoibWtvbmdzaXZlcnQiLCJhIjoiY2ppNHljYTZlMGViYT"+\
+		"NybzY1ODBrZHFteiJ9.cryeQAatX8rCKMgGo8rRNw'"+lb+"}).addTo(map);"
+	featFun="function onEachFeature(feature, layer) {"+lb+"if (feature.prope"+\
+		"rties && feature.properties.popupContent) {"+lb+"popupContent = fea"+\
+		"ture.properties.popupContent;"+lb+"}"+lb+"layer.bindPopup(popupContent);"
 
 	for key in mapLabels.keys():
 		keyID = key[:5].lower()
 		#set the table's visibility to hidden initially
-		scriptStr+=ls*2+"var "+keyID+"Table = document.getElementById('"+keyID
-		scriptStr+="');"+lb+keyID"Table.style.visibility = 'hidden';"
+		scriptStr+=ls*2+"var "+keyID+"Table = document.getElementById('"+keyID\
+			+"');"+lb+keyID"Table.style.visibility = 'hidden';"
 		#create functions to change tables' visibilities
-		scriptStr+=ls*2+"function "+keyID+"In(e) {"+lb+keyID+"Table.style."
-		scriptStr+="visibility = 'visible';"+lb+"}"+lb+"function "+keyID
-		scriptStr+="Out(e) {"+lb+keyID+"Table.style.visibility = 'hidden';"+lb+"}"
-		#add interaction FIX-----------------------------------------------------------------------------------
-		scriptStr+="function onEachFeature(feature, layer) {"+lb+"if (feature."
-		scriptStr+="properties && feature.properties.popupContent) {"+lb
-		scriptStr+="popupContent = feature.properties.popupContent;"+lb+"}"
-		scriptStr+=lb+"layer.bindPopup(popupContent);"+lb+"layer.on({"
-		scriptStr+=lb+"mouseover: sidebarIn,"+lb+"mouseout: sidebarOut"+lb
-		scriptStr+="});"+lb+"}"
+		scriptStr+=ls*2+"function "+keyID+"In(e) {"+lb+keyID+"Table.style."+\
+			"visibility = 'visible';"+lb+"}"+lb+"function "+keyID+"Out(e) {"+\
+			lb+keyID+"Table.style.visibility = 'hidden';"+lb+"}"
+		#add interaction
+		scriptStr+=lb+"if (feature.properties.popupContent == '"+key+"'){"+\
+			"layer.on({"+lb+"mouseover: "+layerID+"In,"+lb+"mouseout: "+\
+			layerID+"Out"+lb+scriptStr+="});"+lb+"}"
+	featFun+=lb+"}"
 
 def makeJSON(mapLabels):
 	'''takes in a dictionary of events indexed by location and returns a
@@ -106,8 +106,8 @@ def main():
 		oldText = htmlRead.read()
 		tables = makeTable(mapLabels)
 		script = makeJS(mapLabels)
-		beforeTable = oldText.find(beginTag) + len(beginTag)
+		beforeTable = oldText.find(beginTag)+len(beginTag)
 		afterTable = oldText.find(endTag)
-		newText = oldText[:beforeTable] + tables + script + oldText[afterTable:]
+		newText = oldText[:beforeTable]+tables+script+oldText[afterTable:]
 	with open('map.html', 'w', newline='') as htmlWrite:
 		htmlWrite.write(newText)

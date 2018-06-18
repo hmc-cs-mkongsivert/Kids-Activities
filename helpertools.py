@@ -1,7 +1,8 @@
 import datetime as dt
 import math
 
-months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
+months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep',
+	'oct', 'nov', 'dec']
 
 def between(string, start, beginTag, endTag):
 	'''resturns a substring between two tags'''
@@ -21,7 +22,8 @@ def removeTag(string, tag, middle = True, neg = False):
 	right = string.find("</" + tag + ">", leftEnd)
 	if middle:
 		#just remove the tags
-		return string[0:leftBeg]+string[leftEnd+1:right]+string[right+len(tag)+3:]
+		return string[0:leftBeg]+string[leftEnd+1:right]+string[right+\
+			len(tag)+3:]
 	elif (not neg):
 		#remove the tags and tagged material
 		return string[0:leftBeg]+string[right+len(tag)+3:]
@@ -186,7 +188,8 @@ def formatTimes(time):
 
 def formatDates(event):
 	'''formats a datetime object as a string'''
-	Months = ['January', 'Febrary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+	Months = ['January', 'Febrary', 'March', 'April', 'May', 'June', 'July',
+		'August', 'September', 'October', 'November', 'December']
 	begin = event[1][0]
 	end = event[1][1]
 	newDate = Months[begin.month]
