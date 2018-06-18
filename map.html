@@ -181,6 +181,11 @@
 							});
 							}
 							}
+							L.geoJSON([blinevents], {
+							style: function (feature) {
+							return feature.properties && feature.properties.style;
+							},onEachFeature: onEachFeature
+							}).addTo(map);
 							</script>
 							<!-- Tables End Here -->
 							</div>

@@ -60,6 +60,7 @@ def makeJS(mapLabels):
 	featFun="function onEachFeature(feature, layer) {"+lb+"if (feature.prope"+\
 		"rties && feature.properties.popupContent) {"+lb+"popupContent = fea"+\
 		"ture.properties.popupContent;"+lb+"}"+lb+"layer.bindPopup(popupContent);"
+	eventVars=[]
 
 	for key in mapLabels.keys():
 		keyID = key[:5].lower()
@@ -74,7 +75,9 @@ def makeJS(mapLabels):
 		featFun+=lb+"if (feature.properties.popupContent == '"+key+"'){"+\
 			"layer.on({"+lb+"mouseover: "+keyID+"In,"+lb+"mouseout: "+\
 			keyID+"Out"+lb+"});"+lb+"}"
-	featFun+=lb+"}"+lb+"</script>"+lb
+	featFun+=lb+"}"+lb+"L.geoJSON([blinevents], {"+lb+"style: function (feature) {"+\
+		lb+"return feature.properties && feature.properties.style;"+lb+"},"+\
+		"onEachFeature: onEachFeature"+lb+"}).addTo(map);"+lb+"</script>"+lb
 	return scriptStr+featFun
 
 def makeJSON(mapLabels):
@@ -85,12 +88,12 @@ def makeJSON(mapLabels):
 		jsonStr += 'var '+key[:4].lower()+'events = {\n"type": "Feature",\n"'+\
 			'properties": {\n"popupContent": "'+key+'",\n"style": {\nweight:'+\
 			' 0,\nopacity: 0,\nfillColor: "#00ffdf",\nfillOpacity: 0.5\n}\n}'+\
-			',\n"geometry": {\n"type": "MultiPolygon",\n"coordinates": [\n[\n[\n'
+			',\n"geometry": {\n"type": "MultiPolygon",\n"coordinates": \n[\n[\n'
 		
 		scale = len(mapLabels[key])#events
 		shape = polygon(coords[key], scale, 6)
 		
-		jsonStr += str(shape)+']\n]\n]\n}\n};\n\n'
+		jsonStr += str(shape)+'\n]\n]\n}\n};\n\n'
 	return jsonStr
 
 def main():
