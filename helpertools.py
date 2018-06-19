@@ -203,6 +203,17 @@ def formatDates(event):
 	newEvent = [event[0]]+[newDate]+event[2:]
 	return newEvent
 
+def correction(cLat, lat, lon):
+	'''does things'''
+	d = math.fabs(cLon - lon)
+	#radius of Earth in meters
+	r = 6371000
+	#convert longitude to meters
+	x = d*40075000*math.cos(lat)/360
+	y = 2*math.pi*r*x/(2*r+x)
+	newD = y*360/(40075000*math.cos(lat))
+	return cLon+newD if lon>cLon else cLon-newD
+
 def polygon(center, scale, n, r=0.0002):
 	'''creates the map coordinates for a regular n-gon scaled by given factor,
 	centered on a given center'''
