@@ -206,11 +206,12 @@ def formatDates(event):
 def correction(lat, dist):
 	'''does things'''
 	#radius of Earth in meters
-	r = 6371000
+	r = 6371000*math.cos(lat)
+	conv = 40075000*math.cos(lat)/360
 	#convert longitude to meters
-	x = dist*40075000*math.cos(lat)/360
+	x = dist*conv
 	y = 2*math.pi*r*x/(2*r+x)
-	newD = y*360/(40075000*math.cos(lat))
+	newD = y/conv
 	return newD
 
 def polygon(center, scale, n, r=0.0002):
