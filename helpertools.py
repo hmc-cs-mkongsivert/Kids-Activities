@@ -211,7 +211,7 @@ def correction(dist, center):
 	lon = math.degrees(math.atan(dist/r+math.tan(math.radians(center[0]))))
 	return lon
 
-def polygon(center, scale, n, r=0.0004):
+def polygon(center, scale, n, r=0.00041):
 	'''creates the map coordinates for a regular n-gon scaled by given factor,
 	centered on a given center'''
 	points = [] 

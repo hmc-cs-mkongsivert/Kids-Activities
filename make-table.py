@@ -32,7 +32,7 @@ def makeTable(mapLabels):
 	lb = '\n' + '\t'*7 #indenting to match the rest
 	tableStr = ''
 	for key in mapLabels.keys():
-		tableStr += '<div class="4u 12u$(medium)">'+lb+'<div id="'+key[:5]\
+		tableStr += lb+'<div class="4u 12u$(medium)">'+lb+'<div id="'+key[:5]\
 .lower()+'">'+lb+'<h3>'+key+'</h3>'
 		tableStr += lb+'<table>'
 		for item in mapLabels[key]:
@@ -86,12 +86,12 @@ def makeJSON(mapLabels):
 	jsonStr = ""
 	for key in mapLabels.keys():
 		jsonStr += 'var '+key[:4].lower()+'events = {\n"type": "Feature",\n"pr\
-operties": {\n"popupContent": "'+key+'",\n"style": {\nweight: 0,\nopacity: 0,\
-\nfillColor: "#00ffdf",\nfillOpacity: 0.5\n}\n},\n"geometry": {\n"type": "Mult\
+operties": {\n"popupContent": "'+key+'",\n"style": {\nweight: .5,\nopacity: 1,\
+\nfillColor: "#00ffdf",\nfillOpacity: 0.4\n}\n},\n"geometry": {\n"type": "Mult\
 iPolygon",\n"coordinates": \n[\n[\n'
 		
 		scale = len(mapLabels[key])#events
-		shape = polygon(coords[key], scale, 32)
+		shape = polygon(coords[key], scale, 42)
 		
 		jsonStr += str(shape)+'\n]\n]\n}\n};\n\n'
 	return jsonStr
