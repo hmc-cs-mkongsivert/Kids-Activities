@@ -198,30 +198,28 @@ def formatDates(event):
 	begin = event[1][0]
 	end = event[1][1]
 	newDate = Months[begin.month-1]
-	newDate += " "+str(begin.day)+", "+str(begin.year)+" from "
+	newDate += ' '+str(begin.day)+', '+str(begin.year)+' from '
 	newDate += formatTimes(begin)+' to '+formatTimes(end)
 	newEvent = [event[0]]+[newDate]+event[2:]
 	return newEvent
 
-def correction(lat, dist):
+def correction(dist, center):
 	'''does things'''
 	#radius of Earth in meters
-	r = 6371000*math.cos(lat)
-	conv = 40075000*math.cos(lat)/360
+	r = 6371000
+	#conv = 40075000*math.cos(lat)/360
 	#convert longitude to meters
-	x = dist*conv
-	y = 2*math.pi*r*x/(2*r+x)
-	newD = y/conv
-	return newD
+	lon = math.degrees(math.atan(dist/r+math.tan(math.radians(center[1]))))
+	return lon
 
-def polygon(center, scale, n, r=0.0002):
+def polygon(center, scale, n, r=0.005):
 	'''creates the map coordinates for a regular n-gon scaled by given factor,
 	centered on a given center'''
 	points = [] 
 	rad = 2*math.pi/n
 	for i in range(n):
 		vert = scale*r*math.sin(i*rad)
-		h = scale*r*math.cos(i*rad)
-		horiz = correction(vert, h)
-		points.append([center[1]+horiz, center[0]+vert])
+		horiz = scale*r*math.cos(i*rad)
+		lon = correction(horiz, center)
+		points.append([lon, center[0]+vert])
 	return points
