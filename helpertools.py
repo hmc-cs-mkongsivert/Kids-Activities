@@ -207,8 +207,7 @@ def correction(dist, center):
 	'''does things'''
 	#radius of Earth in meters
 	r = 6371000
-	#conv = 40075000*math.cos(lat)/360
-	#convert longitude to meters
+	#calculates angle for projection of desired height
 	lon = math.degrees(math.atan(dist/r+math.tan(math.radians(center[0]))))
 	return lon
 

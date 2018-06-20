@@ -32,14 +32,15 @@ def makeTable(mapLabels):
 	lb = '\n' + '\t'*7 #indenting to match the rest
 	tableStr = ''
 	for key in mapLabels.keys():
-		tableStr += lb+'<div id="'+key[:5].lower()+'">'+lb+'<h3>'+key+'</h3>'
+		tableStr += '<div class="4u 12u$(medium)">'+lb+'<div id="'+key[:5]\
+.lower()+'">'+lb+'<h3>'+key+'</h3>'
 		tableStr += lb+'<table>'
 		for item in mapLabels[key]:
 			tableStr += lb+'<tr>'
 			tableStr += lb+'<th>' + item[1] + '</th>'#time
 			tableStr += lb+'<th>' + item[0] + '</th>'#title
 			tableStr += lb+'</tr>'
-		tableStr += lb+'</table>'+lb
+		tableStr += lb+'</table>'+lb+'</div>'+lb+'</div>'+lb
 	return tableStr
 
 def makeJS(mapLabels):
