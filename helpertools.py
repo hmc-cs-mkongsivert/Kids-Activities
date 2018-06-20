@@ -209,17 +209,17 @@ def correction(dist, center):
 	r = 6371000
 	#conv = 40075000*math.cos(lat)/360
 	#convert longitude to meters
-	lon = math.degrees(math.atan(dist/r+math.tan(math.radians(center[1]))))
+	lon = math.degrees(math.atan(dist/r+math.tan(math.radians(center[0]))))
 	return lon
 
-def polygon(center, scale, n, r=0.005):
+def polygon(center, scale, n, r=0.0004):
 	'''creates the map coordinates for a regular n-gon scaled by given factor,
 	centered on a given center'''
 	points = [] 
 	rad = 2*math.pi/n
 	for i in range(n):
-		vert = scale*r*math.sin(i*rad)
+		vert = scale*60*math.sin(i*rad)
 		horiz = scale*r*math.cos(i*rad)
-		lon = correction(horiz, center)
-		points.append([lon, center[0]+vert])
+		lon = correction(vert, center)
+		points.append([center[1]+horiz, lon])
 	return points
