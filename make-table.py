@@ -90,7 +90,7 @@ operties": {\n"popupContent": "'+key+'",\n"style": {\nweight: 0,\nopacity: 0,\
 iPolygon",\n"coordinates": \n[\n[\n'
 		
 		scale = len(mapLabels[key])#events
-		shape = polygon(coords[key], scale, 6)
+		shape = polygon(coords[key], scale, 32)
 		
 		jsonStr += str(shape)+'\n]\n]\n}\n};\n\n'
 	return jsonStr
