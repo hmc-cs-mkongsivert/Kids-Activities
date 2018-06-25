@@ -15,6 +15,7 @@ git add map.html geojson.js
 git commit -m "daily event update"
 git push
 ```
+We are currently working on getting it to run every day at midnight.
 
 ## Next Steps
 At the moment, we load in all events from each location irrespective of their appropriateness for children. In time, we hope to be able not only to separate the children's events from the adults' events but also to separate the children's events by age range.
