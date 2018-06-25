@@ -6,12 +6,12 @@ This repository is meant to create and maintain a website that gathers informati
 
 In terms of the actual files in this repository, most of the heavy lifting is done by the Python scripts (and by [HTML5 UP](html5up.net) for creating the lovely template that we used to make this website). The Python scripts gather information about upcoming events from various institutions around Washington, DC and insert them into the HTML files for the website with the necessary formatting. This then creates an interactive map that displays where the events are with a marker with a radius proportional to the number of events at that location.
 
-The website is updated automatically using the following bash script:\
-`cd ~/Kids-Activities\
-python collect-data.py\
-python make-table.py\
-git add map.html geojson.js\
-git commit -m "daily event update"\
+The website is updated automatically using the following bash script:  
+`cd ~/Kids-Activities  
+python collect-data.py  
+python make-table.py  
+git add map.html geojson.js  
+git commit -m "daily event update"  
 git push`
 
 ## Next Steps
