@@ -25,8 +25,4 @@ We also hope somehow to make the python scripts run automatically every night ar
 Finally, we should at some point add the capability for users/parents to add in their own events and import them into our map.
 
 ## Required Libraries
-The Python libraries required to run these scripts are:
-- TensorFlow
-- MatPlotLib
-- Numpy
-- CSV
+I will fill this in later when I have better information about this.
