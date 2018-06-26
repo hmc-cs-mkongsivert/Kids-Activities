@@ -23,8 +23,4 @@ At the moment, we load in all events from each location irrespective of their ap
 We also hope somehow to make the python scripts run automatically every night around midnight so that we can ensure that the website will be regularly updated without our having to update it manually.
 
 ## Required Libraries
-The Python libraries required to run these scripts are:
-- TensorFlow
-- MatPlotLib
-- Numpy
-- CSV
+I will fill this in later when I have better information about this.
