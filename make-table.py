@@ -40,7 +40,7 @@ def makeTable(mapLabels):
 			tableStr += lb+'<th>' + item[1] + '</th>'#time
 			tableStr += lb+'<th>' + item[0] + '</th>'#title
 			tableStr += lb+'</tr>'
-		tableStr += lb+'</table>'+lb+'</div>'+lb+'</div>'+lb
+		tableStr += lb+'</table>'+lb+'</div>'+lb
 	return tableStr
 
 def makeJS(mapLabels):
