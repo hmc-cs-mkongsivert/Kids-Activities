@@ -874,13 +874,6 @@
 		.\-1u\28large\29 {
 			margin-left: 8.33333%;
 		}
-
-		.sideoverlay {
-			position: absolute;
-			top: 100px;
-			width: 500px;
-		}
-
 	}
 
 	@media screen and (max-width: 980px) {
@@ -1938,6 +1931,13 @@
 				background: #444;
 				color: #fff;
 			}
+
+	.sideoverlay {
+		position: absolute;
+		top: 150px;
+		right: 60px;
+		width: 600px;
+	}
 
 	.dropotron {
 		background: #fff;
