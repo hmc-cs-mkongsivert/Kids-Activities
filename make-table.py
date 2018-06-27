@@ -32,7 +32,7 @@ def makeTable(mapLabels):
 	lb = '\n' + '\t'*7 #indenting to match the rest
 	tableStr = ''
 	for key in mapLabels.keys():
-		tableStr += lb+'<div class="4u 12u$(medium)" id="'+key[:5]\
+		tableStr += lb+'<div class="4u 12u$(medium) sideoverlay" id="'+key[:5]\
 .lower()+'">'+lb+'<h3>'+key+'</h3>'
 		tableStr += lb+'<table>'
 		for item in mapLabels[key]:

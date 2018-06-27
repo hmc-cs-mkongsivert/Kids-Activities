@@ -875,6 +875,12 @@
 			margin-left: 8.33333%;
 		}
 
+		.sideoverlay {
+			position: absolute;
+			top: 100px;
+			width: 500px;
+		}
+
 	}
 
 	@media screen and (max-width: 980px) {
