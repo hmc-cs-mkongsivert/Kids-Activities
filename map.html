@@ -1646,13 +1646,19 @@
 							}).addTo(map);
 							
 							var mountTable = document.getElementById('mount');
+							var mountBool = false
 							mountTable.style.visibility = 'hidden';
 							
 							function mountIn(e) {
 							mountTable.style.visibility = 'visible';
 							}
 							function mountOut(e) {
+							if (!mountBool){
 							mountTable.style.visibility = 'hidden';
+							}
+							}
+							function mountClick(e) {
+							mountBool = mountBool ? false : true
 							}
 							
 							var newseTable = document.getElementById('newse');
@@ -1750,7 +1756,8 @@
 							layer.bindPopup(popupContent);
 							if (feature.properties.popupContent == 'Mount Vernon'){layer.on({
 							mouseover: mountIn,
-							mouseout: mountOut
+							mouseout: mountOut,
+							click: mountClick
 							});
 							}
 							if (feature.properties.popupContent == 'Newseum'){layer.on({
