@@ -1935,6 +1935,9 @@
 	.sideoverlay {
 		position: absolute;
 		overflow-y: scroll;
+		text-align: left;
+		background-color: #ffffff;
+		opacity: 1;
 		top: 200px;
 		right: 60px;
 		width: 600px;
