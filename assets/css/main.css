@@ -1936,12 +1936,12 @@
 		position: absolute;
 		overflow-y: scroll;
 		text-align: left;
-		background-color: #ffffff;
+		background-color: #FFFFFF;
 		opacity: 1;
-		top: 200px;
-		right: 60px;
-		width: 600px;
-		height: 500px;
+		top: 190px;
+		right: 20px;
+		width: 650px;
+		height: 550px;
 	}
 
 	.dropotron {
