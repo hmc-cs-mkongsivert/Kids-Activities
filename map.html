@@ -1646,109 +1646,163 @@
 							}).addTo(map);
 							
 							var mountTable = document.getElementById('mount');
-							var mountBool = false
+							mountBool = false;
 							mountTable.style.visibility = 'hidden';
 							
 							function mountIn(e) {
 							mountTable.style.visibility = 'visible';
 							}
 							function mountOut(e) {
-							if (!mountBool){
+							if (!mountBool) {
 							mountTable.style.visibility = 'hidden';
 							}
 							}
 							function mountClick(e) {
-							mountBool = mountBool ? false : true
+							mountBool = mountBool ? false : true;
 							}
 							
 							var newseTable = document.getElementById('newse');
+							newseBool = false;
 							newseTable.style.visibility = 'hidden';
 							
 							function newseIn(e) {
 							newseTable.style.visibility = 'visible';
 							}
 							function newseOut(e) {
+							if (!newseBool) {
 							newseTable.style.visibility = 'hidden';
+							}
+							}
+							function newseClick(e) {
+							newseBool = newseBool ? false : true;
 							}
 							
 							var natioTable = document.getElementById('natio');
+							natioBool = false;
 							natioTable.style.visibility = 'hidden';
 							
 							function natioIn(e) {
 							natioTable.style.visibility = 'visible';
 							}
 							function natioOut(e) {
+							if (!natioBool) {
 							natioTable.style.visibility = 'hidden';
+							}
+							}
+							function natioClick(e) {
+							natioBool = natioBool ? false : true;
 							}
 							
 							var uniteTable = document.getElementById('unite');
+							uniteBool = false;
 							uniteTable.style.visibility = 'hidden';
 							
 							function uniteIn(e) {
 							uniteTable.style.visibility = 'visible';
 							}
 							function uniteOut(e) {
+							if (!uniteBool) {
 							uniteTable.style.visibility = 'hidden';
+							}
+							}
+							function uniteClick(e) {
+							uniteBool = uniteBool ? false : true;
 							}
 							
 							var blindTable = document.getElementById('blind');
+							blindBool = false;
 							blindTable.style.visibility = 'hidden';
 							
 							function blindIn(e) {
 							blindTable.style.visibility = 'visible';
 							}
 							function blindOut(e) {
+							if (!blindBool) {
 							blindTable.style.visibility = 'hidden';
+							}
+							}
+							function blindClick(e) {
+							blindBool = blindBool ? false : true;
 							}
 							
 							var politTable = document.getElementById('polit');
+							politBool = false;
 							politTable.style.visibility = 'hidden';
 							
 							function politIn(e) {
 							politTable.style.visibility = 'visible';
 							}
 							function politOut(e) {
+							if (!politBool) {
 							politTable.style.visibility = 'hidden';
+							}
+							}
+							function politClick(e) {
+							politBool = politBool ? false : true;
 							}
 							
 							var phillTable = document.getElementById('phill');
+							phillBool = false;
 							phillTable.style.visibility = 'hidden';
 							
 							function phillIn(e) {
 							phillTable.style.visibility = 'visible';
 							}
 							function phillOut(e) {
+							if (!phillBool) {
 							phillTable.style.visibility = 'hidden';
+							}
+							}
+							function phillClick(e) {
+							phillBool = phillBool ? false : true;
 							}
 							
 							var hirshTable = document.getElementById('hirsh');
+							hirshBool = false;
 							hirshTable.style.visibility = 'hidden';
 							
 							function hirshIn(e) {
 							hirshTable.style.visibility = 'visible';
 							}
 							function hirshOut(e) {
+							if (!hirshBool) {
 							hirshTable.style.visibility = 'hidden';
+							}
+							}
+							function hirshClick(e) {
+							hirshBool = hirshBool ? false : true;
 							}
 							
 							var tudorTable = document.getElementById('tudor');
+							tudorBool = false;
 							tudorTable.style.visibility = 'hidden';
 							
 							function tudorIn(e) {
 							tudorTable.style.visibility = 'visible';
 							}
 							function tudorOut(e) {
+							if (!tudorBool) {
 							tudorTable.style.visibility = 'hidden';
+							}
+							}
+							function tudorClick(e) {
+							tudorBool = tudorBool ? false : true;
 							}
 							
 							var interTable = document.getElementById('inter');
+							interBool = false;
 							interTable.style.visibility = 'hidden';
 							
 							function interIn(e) {
 							interTable.style.visibility = 'visible';
 							}
 							function interOut(e) {
+							if (!interBool) {
 							interTable.style.visibility = 'hidden';
+							}
+							}
+							function interClick(e) {
+							interBool = interBool ? false : true;
 							}function onEachFeature(feature, layer) {
 							if (feature.properties && feature.properties.popupContent) {
 							popupContent = feature.properties.popupContent;
@@ -1762,47 +1816,56 @@
 							}
 							if (feature.properties.popupContent == 'Newseum'){layer.on({
 							mouseover: newseIn,
-							mouseout: newseOut
+							mouseout: newseOut,
+							click: newseClick
 							});
 							}
 							if (feature.properties.popupContent == 'National Mall'){layer.on({
 							mouseover: natioIn,
-							mouseout: natioOut
+							mouseout: natioOut,
+							click: natioClick
 							});
 							}
 							if (feature.properties.popupContent == 'United States Botanical Garden'){layer.on({
 							mouseover: uniteIn,
-							mouseout: uniteOut
+							mouseout: uniteOut,
+							click: uniteClick
 							});
 							}
 							if (feature.properties.popupContent == 'Blind Whino Art Annex'){layer.on({
 							mouseover: blindIn,
-							mouseout: blindOut
+							mouseout: blindOut,
+							click: blindClick
 							});
 							}
 							if (feature.properties.popupContent == 'Politics and Prose Bookstore'){layer.on({
 							mouseover: politIn,
-							mouseout: politOut
+							mouseout: politOut,
+							click: politClick
 							});
 							}
 							if (feature.properties.popupContent == 'Phillips Collection'){layer.on({
 							mouseover: phillIn,
-							mouseout: phillOut
+							mouseout: phillOut,
+							click: phillClick
 							});
 							}
 							if (feature.properties.popupContent == 'Hirshhorn Museum and Sculpture Garden'){layer.on({
 							mouseover: hirshIn,
-							mouseout: hirshOut
+							mouseout: hirshOut,
+							click: hirshClick
 							});
 							}
 							if (feature.properties.popupContent == 'Tudor Place Historic House and Garden'){layer.on({
 							mouseover: tudorIn,
-							mouseout: tudorOut
+							mouseout: tudorOut,
+							click: tudorClick
 							});
 							}
 							if (feature.properties.popupContent == 'International Spy Museum'){layer.on({
 							mouseover: interIn,
-							mouseout: interOut
+							mouseout: interOut,
+							click: interClick
 							});
 							}
 							}

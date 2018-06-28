@@ -66,14 +66,16 @@ es.popupContent;"+lb+"}"+lb+"layer.bindPopup(popupContent);"
 		keyID = key[:5].lower()
 		#set the table's visibility to hidden initially
 		scriptStr+=lb*2+"var "+keyID+"Table = document.getElementById('"+keyID\
-			+"');"+lb+keyID+"Table.style.visibility = 'hidden';"
++"');"+lb+keyID+"Bool = false;"+lb+keyID+"Table.style.visibility = 'hidden';"
 		#create functions to change tables' visibilities
 		scriptStr+=lb*2+"function "+keyID+"In(e) {"+lb+keyID+"Table.style.visi\
-bility = 'visible';"+lb+"}"+lb+"function "+keyID+"Out(e) {"+lb+keyID+"Table.st\
-yle.visibility = 'hidden';"+lb+"}"
+bility = 'visible';"+lb+"}"+lb+"function "+keyID+"Out(e) {"+lb+"if (!"+keyID+"\
+Bool) {"+lb+keyID+"Table.style.visibility = 'hidden';"+lb+"}"+lb+"}"+lb+"funct\
+ion "+keyID+"Click(e) {"+lb+keyID+"Bool = "+keyID+"Bool ? false : true;"+lb+"}"
 		#add interaction
 		featFun+=lb+"if (feature.properties.popupContent == '"+key+"'){layer.o\
-n({"+lb+"mouseover: "+keyID+"In,"+lb+"mouseout: "+keyID+"Out"+lb+"});"+lb+"}"
+n({"+lb+"mouseover: "+keyID+"In,"+lb+"mouseout: "+keyID+"Out,"+lb+"click: "+\
+keyID+"Click"+lb+"});"+lb+"}"
 		eventVars+=key[:4].lower()+'events, '
 	featFun+=lb+"}"+lb+"L.geoJSON(["+eventVars[:-2]+"], {"+lb+"style: function \
 (feature) {"+lb+"return feature.properties && feature.properties.style;"+lb+"},\
