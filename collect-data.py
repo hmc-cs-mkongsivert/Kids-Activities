@@ -178,8 +178,17 @@ def phillipsScrape():
 		#parse time(s)
 		if 'am' in dtString or 'pm' in dtString:
 			dtList = dtString.split(',')
-			time = parseTime(dtList[2])
 			dtString = dtList[0] + ", " + dtList[1]
+			if ';' in dtList[2]:
+				times = dtList[2].split(';')
+				for tString in times:
+					time = parseTime(tString)
+					date = parseDate(dtString)
+					when = (dt.datetime.combine(date, time[0]), dt.datetime.combine(date, time[1]))
+					table.append([title, when, where, details])
+				continue
+			else:
+				time = parseTime(dtList[2])
 		else:
 			#not quite accurate, maybe fix later
 			time = (dt.time(10), dt.time(17))
