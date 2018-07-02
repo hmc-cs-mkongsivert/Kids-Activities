@@ -72,7 +72,7 @@
 								<div id="content">
 
 									<!-- Content -->
-									<div id="map" style="width: 600px; height: 400px;"></div>
+									<div id="map" style="width: 600px; height: 600px;"></div>
 									<script src="geojson.js" type="text/javascript"></script>
 								</div>
 							</div>
@@ -1504,7 +1504,7 @@
 							</tr>
 							<tr>
 							<th>July 8, 2018 from 10:00 a.m. to 0:00 p.m.</th>
-							<th>Mariana Valencia, Album (2018)</th>
+							<th>Mariana Valencia, Album (2018)</th>
 							</tr>
 							<tr>
 							<th>July 12, 2018 from 7:00 p.m. to 9:00 p.m.</th>
@@ -2203,25 +2203,46 @@
 							</table>
 							</div>
 							<script>
-							var map = L.map('map').setView([38.89, -77.026148], 11);
+							var map = L.map('map').setView([38.84, -77.026148], 11);
 							L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
 							attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
 							maxZoom: 20,
 							id: 'mapbox.streets',
 							accessToken: 'pk.eyJ1IjoibWtvbmdzaXZlcnQiLCJhIjoiY2ppNHljYTZlMGViYTNybzY1ODBrZHFteiJ9.cryeQAatX8rCKMgGo8rRNw'
 							}).addTo(map);
+
+							/*var info = L.control();
+
+							info.onAdd = function (map) {
+							    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+							    this.update();
+							    return this._div;
+							};
+
+							// method that we will use to update the control based on feature properties passed
+							info.update = function (props) {
+							    this._div.innerHTML = '<h4>US Population Density</h4>' +  (props ?
+							        '<b>' + props.name + '</b>'
+							        : 'Hover over an area to see the activities there');
+							};
+
+							info.addTo(map);*/
 							
 							var mountTable = document.getElementById('mount');
 							mountBool = false;
 							mountTable.style.visibility = 'hidden';
 							
 							function mountIn(e) {
+							//console.out('mouse in');
 							mountTable.style.visibility = 'visible';
+							//info.update(layer.features.properties);
 							}
 							function mountOut(e) {
+							//console.out('mouse out');
 							if (!mountBool) {
 							mountTable.style.visibility = 'hidden';
 							}
+							//info.update();
 							}
 							function mountClick(e) {
 							mountBool = mountBool ? false : true;
@@ -2357,7 +2378,6 @@
 							if (feature.properties && feature.properties.popupContent) {
 							popupContent = feature.properties.popupContent;
 							}
-							layer.bindPopup(popupContent);
 							if (feature.properties.popupContent == 'Mount Vernon'){layer.on({
 							mouseover: mountIn,
 							mouseout: mountOut,

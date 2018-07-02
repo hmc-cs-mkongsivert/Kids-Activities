@@ -1,7 +1,7 @@
 var mounevents = {
 "type": "Feature",
 "properties": {
-"popupContent": "Mount Vernon",
+"name": "Mount Vernon",
 "style": {
 weight: .5,
 opacity: 1,
@@ -23,7 +23,7 @@ fillOpacity: 0.4
 var newsevents = {
 "type": "Feature",
 "properties": {
-"popupContent": "Newseum",
+"name": "<a href='http://www.newseum.org/events-programs/'>Newseum</a>",
 "style": {
 weight: .5,
 opacity: 1,
@@ -45,7 +45,7 @@ fillOpacity: 0.4
 var polievents = {
 "type": "Feature",
 "properties": {
-"popupContent": "Politics and Prose Bookstore",
+"name": "<a href='https://www.politics-prose.com/events'>Politics and Prose Bookstore</a>",
 "style": {
 weight: .5,
 opacity: 1,
@@ -67,7 +67,7 @@ fillOpacity: 0.4
 var philevents = {
 "type": "Feature",
 "properties": {
-"popupContent": "Phillips Collection",
+"name": "<a href='http://www.phillipscollection.org/events?type=all'>Phillips Collection</a>",
 "style": {
 weight: .5,
 opacity: 1,
@@ -89,7 +89,7 @@ fillOpacity: 0.4
 var inteevents = {
 "type": "Feature",
 "properties": {
-"popupContent": "International Spy Museum",
+"name": "<a href='https://www.spymuseum.org/calendar/upcoming/1/'>International Spy Museum</a>",
 "style": {
 weight: .5,
 opacity: 1,
@@ -111,7 +111,7 @@ fillOpacity: 0.4
 var hirsevents = {
 "type": "Feature",
 "properties": {
-"popupContent": "Hirshhorn Museum and Sculpture Garden",
+"name": "<a href='https://hirshhorn.si.edu/exhibitions-events/'>Hirshhorn Museum and Sculpture Garden</a>",
 "style": {
 weight: .5,
 opacity: 1,
@@ -133,7 +133,7 @@ fillOpacity: 0.4
 var unitevents = {
 "type": "Feature",
 "properties": {
-"popupContent": "United States Botanical Garden",
+"name": "<a href='https://www.usbg.gov/programs-and-events'>United States Botanical Garden</a>",
 "style": {
 weight: .5,
 opacity: 1,
@@ -155,7 +155,7 @@ fillOpacity: 0.4
 var tudoevents = {
 "type": "Feature",
 "properties": {
-"popupContent": "Tudor Place Historic House and Garden",
+"name": "<a href='https://www.tudorplace.org/programs/'>Tudor Place Historic House and Garden</a>",
 "style": {
 weight: .5,
 opacity: 1,
@@ -177,7 +177,7 @@ fillOpacity: 0.4
 var natievents = {
 "type": "Feature",
 "properties": {
-"popupContent": "National Mall",
+"name": "<a href='https://www.nps.gov/nama/planyourvisit/calendar.htm'>National Mall</a>",
 "style": {
 weight: .5,
 opacity: 1,

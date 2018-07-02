@@ -52,7 +52,7 @@ def makeJS(mapLabels):
 	lb = '\n'+'\t'*7
 
 	#construct map
-	scriptStr="<script>"+lb+"var map = L.map('map').setView([38.89, -77.026148\
+	scriptStr="<script>"+lb+"var map = L.map('map').setView([38.84, -77.026148\
 ], 11);"+lb+"L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png\
 ?access_token={accessToken}', {"+lb+"attribution: 'Map data &copy; <a href=\"h\
 ttps://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"http\
@@ -91,9 +91,9 @@ def makeJSON(mapLabels):
 	jsonStr = ""
 	for key in mapLabels.keys():
 		jsonStr += 'var '+key[:4].lower()+'events = {\n"type": "Feature",\n"pr\
-operties": {\n"popupContent": "'+key+'",\n"style": {\nweight: .5,\nopacity: 1,\
-\nfillColor: "#00ffdf",\nfillOpacity: 0.4\n}\n},\n"geometry": {\n"type": "Mult\
-iPolygon",\n"coordinates": \n[\n[\n'
+operties": {\n"popupContent": "<a href=\''+coords[key][1]+'\'>'+key+'</a>",\n"\
+style": {\nweight: .5,\nopacity: 1,\nfillColor: "#00ffdf",\nfillOpacity: 0.4\n\
+}\n},\n"geometry": {\n"type": "MultiPolygon",\n"coordinates": \n[\n[\n'
 		
 		scale = len(mapLabels[key])#events
 		shape = polygon(coords[key][0], scale, 42)
