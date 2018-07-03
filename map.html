@@ -2211,7 +2211,7 @@
 							accessToken: 'pk.eyJ1IjoibWtvbmdzaXZlcnQiLCJhIjoiY2ppNHljYTZlMGViYTNybzY1ODBrZHFteiJ9.cryeQAatX8rCKMgGo8rRNw'
 							}).addTo(map);
 
-							/*var info = L.control();
+							var info = L.control();
 
 							info.onAdd = function (map) {
 							    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
@@ -2221,12 +2221,12 @@
 
 							// method that we will use to update the control based on feature properties passed
 							info.update = function (props) {
-							    this._div.innerHTML = '<h4>US Population Density</h4>' +  (props ?
+							    this._div.innerHTML = '<h4>Washington, DC Activities</h4>' +  (props ?
 							        '<b>' + props.name + '</b>'
 							        : 'Hover over an area to see the activities there');
 							};
 
-							info.addTo(map);*/
+							info.addTo(map);
 							
 							var mountTable = document.getElementById('mount');
 							mountBool = false;
@@ -2235,7 +2235,7 @@
 							function mountIn(e) {
 							//console.out('mouse in');
 							mountTable.style.visibility = 'visible';
-							//info.update(layer.features.properties);
+							info.update(layer.features.properties);
 							}
 							function mountOut(e) {
 							//console.out('mouse out');
@@ -2378,7 +2378,7 @@
 							if (feature.properties && feature.properties.popupContent) {
 							popupContent = feature.properties.popupContent;
 							}
-							if (feature.properties.popupContent == 'Mount Vernon'){layer.on({
+							if (feature.properties.name == 'Mount Vernon'){layer.on({
 							mouseover: mountIn,
 							mouseout: mountOut,
 							click: mountClick
