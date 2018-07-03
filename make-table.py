@@ -76,9 +76,9 @@ bility = 'visible';"+lb+"}"+lb+"function "+keyID+"Out(e) {"+lb+"if (!"+keyID+"\
 Bool) {"+lb+keyID+"Table.style.visibility = 'hidden';"+lb+"}"+lb+"}"+lb+"funct\
 ion "+keyID+"Click(e) {"+lb+keyID+"Bool = "+keyID+"Bool ? false : true;"+lb+"}"
 		#add interaction
-		featFun+=lb+"if (feature.properties.popupContent == '"+key+"'){layer.o\
-n({"+lb+"mouseover: "+keyID+"In,"+lb+"mouseout: "+keyID+"Out,"+lb+"click: "+\
-keyID+"Click"+lb+"});"+lb+"}"
+		featFun+=lb+"if (feature.properties.name == '"+key+"'){layer.on({"+lb+\
+"mouseover: "+keyID+"In,"+lb+"mouseout: "+keyID+"Out,"+lb+"click: "+keyID+"Cli\
+ck"+lb+"});"+lb+"}"
 		eventVars+=key[:4].lower()+'events, '
 	featFun+=lb+"}"+lb+"L.geoJSON(["+eventVars[:-2]+"], {"+lb+"style: function \
 (feature) {"+lb+"return feature.properties && feature.properties.style;"+lb+"},\
@@ -91,9 +91,10 @@ def makeJSON(mapLabels):
 	jsonStr = ""
 	for key in mapLabels.keys():
 		jsonStr += 'var '+key[:4].lower()+'events = {\n"type": "Feature",\n"pr\
-operties": {\n"popupContent": "'+key+'",\n"style": {\nweight: .5,\nopacity: 1,\
-\nfillColor: "#00ffdf",\nfillOpacity: 0.4\n}\n},\n"geometry": {\n"type": "Mult\
-iPolygon",\n"coordinates": \n[\n[\n'
+operties": {\n"popupContent": "<a href=\''+coords[key][1]+'\' target=\'_blank\
+\'>'+key+'</a>",\n"name": "'+key+'",\n"style": {\nweight: .5,\nopacity: 1,\nfi\
+llColor: "#00ffdf",\nfillOpacity: 0.4\n}\n},\n"geometry": {\n"type": "MultiPol\
+ygon",\n"coordinates": \n[\n[\n'
 		
 		scale = len(mapLabels[key])#events
 		shape = polygon(coords[key][0], scale, 42)

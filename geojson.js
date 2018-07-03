@@ -1,7 +1,8 @@
 var mounevents = {
 "type": "Feature",
 "properties": {
-"popupContent": "Mount Vernon",
+"popupContent": "<a href='https://www.mountvernon.org/plan-your-visit/calendar/2018-7-3/' target='_blank'>Mount Vernon</a>",
+"name": "Mount Vernon",
 "style": {
 weight: .5,
 opacity: 1,
@@ -23,7 +24,8 @@ fillOpacity: 0.4
 var newsevents = {
 "type": "Feature",
 "properties": {
-"popupContent": "Newseum",
+"popupContent": "<a href='http://www.newseum.org/events-programs/' target='_blank'>Newseum</a>",
+"name": "Newseum",
 "style": {
 weight: .5,
 opacity: 1,
@@ -45,7 +47,8 @@ fillOpacity: 0.4
 var polievents = {
 "type": "Feature",
 "properties": {
-"popupContent": "Politics and Prose Bookstore",
+"popupContent": "<a href='https://www.politics-prose.com/events' target='_blank'>Politics and Prose Bookstore</a>",
+"name": "Politics and Prose Bookstore",
 "style": {
 weight: .5,
 opacity: 1,
@@ -67,7 +70,8 @@ fillOpacity: 0.4
 var philevents = {
 "type": "Feature",
 "properties": {
-"popupContent": "Phillips Collection",
+"popupContent": "<a href='http://www.phillipscollection.org/events?type=all' target='_blank'>Phillips Collection</a>",
+"name": "Phillips Collection",
 "style": {
 weight: .5,
 opacity: 1,
@@ -89,7 +93,8 @@ fillOpacity: 0.4
 var inteevents = {
 "type": "Feature",
 "properties": {
-"popupContent": "International Spy Museum",
+"popupContent": "<a href='https://www.spymuseum.org/calendar/upcoming/1/' target='_blank'>International Spy Museum</a>",
+"name": "International Spy Museum",
 "style": {
 weight: .5,
 opacity: 1,
@@ -111,7 +116,8 @@ fillOpacity: 0.4
 var hirsevents = {
 "type": "Feature",
 "properties": {
-"popupContent": "Hirshhorn Museum and Sculpture Garden",
+"popupContent": "<a href='https://hirshhorn.si.edu/exhibitions-events/' target='_blank'>Hirshhorn Museum and Sculpture Garden</a>",
+"name": "Hirshhorn Museum and Sculpture Garden",
 "style": {
 weight: .5,
 opacity: 1,
@@ -133,7 +139,8 @@ fillOpacity: 0.4
 var unitevents = {
 "type": "Feature",
 "properties": {
-"popupContent": "United States Botanical Garden",
+"popupContent": "<a href='https://www.usbg.gov/programs-and-events' target='_blank'>United States Botanical Garden</a>",
+"name": "United States Botanical Garden",
 "style": {
 weight: .5,
 opacity: 1,
@@ -155,7 +162,8 @@ fillOpacity: 0.4
 var tudoevents = {
 "type": "Feature",
 "properties": {
-"popupContent": "Tudor Place Historic House and Garden",
+"popupContent": "<a href='https://www.tudorplace.org/programs/' target='_blank'>Tudor Place Historic House and Garden</a>",
+"name": "Tudor Place Historic House and Garden",
 "style": {
 weight: .5,
 opacity: 1,
@@ -177,7 +185,8 @@ fillOpacity: 0.4
 var natievents = {
 "type": "Feature",
 "properties": {
-"popupContent": "National Mall",
+"popupContent": "<a href='https://www.nps.gov/nama/planyourvisit/calendar.htm' target='_blank'>National Mall</a>",
+"name": "National Mall",
 "style": {
 weight: .5,
 opacity: 1,
