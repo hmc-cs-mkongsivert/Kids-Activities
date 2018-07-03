@@ -178,8 +178,17 @@ def phillipsScrape():
 		#parse time(s)
 		if 'am' in dtString or 'pm' in dtString:
 			dtList = dtString.split(',')
-			time = parseTime(dtList[2])
 			dtString = dtList[0] + ", " + dtList[1]
+			if ';' in dtList[2]:
+				times = dtList[2].split(';')
+				date = parseDate(dtString)
+				for tString in times:
+					time = parseTime(tString)
+					when = (dt.datetime.combine(date, time[0]), dt.datetime.combine(date, time[1]))
+					table.append([title, when, where, details])
+				continue
+			else:
+				time = parseTime(dtList[2])
 		else:
 			#not quite accurate, maybe fix later
 			time = (dt.time(10), dt.time(17))
@@ -322,7 +331,8 @@ def main():
 		sortedTable = sortByDate(eventTable)
 		
 		for event in sortedTable:
-			if event[1][1] >= dt.datetime.now():
+			if event[1][1] >= dt.datetime.now() and event[1][1] <= (dt.\
+datetime.now()+dt.timedelta(days=7)):
 				#eventFile.writerow(event)
 				eventFile.writerow(formatDates(event))
 

@@ -122,7 +122,11 @@ def parseTimeHelper(tString):
 def parseTime(tString):
 	'''takes in a string representing a time and returns a datetime object
 	representing that same date'''
-	if "–" in tString:
+	if '(' in tString:
+		#get rid of extraneous labels
+		return parseTime(tString.split('(')[0])
+
+	if '–' in tString:
 		interval = tString.split('–')
 		begin = parseTimeHelper(interval[0])
 		end = parseTimeHelper(interval[1])
@@ -211,14 +215,14 @@ def correction(dist, center):
 	lon = math.degrees(math.atan(dist/r+math.tan(math.radians(center[0]))))
 	return lon
 
-def polygon(center, scale, n, r=0.00041):
+def polygon(center, scale, n, r=0.001):
 	'''creates the map coordinates for a regular n-gon scaled by given factor,
 	centered on a given center'''
 	points = [] 
 	rad = 2*math.pi/n
 	for i in range(n):
-		vert = scale*60*math.sin(i*rad)
-		horiz = scale*r*math.cos(i*rad)
+		vert = math.log(scale)*120*math.sin(i*rad)
+		horiz = math.log(scale)*r*math.cos(i*rad)
 		lon = correction(vert, center)
 		points.append([center[1]+horiz, lon])
 	return points
