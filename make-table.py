@@ -93,7 +93,7 @@ def makeJSON(mapLabels):
 		jsonStr += 'var '+key[:4].lower()+'events = {\n"type": "Feature",\n"pr\
 operties": {\n"popupContent": "<a href=\''+coords[key][1]+'\' target=\'_blank\
 \'>'+key+'</a>",\n"name": "'+key+'",\n"style": {\nweight: .5,\nopacity: 1,\nfi\
-llColor: "#00ffdf",\nfillOpacity: 0.4\n}\n},\n"geometry": {\n"type": "MultiPol\
+llColor: "#00ffdf",\nfillOpacity: 0.6\n}\n},\n"geometry": {\n"type": "MultiPol\
 ygon",\n"coordinates": \n[\n[\n'
 		
 		scale = len(mapLabels[key])#events

@@ -215,14 +215,14 @@ def correction(dist, center):
 	lon = math.degrees(math.atan(dist/r+math.tan(math.radians(center[0]))))
 	return lon
 
-def polygon(center, scale, n, r=0.001):
+def polygon(center, scale, n, r=0.009):
 	'''creates the map coordinates for a regular n-gon scaled by given factor,
 	centered on a given center'''
 	points = [] 
 	rad = 2*math.pi/n
 	for i in range(n):
-		vert = math.log(scale)*120*math.sin(i*rad)
-		horiz = math.log(scale)*r*math.cos(i*rad)
+		vert = math.pow(scale,1/4)*1300*math.sin(i*rad)
+		horiz = math.pow(scale,1/4)*r*math.cos(i*rad)
 		lon = correction(vert, center)
 		points.append([center[1]+horiz, lon])
 	return points
