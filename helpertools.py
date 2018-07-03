@@ -190,9 +190,10 @@ def sortByDate(table):
 
 def formatTimes(time):
 	'''formats a datetime time object as a string'''
-	newDate = str(time.hour%12)+':'+str(time.minute)
+	newDate = str(time.hour%12) if (time.hour%12)>0 else '12'
+	newDate +=':'+str(time.minute)
 	newDate += '0' if len(str(time.minute))==1 else ''
-	newDate += " a.m." if time.hour < 12 else " p.m."
+	newDate += " a.m." if time.hour<12 else " p.m."
 	return newDate
 
 def formatDates(event):
@@ -208,7 +209,8 @@ def formatDates(event):
 	return newEvent
 
 def correction(dist, center):
-	'''does things'''
+	'''takes in a center and a distance and returns a point that is the given
+	distance from the center, as corrected for the map projection'''
 	#radius of Earth in meters
 	r = 6371000
 	#calculates angle for projection of desired height

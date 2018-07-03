@@ -4,16 +4,26 @@ from helpertools import *
 
 today = dt.datetime.now()
 todayStr = str(today.year)+'-'+str(today.month)+'-'+str(today.day)+'/'
-coords = {'Blind Whino Art Annex': [[38.88041, -77.01192], 'https://www.swartsclub.org/art-annex/'],
-	'Hirshhorn Museum and Sculpture Garden': [[38.88816, -77.02304], 'https://hirshhorn.si.edu/exhibitions-events/'],
-	'International Spy Museum': [[38.8970326, -77.0233503], 'https://www.spymuseum.org/calendar/upcoming/1/'],
-	'Mount Vernon': [[38.71029, -77.08644], 'https://www.mountvernon.org/plan-your-visit/calendar/'+todayStr],
-	'National Mall': [[38.88994, -77.02698], 'https://www.nps.gov/nama/planyourvisit/calendar.htm'],
-	'Newseum': [[38.89312, -77.0192], 'http://www.newseum.org/events-programs/'],
-	'Phillips Collection': [[38.9115020, -77.0468522], 'http://www.phillipscollection.org/events?type=all'],
-	'Politics and Prose Bookstore': [[38.9554465, -77.0696419], 'https://www.politics-prose.com/events'],
-	'Tudor Place Historic House and Garden': [[38.91146, -77.06304], 'https://www.tudorplace.org/programs/'],
-	'United States Botanical Garden': [[38.8882478, -77.0129011], 'https://www.usbg.gov/programs-and-events']}
+coords = {'Blind Whino Art Annex': [[38.88041, -77.01192], 'https://www.swarts\
+club.org/art-annex/'],
+	'Hirshhorn Museum and Sculpture Garden': [[38.88816, -77.02304], 'https://\
+hirshhorn.si.edu/exhibitions-events/'],
+	'International Spy Museum': [[38.8970326, -77.0233503], 'https://www.spymu\
+seum.org/calendar/upcoming/1/'],
+	'Mount Vernon': [[38.71029, -77.08644], 'https://www.mountvernon.org/plan-\
+your-visit/calendar/'+todayStr],
+	'National Mall': [[38.88994, -77.02698], 'https://www.nps.gov/nama/planyou\
+rvisit/calendar.htm'],
+	'Newseum': [[38.89312, -77.0192], 'http://www.newseum.org/events-programs/\
+'],
+	'Phillips Collection': [[38.9115020, -77.0468522], 'http://www.phillipscol\
+lection.org/events?type=all'],
+	'Politics and Prose Bookstore': [[38.9554465, -77.0696419], 'https://www.p\
+olitics-prose.com/events'],
+	'Tudor Place Historic House and Garden': [[38.91146, -77.06304], 'https://\
+www.tudorplace.org/programs/'],
+	'United States Botanical Garden': [[38.8882478, -77.0129011], 'https://www\
+.usbg.gov/programs-and-events']}
 
 def makeDict():
 	'''reads events from a CSV file and formats them into a dictionary
@@ -52,7 +62,7 @@ def makeJS(mapLabels):
 	lb = '\n'+'\t'*7
 
 	#construct map
-	scriptStr="<script>"+lb+"var map = L.map('map').setView([38.89, -77.026148\
+	scriptStr="<script>"+lb+"var map = L.map('map').setView([38.85, -77.026148\
 ], 11);"+lb+"L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png\
 ?access_token={accessToken}', {"+lb+"attribution: 'Map data &copy; <a href=\"h\
 ttps://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"http\

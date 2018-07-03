@@ -1866,7 +1866,7 @@
 	}
 
 		#logo h1 {
-			background: #ff4486;
+			background: #9300FF;
 			color: #fff;
 			border-radius: 6px;
 			font-family: 'Oleo Script', serif;
@@ -1940,7 +1940,7 @@
 		opacity: 1;
 		top: 190px;
 		right: 20px;
-		width: 650px;
+		width: 700px;
 		height: 550px;
 	}
 
@@ -2598,37 +2598,4 @@
 				text-align: left;
 			}
 
-	}
-
-	.sidenav {
-    height: 100%;
-    width: 100px;
-    position: fixed;
-    z-index: 1;
-    top: 183px;
-    right: 0;
-    background-color: #F2F3F4;
-    font-family: 'Open Sans', sans-serif;
-    overflow-x: hidden;
-    position: absolute;
-    padding-top: 60px;
-    padding-left: 30px;
-    transition: 0.8s;
-	}
-
-	.sidenav:hover{
-	   width: 550px;
-	}
-
-	.info {
-	    padding: 6px 8px;
-	    font: 14px/16px Arial, Helvetica, sans-serif;
-	    background: white;
-	    background: rgba(255,255,255,0.8);
-	    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-	    border-radius: 5px;
-	}
-	.info h4 {
-	    margin: 0 0 5px;
-	    color: #777;
 	}
