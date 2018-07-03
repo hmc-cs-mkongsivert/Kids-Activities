@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 var mounevents = {
 "type": "Feature",
 "properties": {
@@ -196,3 +197,5 @@ fillOpacity: 0.4
 }
 };
 
+=======
+>>>>>>> parent of ccca299... fixed parsing bug

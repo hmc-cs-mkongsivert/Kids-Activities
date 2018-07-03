@@ -100,7 +100,6 @@ def parseDate(dString, allNums = False):
 def parseTimeHelper(tString):
 	'''helper function for parseTime, which takes in a string that only
 	represents one time and interprets it'''
-	print(tString)
 	num = ''.join([i for i in tString if i.isdigit()])
 	alph = ''.join([i for i in tString if i.isalpha()]).lower()
 
@@ -123,10 +122,7 @@ def parseTimeHelper(tString):
 def parseTime(tString):
 	'''takes in a string representing a time and returns a datetime object
 	representing that same date'''
-	if '(' in tString:
-		tString = tString.split('(')[0]
-
-	if '–' in tString:
+	if "–" in tString:
 		interval = tString.split('–')
 		begin = parseTimeHelper(interval[0])
 		end = parseTimeHelper(interval[1])
