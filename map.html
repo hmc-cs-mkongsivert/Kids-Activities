@@ -1287,56 +1287,56 @@
 							popupContent = feature.properties.popupContent;
 							}
 							layer.bindPopup(popupContent);
-							if (feature.properties.name == 'Mount Vernon'){layer.on({
+							if (feature.properties.name == 'mount'){layer.on({
 							mouseover: mountIn,
 							mouseout: mountOut,
 							click: mountClick
 							});
 							}
-							if (feature.properties.name == 'Newseum'){layer.on({
+							if (feature.properties.name == 'newse'){layer.on({
 							mouseover: newseIn,
 							mouseout: newseOut,
 							click: newseClick
 							});
 							}
-							if (feature.properties.name == 'Phillips Collection'){layer.on({
+							if (feature.properties.name == 'phill'){layer.on({
 							mouseover: phillIn,
 							mouseout: phillOut,
 							click: phillClick
 							});
 							}
-							if (feature.properties.name == 'Politics and Prose Bookstore'){layer.on({
+							if (feature.properties.name == 'polit'){layer.on({
 							mouseover: politIn,
 							mouseout: politOut,
 							click: politClick
 							});
 							}
-							if (feature.properties.name == 'International Spy Museum'){layer.on({
+							if (feature.properties.name == 'inter'){layer.on({
 							mouseover: interIn,
 							mouseout: interOut,
 							click: interClick
 							});
 							}
-							if (feature.properties.name == 'National Mall'){layer.on({
+							if (feature.properties.name == 'natio'){layer.on({
 							mouseover: natioIn,
 							mouseout: natioOut,
 							click: natioClick
 							});
 							}
-							if (feature.properties.name == 'Hirshhorn Museum and Sculpture Garden'){layer.on({
+							if (feature.properties.name == 'hirsh'){layer.on({
 							mouseover: hirshIn,
 							mouseout: hirshOut,
 							click: hirshClick
 							});
 							}
-							if (feature.properties.name == 'United States Botanical Garden'){layer.on({
+							if (feature.properties.name == 'unite'){layer.on({
 							mouseover: uniteIn,
 							mouseout: uniteOut,
 							click: uniteClick
 							});
 							}
 							}
-							L.geoJSON([mounevents, newsevents, philevents, polievents, inteevents, natievents, hirsevents, unitevents], {
+							L.geoJSON([mountevents, newseevents, phillevents, politevents, interevents, natioevents, hirshevents, uniteevents], {
 							style: function (feature) {
 							return feature.properties && feature.properties.style;
 							},onEachFeature: onEachFeature
