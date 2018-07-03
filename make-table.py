@@ -78,18 +78,18 @@ es.popupContent;"+lb+"}"+lb+"layer.bindPopup(popupContent);"
 	for key in mapLabels.keys():
 		keyID = key[:5].lower()
 		#set the table's visibility to hidden initially
-		scriptStr+=lb*2+"var "+keyID+"Table = document.getElementById('"+keyID\
-+"');"+lb+keyID+"Bool = false;"+lb+keyID+"Table.style.visibility = 'hidden';"
+		scriptStr+=lb*2+"var "+keyID+" = document.getElementById('"+keyID\
++"');"+lb+keyID+"Bool = false;"+lb+keyID+".style.visibility = 'hidden';"
 		#create functions to change tables' visibilities
-		scriptStr+=lb*2+"function "+keyID+"In(e) {"+lb+keyID+"Table.style.visi\
+		scriptStr+=lb*2+"function "+keyID+"In(e) {"+lb+keyID+".style.visi\
 bility = 'visible';"+lb+"}"+lb+"function "+keyID+"Out(e) {"+lb+"if (!"+keyID+"\
-Bool) {"+lb+keyID+"Table.style.visibility = 'hidden';"+lb+"}"+lb+"}"+lb+"funct\
-ion "+keyID+"Click(e) {"+lb+keyID+"Bool = "+keyID+"Bool ? false : true;"+lb+"}"
+Bool) {"+lb+keyID+".style.visibility = 'hidden';"+lb+"}"+lb+"}"+lb+"function "\
++keyID+"Click(e) {"+lb+keyID+"Bool = "+keyID+"Bool ? false : true;"+lb+"}"
 		#add interaction
-		featFun+=lb+"if (feature.properties.name == '"+key+"'){layer.on({"+lb+\
-"mouseover: "+keyID+"In,"+lb+"mouseout: "+keyID+"Out,"+lb+"click: "+keyID+"Cli\
-ck"+lb+"});"+lb+"}"
-		eventVars+=key[:4].lower()+'events, '
+		featFun+=lb+"if (feature.properties.name == '"+keyID+"'){layer.on({"+\
+lb+"mouseover: "+keyID+"In,"+lb+"mouseout: "+keyID+"Out,"+lb+"click: "+keyID+"\
+Click"+lb+"});"+lb+"}"
+		eventVars+=keyID+'events, '
 	featFun+=lb+"}"+lb+"L.geoJSON(["+eventVars[:-2]+"], {"+lb+"style: function \
 (feature) {"+lb+"return feature.properties && feature.properties.style;"+lb+"},\
 onEachFeature: onEachFeature"+lb+"}).addTo(map);"+lb+"</script>"+lb
@@ -100,11 +100,12 @@ def makeJSON(mapLabels):
 	GeoJSON file to indicate location and quantity of events on a map'''
 	jsonStr = ""
 	for key in mapLabels.keys():
-		jsonStr += 'var '+key[:4].lower()+'events = {\n"type": "Feature",\n"pr\
-operties": {\n"popupContent": "<a href=\''+coords[key][1]+'\' target=\'_blank\
-\'>'+key+'</a>",\n"name": "'+key+'",\n"style": {\nweight: .5,\nopacity: 1,\nfi\
-llColor: "#00ffdf",\nfillOpacity: 0.6\n}\n},\n"geometry": {\n"type": "MultiPol\
-ygon",\n"coordinates": \n[\n[\n'
+		keyID = key[:5].lower()
+		jsonStr += 'var '+keyID+'events = {\n"type": "Feature",\n"properties"\
+: {\n"popupContent": "<a href=\''+coords[key][1]+'\' target=\'_blank\'>'+key+\
+'</a>",\n"name": "'+keyID+'",\n"style": {\nweight: .5,\nopacity: 1,\nfillColo\
+r: "#00ffdf",\nfillOpacity: 0.6\n}\n},\n"geometry": {\n"type": "MultiPolygon"\
+,\n"coordinates": \n[\n[\n'
 		
 		scale = len(mapLabels[key])#events
 		shape = polygon(coords[key][0], scale, 42)

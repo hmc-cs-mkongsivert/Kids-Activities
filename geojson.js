@@ -1,8 +1,8 @@
-var mounevents = {
+var mountevents = {
 "type": "Feature",
 "properties": {
 "popupContent": "<a href='https://www.mountvernon.org/plan-your-visit/calendar/2018-7-3/' target='_blank'>Mount Vernon</a>",
-"name": "Mount Vernon",
+"name": "mount",
 "style": {
 weight: .5,
 opacity: 1,
@@ -21,11 +21,11 @@ fillOpacity: 0.6
 }
 };
 
-var newsevents = {
+var newseevents = {
 "type": "Feature",
 "properties": {
 "popupContent": "<a href='http://www.newseum.org/events-programs/' target='_blank'>Newseum</a>",
-"name": "Newseum",
+"name": "newse",
 "style": {
 weight: .5,
 opacity: 1,
@@ -44,11 +44,11 @@ fillOpacity: 0.6
 }
 };
 
-var philevents = {
+var phillevents = {
 "type": "Feature",
 "properties": {
 "popupContent": "<a href='http://www.phillipscollection.org/events?type=all' target='_blank'>Phillips Collection</a>",
-"name": "Phillips Collection",
+"name": "phill",
 "style": {
 weight: .5,
 opacity: 1,
@@ -67,11 +67,11 @@ fillOpacity: 0.6
 }
 };
 
-var polievents = {
+var politevents = {
 "type": "Feature",
 "properties": {
 "popupContent": "<a href='https://www.politics-prose.com/events' target='_blank'>Politics and Prose Bookstore</a>",
-"name": "Politics and Prose Bookstore",
+"name": "polit",
 "style": {
 weight: .5,
 opacity: 1,
@@ -90,11 +90,11 @@ fillOpacity: 0.6
 }
 };
 
-var inteevents = {
+var interevents = {
 "type": "Feature",
 "properties": {
 "popupContent": "<a href='https://www.spymuseum.org/calendar/upcoming/1/' target='_blank'>International Spy Museum</a>",
-"name": "International Spy Museum",
+"name": "inter",
 "style": {
 weight: .5,
 opacity: 1,
@@ -113,11 +113,11 @@ fillOpacity: 0.6
 }
 };
 
-var natievents = {
+var natioevents = {
 "type": "Feature",
 "properties": {
 "popupContent": "<a href='https://www.nps.gov/nama/planyourvisit/calendar.htm' target='_blank'>National Mall</a>",
-"name": "National Mall",
+"name": "natio",
 "style": {
 weight: .5,
 opacity: 1,
@@ -136,11 +136,11 @@ fillOpacity: 0.6
 }
 };
 
-var hirsevents = {
+var hirshevents = {
 "type": "Feature",
 "properties": {
 "popupContent": "<a href='https://hirshhorn.si.edu/exhibitions-events/' target='_blank'>Hirshhorn Museum and Sculpture Garden</a>",
-"name": "Hirshhorn Museum and Sculpture Garden",
+"name": "hirsh",
 "style": {
 weight: .5,
 opacity: 1,
@@ -159,11 +159,11 @@ fillOpacity: 0.6
 }
 };
 
-var unitevents = {
+var uniteevents = {
 "type": "Feature",
 "properties": {
 "popupContent": "<a href='https://www.usbg.gov/programs-and-events' target='_blank'>United States Botanical Garden</a>",
-"name": "United States Botanical Garden",
+"name": "unite",
 "style": {
 weight: .5,
 opacity: 1,
