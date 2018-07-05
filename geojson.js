@@ -1,7 +1,7 @@
 var mountevents = {
 "type": "Feature",
 "properties": {
-"popupContent": "<a href='https://www.mountvernon.org/plan-your-visit/calendar/2018-7-5/' target='_blank'>Mount Vernon</a>",
+"popupContent": "Mount Vernon",
 "name": "mount",
 "style": {
 weight: .5,
