@@ -70,14 +70,6 @@ s://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\
 \"https://www.mapbox.com/\">Mapbox</a>',"+lb+"maxZoom: 20,"+lb+"id: 'mapbox.st\
 reets',"+lb+"accessToken: 'pk.eyJ1IjoibWtvbmdzaXZlcnQiLCJhIjoiY2ppNHljYTZlMGVi\
 YTNybzY1ODBrZHFteiJ9.cryeQAatX8rCKMgGo8rRNw'"+lb+"}).addTo(map);"
-<<<<<<< HEAD
-	allIn=lb+"function allIn(e) {"+lb+"var layer = e.target;"+lb+"layer.setSty\
-le({color: '#00FF08', fillColor: '#00FF08'});"
-	allOut=lb+"function allOut(e) {"+lb+"var layer = e.target;"+lb+"layer.setS\
-tyle({color: '#00ffdf', fillColor: '#00ffdf'});"
-	allClick=lb+"function allClick(e) {"+lb
-=======
->>>>>>> parent of 0ce4c00... draft of interaction overhaul
 	featFun="function onEachFeature(feature, layer) {"+lb+"if (feature.propert\
 ies && feature.properties.popupContent) {"+lb+"popupContent = feature.properti\
 es.popupContent;"+lb+"}"+lb+"layer.bindPopup(popupContent);"
@@ -94,18 +86,9 @@ bility = 'visible';"+lb+"}"+lb+"function "+keyID+"Out(e) {"+lb+"if (!"+keyID+"\
 Bool) {"+lb+keyID+".style.visibility = 'hidden';"+lb+"}"+lb+"}"+lb+"function "\
 +keyID+"Click(e) {"+lb+keyID+"Bool = "+keyID+"Bool ? false : true;"+lb+"}"
 		#add interaction
-<<<<<<< HEAD
-		allIn+=lb+"if (name == '"+keyID+"'){"+lb+keyID+"In(\
-e);"+lb+"}"
-		allOut+=lb+"if (name == '"+keyID+"'){"+lb+keyID+"Ou\
-t(e);"+lb+"}"
-		allClick+=lb+"if (name == '"+keyID+"'){"+lb+keyID+"\
-Click(e);"+lb+"}"
-=======
 		featFun+=lb+"if (feature.properties.name == '"+keyID+"'){layer.on({"+\
 lb+"mouseover: "+keyID+"In,"+lb+"mouseout: "+keyID+"Out,"+lb+"click: "+keyID+"\
 Click"+lb+"});"+lb+"}"
->>>>>>> parent of 0ce4c00... draft of interaction overhaul
 		eventVars+=keyID+'events, '
 	featFun+=lb+"}"+lb+"L.geoJSON(["+eventVars[:-2]+"], {"+lb+"style: function \
 (feature) {"+lb+"return feature.properties && feature.properties.style;"+lb+"},\
@@ -120,9 +103,9 @@ def makeJSON(mapLabels):
 		keyID = key[:5].lower()
 		jsonStr += 'var '+keyID+'events = {\n"type": "Feature",\n"properties"\
 : {\n"popupContent": "<a href=\''+coords[key][1]+'\' target=\'_blank\'>'+key+\
-'</a>",\n"name": "'+keyID+'",\n"style": {\nweight: .5,\nopacity: 1,\ncolor: "\
-#00ffdf",\nfillColor: "#00ffdf",\nfillOpacity: 0.6\n}\n},\n"geometry": {\n"ty\
-pe": "MultiPolygon",\n"coordinates": \n[\n[\n'
+'</a>",\n"name": "'+keyID+'",\n"style": {\nweight: .5,\nopacity: 1,\nfillColo\
+r: "#00ffdf",\nfillOpacity: 0.6\n}\n},\n"geometry": {\n"type": "MultiPolygon"\
+,\n"coordinates": \n[\n[\n'
 		
 		scale = len(mapLabels[key])#events
 		shape = polygon(coords[key][0], scale, 42)
