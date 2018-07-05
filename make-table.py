@@ -70,15 +70,17 @@ s://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\
 \"https://www.mapbox.com/\">Mapbox</a>',"+lb+"maxZoom: 20,"+lb+"id: 'mapbox.st\
 reets',"+lb+"accessToken: 'pk.eyJ1IjoibWtvbmdzaXZlcnQiLCJhIjoiY2ppNHljYTZlMGVi\
 YTNybzY1ODBrZHFteiJ9.cryeQAatX8rCKMgGo8rRNw'"+lb+"}).addTo(map);"
+<<<<<<< HEAD
 	allIn=lb+"function allIn(e) {"+lb+"var layer = e.target;"+lb+"layer.setSty\
 le({color: '#00FF08', fillColor: '#00FF08'});"
 	allOut=lb+"function allOut(e) {"+lb+"var layer = e.target;"+lb+"layer.setS\
 tyle({color: '#00ffdf', fillColor: '#00ffdf'});"
 	allClick=lb+"function allClick(e) {"+lb
+=======
+>>>>>>> parent of 0ce4c00... draft of interaction overhaul
 	featFun="function onEachFeature(feature, layer) {"+lb+"if (feature.propert\
 ies && feature.properties.popupContent) {"+lb+"popupContent = feature.properti\
-es.popupContent;"+lb+"}"+lb+"layer.bindPopup(popupContent);"+lb+"layer.on({"+\
-lb+"mouseover: allIn,"+lb+"mouseout: allOut,"+lb+"click: allClick"+lb+"});"
+es.popupContent;"+lb+"}"+lb+"layer.bindPopup(popupContent);"
 	eventVars=""
 
 	for key in mapLabels.keys():
@@ -92,20 +94,23 @@ bility = 'visible';"+lb+"}"+lb+"function "+keyID+"Out(e) {"+lb+"if (!"+keyID+"\
 Bool) {"+lb+keyID+".style.visibility = 'hidden';"+lb+"}"+lb+"}"+lb+"function "\
 +keyID+"Click(e) {"+lb+keyID+"Bool = "+keyID+"Bool ? false : true;"+lb+"}"
 		#add interaction
+<<<<<<< HEAD
 		allIn+=lb+"if (name == '"+keyID+"'){"+lb+keyID+"In(\
 e);"+lb+"}"
 		allOut+=lb+"if (name == '"+keyID+"'){"+lb+keyID+"Ou\
 t(e);"+lb+"}"
 		allClick+=lb+"if (name == '"+keyID+"'){"+lb+keyID+"\
 Click(e);"+lb+"}"
+=======
+		featFun+=lb+"if (feature.properties.name == '"+keyID+"'){layer.on({"+\
+lb+"mouseover: "+keyID+"In,"+lb+"mouseout: "+keyID+"Out,"+lb+"click: "+keyID+"\
+Click"+lb+"});"+lb+"}"
+>>>>>>> parent of 0ce4c00... draft of interaction overhaul
 		eventVars+=keyID+'events, '
-	allIn+="}"+lb
-	allOut+="}"+lb
-	allClick+="}"+lb
 	featFun+=lb+"}"+lb+"L.geoJSON(["+eventVars[:-2]+"], {"+lb+"style: function \
 (feature) {"+lb+"return feature.properties && feature.properties.style;"+lb+"},\
 onEachFeature: onEachFeature"+lb+"}).addTo(map);"+lb+"</script>"+lb
-	return scriptStr+allIn+allOut+allClick+featFun
+	return scriptStr+featFun
 
 def makeJSON(mapLabels):
 	'''takes in a dictionary of events indexed by location and returns a
