@@ -1308,34 +1308,36 @@ e<!DOCTYPE HTML>
 							uniteBool = uniteBool ? false : true;
 							}
 							function allIn(e) {
-							console.log(e);
-							if (e.properties.name == 'mount'){
+							var layer = e.target;
+							layer.setStyle({color: '#00FF08', fillColor: '#00FF08'});
+							if (layer.properties.name == 'mount'){
 							mountIn(e);
 							}
-							if (e.properties.name == 'newse'){
+							if (layer.properties.name == 'newse'){
 							newseIn(e);
 							}
-							if (e.properties.name == 'phill'){
+							if (layer.properties.name == 'phill'){
 							phillIn(e);
 							}
-							if (e.properties.name == 'polit'){
+							if (layer.properties.name == 'polit'){
 							politIn(e);
 							}
-							if (e.properties.name == 'inter'){
+							if (layer.properties.name == 'inter'){
 							interIn(e);
 							}
-							if (e.properties.name == 'natio'){
+							if (layer.properties.name == 'natio'){
 							natioIn(e);
 							}
-							if (e.properties.name == 'hirsh'){
+							if (layer.properties.name == 'hirsh'){
 							hirshIn(e);
 							}
-							if (e.properties.name == 'unite'){
+							if (layer.properties.name == 'unite'){
 							uniteIn(e);
 							}}
 							
 							function allOut(e) {
-							
+							var layer = e.target;
+							layer.setStyle({color: '#00ffdf', fillColor: '#00ffdf'});
 							if (e.properties.name == 'mount'){
 							mountOut(e);
 							}
