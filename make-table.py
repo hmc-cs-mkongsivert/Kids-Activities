@@ -72,7 +72,7 @@ reets',"+lb+"accessToken: 'pk.eyJ1IjoibWtvbmdzaXZlcnQiLCJhIjoiY2ppNHljYTZlMGVi\
 YTNybzY1ODBrZHFteiJ9.cryeQAatX8rCKMgGo8rRNw'"+lb+"}).addTo(map);"
 	featFun="function green(e) {"+lb+"var layer = e.target;"+lb+"layer.setStyl\
 e({color: \"#00FF08\", fillColor: \"#00FF08\"});"+lb+"}"+lb*2+"function cyan(e\
-) {"+lb+"var layer = e.target;"+lb+"layer.setStyle({color: \"#00ffdf\", fillCo\
+) {"+lb+"var layer = e.target;"+lb+"layer.setStyle({color: \"#00AD97\", fillCo\
 lor: \"#00ffdf\"});"+lb+"}"+"function onEachFeature(feature, layer) {"+lb+"if \
 (feature.properties && feature.properties.popupContent) {"+lb+"popupContent = \
 feature.properties.popupContent;"+lb+"}"+lb+"layer.bindPopup(popupContent);"
@@ -107,8 +107,8 @@ def makeJSON(mapLabels):
 		keyID = key[:5].lower()
 		jsonStr += 'var '+keyID+'events = {\n"type": "Feature",\n"properties"\
 : {\n"popupContent": "<a href=\''+coords[key][1]+'\' target=\'_blank\'>'+key+\
-'</a>",\n"name": "'+keyID+'",\n"style": {\nweight: .5,\nopacity: 1,\ncolor: "\
-#00ffdf"\nfillColor: "#00ffdf",\nfillOpacity: 0.6\n}\n},\n"geometry": {\n"typ\
+'</a>",\n"name": "'+keyID+'",\n"style": {\nweight: .8,\nopacity: 1,\ncolor: "\
+#00DDC1",\nfillColor: "#00ffdf",\nfillOpacity: 0.4\n}\n},\n"geometry": {\n"typ\
 e": "MultiPolygon",\n"coordinates": \n[\n[\n'
 		
 		scale = len(mapLabels[key])#events
