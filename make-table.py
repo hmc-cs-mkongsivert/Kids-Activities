@@ -92,11 +92,11 @@ bility = 'visible';"+lb+"}"+lb+"function "+keyID+"Out(e) {"+lb+"if (!"+keyID+"\
 Bool) {"+lb+keyID+".style.visibility = 'hidden';"+lb+"}"+lb+"}"+lb+"function "\
 +keyID+"Click(e) {"+lb+keyID+"Bool = "+keyID+"Bool ? false : true;"+lb+"}"
 		#add interaction
-		allIn+=lb+"if (properties.name == '"+keyID+"'){"+lb+keyID+"In(\
+		allIn+=lb+"if (name == '"+keyID+"'){"+lb+keyID+"In(\
 e);"+lb+"}"
-		allOut+=lb+"if (properties.name == '"+keyID+"'){"+lb+keyID+"Ou\
+		allOut+=lb+"if (name == '"+keyID+"'){"+lb+keyID+"Ou\
 t(e);"+lb+"}"
-		allClick+=lb+"if (properties.name == '"+keyID+"'){"+lb+keyID+"\
+		allClick+=lb+"if (name == '"+keyID+"'){"+lb+keyID+"\
 Click(e);"+lb+"}"
 		eventVars+=keyID+'events, '
 	allIn+="}"+lb
