@@ -1280,10 +1280,12 @@
 							
 							function mountIn(e) {
 							mount.style.visibility = 'visible';
+							green(e);
 							}
 							function mountOut(e) {
 							if (!mountBool) {
 							mount.style.visibility = 'hidden';
+							cyan(e);
 							}
 							}
 							function mountClick(e) {
@@ -1296,10 +1298,12 @@
 							
 							function newseIn(e) {
 							newse.style.visibility = 'visible';
+							green(e);
 							}
 							function newseOut(e) {
 							if (!newseBool) {
 							newse.style.visibility = 'hidden';
+							cyan(e);
 							}
 							}
 							function newseClick(e) {
@@ -1312,10 +1316,12 @@
 							
 							function politIn(e) {
 							polit.style.visibility = 'visible';
+							green(e);
 							}
 							function politOut(e) {
 							if (!politBool) {
 							polit.style.visibility = 'hidden';
+							cyan(e);
 							}
 							}
 							function politClick(e) {
@@ -1328,10 +1334,12 @@
 							
 							function interIn(e) {
 							inter.style.visibility = 'visible';
+							green(e);
 							}
 							function interOut(e) {
 							if (!interBool) {
 							inter.style.visibility = 'hidden';
+							cyan(e);
 							}
 							}
 							function interClick(e) {
@@ -1344,10 +1352,12 @@
 							
 							function natioIn(e) {
 							natio.style.visibility = 'visible';
+							green(e);
 							}
 							function natioOut(e) {
 							if (!natioBool) {
 							natio.style.visibility = 'hidden';
+							cyan(e);
 							}
 							}
 							function natioClick(e) {
@@ -1360,10 +1370,12 @@
 							
 							function hirshIn(e) {
 							hirsh.style.visibility = 'visible';
+							green(e);
 							}
 							function hirshOut(e) {
 							if (!hirshBool) {
 							hirsh.style.visibility = 'hidden';
+							cyan(e);
 							}
 							}
 							function hirshClick(e) {
@@ -1376,14 +1388,24 @@
 							
 							function uniteIn(e) {
 							unite.style.visibility = 'visible';
+							green(e);
 							}
 							function uniteOut(e) {
 							if (!uniteBool) {
 							unite.style.visibility = 'hidden';
+							cyan(e);
 							}
 							}
 							function uniteClick(e) {
 							uniteBool = uniteBool ? false : true;
+							}function green(e) {
+							var layer = e.target;
+							layer.setStyle({color: "#00FF08", fillColor: "#00FF08"});
+							}
+							
+							function cyan(e) {
+							var layer = e.target;
+							layer.setStyle({color: "#00ffdf", fillColor: "#00ffdf"});
 							}function onEachFeature(feature, layer) {
 							if (feature.properties && feature.properties.popupContent) {
 							popupContent = feature.properties.popupContent;

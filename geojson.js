@@ -6,6 +6,7 @@ var mountevents = {
 "style": {
 weight: .5,
 opacity: 1,
+color: "#00ffdf"
 fillColor: "#00ffdf",
 fillOpacity: 0.6
 }
@@ -29,6 +30,7 @@ var newseevents = {
 "style": {
 weight: .5,
 opacity: 1,
+color: "#00ffdf"
 fillColor: "#00ffdf",
 fillOpacity: 0.6
 }
@@ -52,6 +54,7 @@ var politevents = {
 "style": {
 weight: .5,
 opacity: 1,
+color: "#00ffdf"
 fillColor: "#00ffdf",
 fillOpacity: 0.6
 }
@@ -75,6 +78,7 @@ var interevents = {
 "style": {
 weight: .5,
 opacity: 1,
+color: "#00ffdf"
 fillColor: "#00ffdf",
 fillOpacity: 0.6
 }
@@ -98,6 +102,7 @@ var natioevents = {
 "style": {
 weight: .5,
 opacity: 1,
+color: "#00ffdf"
 fillColor: "#00ffdf",
 fillOpacity: 0.6
 }
@@ -121,6 +126,7 @@ var hirshevents = {
 "style": {
 weight: .5,
 opacity: 1,
+color: "#00ffdf"
 fillColor: "#00ffdf",
 fillOpacity: 0.6
 }
@@ -144,6 +150,7 @@ var uniteevents = {
 "style": {
 weight: .5,
 opacity: 1,
+color: "#00ffdf"
 fillColor: "#00ffdf",
 fillOpacity: 0.6
 }

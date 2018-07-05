@@ -70,9 +70,12 @@ s://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\
 \"https://www.mapbox.com/\">Mapbox</a>',"+lb+"maxZoom: 20,"+lb+"id: 'mapbox.st\
 reets',"+lb+"accessToken: 'pk.eyJ1IjoibWtvbmdzaXZlcnQiLCJhIjoiY2ppNHljYTZlMGVi\
 YTNybzY1ODBrZHFteiJ9.cryeQAatX8rCKMgGo8rRNw'"+lb+"}).addTo(map);"
-	featFun="function onEachFeature(feature, layer) {"+lb+"if (feature.propert\
-ies && feature.properties.popupContent) {"+lb+"popupContent = feature.properti\
-es.popupContent;"+lb+"}"+lb+"layer.bindPopup(popupContent);"
+	featFun="function green(e) {"+lb+"var layer = e.target;"+lb+"layer.setStyl\
+e({color: \"#00FF08\", fillColor: \"#00FF08\"});"+lb+"}"+lb*2+"function cyan(e\
+) {"+lb+"var layer = e.target;"+lb+"layer.setStyle({color: \"#00ffdf\", fillCo\
+lor: \"#00ffdf\"});"+lb+"}"+"function onEachFeature(feature, layer) {"+lb+"if \
+(feature.properties && feature.properties.popupContent) {"+lb+"popupContent = \
+feature.properties.popupContent;"+lb+"}"+lb+"layer.bindPopup(popupContent);"
 	eventVars=""
 
 	for key in mapLabels.keys():
@@ -81,10 +84,11 @@ es.popupContent;"+lb+"}"+lb+"layer.bindPopup(popupContent);"
 		scriptStr+=lb*2+"var "+keyID+" = document.getElementById('"+keyID\
 +"');"+lb+keyID+"Bool = false;"+lb+keyID+".style.visibility = 'hidden';"
 		#create functions to change tables' visibilities
-		scriptStr+=lb*2+"function "+keyID+"In(e) {"+lb+keyID+".style.visi\
-bility = 'visible';"+lb+"}"+lb+"function "+keyID+"Out(e) {"+lb+"if (!"+keyID+"\
-Bool) {"+lb+keyID+".style.visibility = 'hidden';"+lb+"}"+lb+"}"+lb+"function "\
-+keyID+"Click(e) {"+lb+keyID+"Bool = "+keyID+"Bool ? false : true;"+lb+"}"
+		scriptStr+=lb*2+"function "+keyID+"In(e) {"+lb+keyID+".style.visibilit\
+y = 'visible';"+lb+"green(e);"+lb+"}"+lb+"function "+keyID+"Out(e) {"+lb+"if (\
+!"+keyID+"Bool) {"+lb+keyID+".style.visibility = 'hidden';"+lb+"cyan(e);"+lb+"\
+}"+lb+"}"+lb+"function "+keyID+"Click(e) {"+lb+keyID+"Bool = "+keyID+"Bool ? f\
+alse : true;"+lb+"}"
 		#add interaction
 		featFun+=lb+"if (feature.properties.name == '"+keyID+"'){layer.on({"+\
 lb+"mouseover: "+keyID+"In,"+lb+"mouseout: "+keyID+"Out,"+lb+"click: "+keyID+"\
@@ -103,9 +107,9 @@ def makeJSON(mapLabels):
 		keyID = key[:5].lower()
 		jsonStr += 'var '+keyID+'events = {\n"type": "Feature",\n"properties"\
 : {\n"popupContent": "<a href=\''+coords[key][1]+'\' target=\'_blank\'>'+key+\
-'</a>",\n"name": "'+keyID+'",\n"style": {\nweight: .5,\nopacity: 1,\nfillColo\
-r: "#00ffdf",\nfillOpacity: 0.6\n}\n},\n"geometry": {\n"type": "MultiPolygon"\
-,\n"coordinates": \n[\n[\n'
+'</a>",\n"name": "'+keyID+'",\n"style": {\nweight: .5,\nopacity: 1,\ncolor: "\
+#00ffdf"\nfillColor: "#00ffdf",\nfillOpacity: 0.6\n}\n},\n"geometry": {\n"typ\
+e": "MultiPolygon",\n"coordinates": \n[\n[\n'
 		
 		scale = len(mapLabels[key])#events
 		shape = polygon(coords[key][0], scale, 42)
