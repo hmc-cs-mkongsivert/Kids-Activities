@@ -16,8 +16,18 @@ def blindWhinoScrape():
 	for i in [0]+indices[:-1]:
 		title = between(siteText, i, '<h3>', '</h3>')
 		timeRough = between(siteText, i, '</h3><h3>', '</h3><p>')
+		location = "Blind Whino Art Annex"
+		details = between(siteText, i, '<p>', '</p>')
 		if 'h3' in timeRough:
 			timeRough = timeRough.split('<h3>')[1]
+		if '@' in timeRough: #specific date
+			dtList = timeRough.split('@')
+			date = parseDate(dtList[0])
+			time = parseTime(dtList[1])
+			when = (dt.datetime.combine(date, time[0]), dt.datetime.combine(date, time[1]))
+			table.append([title, when, location, details])
+			continue
+
 		interval = timeRough.split('-')
 		if len(interval) == 1:
 			month = findMonth(timeRough)
@@ -30,10 +40,8 @@ def blindWhinoScrape():
 			interval[0] += interval[1][-4:]
 			opening = (parseDate(interval[0]), parseDate(interval[1]))
 		dates = exhibitions(BWSchedule, opening[0], opening[1])
-		location = "Blind Whino Art Annex"
-		details = between(siteText, i, '<p>', '</p>')
-		for day in dates:
-			table.append([title, day, location, details])
+		for when in dates:
+			table.append([title, when, location, details])
 
 	return table
 
