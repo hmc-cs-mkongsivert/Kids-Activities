@@ -65,17 +65,17 @@
 								<article>
 
 									<h2>Submit an Event</h2>
-									<form id="myForm" enctype="application/json">
+									<form id="myForm" action="events.php" method="post">
 										Event Title<br/>
-										<input type="text" value="----------">
+										<input type="text" id="title" value="----------">
 										Date and Time<br/>
 										<input type="date" > from <input type="time" id="Begin"> to <input type="time" id="End"><br/>
 										Address/ Location<br/>
-										<input type="text" value="----------">
+										<input type="text" id="address" value="----------">
 										Details<br/>
-										<input type="text" value="----------">
-									</form><br/>
-									<button type="button" onClick="sendData({test:'ok'})">Submit</button>
+										<input type="text" value="----------"><br/>
+										<input type="submit">
+									</form>
 
 									<script>
 										function sendData(data) {
