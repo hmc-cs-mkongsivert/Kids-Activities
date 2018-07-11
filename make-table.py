@@ -1,3 +1,4 @@
+# -*- coding: UTF8 -*-
 import csv
 import datetime as dt
 from helpertools import *

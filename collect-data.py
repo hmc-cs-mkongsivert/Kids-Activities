@@ -1,3 +1,4 @@
+# -*- coding: UTF8 -*-
 import requests
 import csv
 import datetime as dt
