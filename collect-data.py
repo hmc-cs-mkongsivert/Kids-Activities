@@ -4,7 +4,6 @@ import datetime as dt
 import calendar as cal
 from helpertools import *
 
-
 def blindWhinoScrape():
 	site = requests.get("https://www.swartsclub.org/art-annex/")
 	siteText = removeWhitespace(site.text)
