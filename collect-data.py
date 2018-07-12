@@ -19,7 +19,7 @@ def blindWhinoScrape():
 		location = "Blind Whino Art Annex"
 		details = between(siteText, i, '<p>', '</p>')
 		if 'h3' in timeRough:
-			timeRough = timeRough.split('<h3>')[1]
+			timeRough = timeRough.split('<h3>')[-1]
 		if '@' in timeRough: #specific date
 			dtList = timeRough.split('@')
 			date = parseDate(dtList[0])
