@@ -9,13 +9,13 @@ In terms of the actual files in this repository, most of the heavy lifting is do
 The website is updated automatically using the following bash script:
 ```bash
 cd ~/Kids-Activities
-python collect-data.py
-python make-table.py
+python3 collect-data.py
+python3 make-table.py
 git add map.html geojson.js
 git commit -m "daily event update"
 git push
 ```
-We are currently working on getting it to run every day at midnight.
+We are currently working on getting it to run every day at midnight. It works except for the part where I need to enter my login information when I push.
 
 ## Next Steps
 At the moment, we load in all events from each location irrespective of their appropriateness for children. In time, we hope to be able not only to separate the children's events from the adults' events but also to separate the children's events by age range.
