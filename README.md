@@ -23,3 +23,5 @@ At the moment, we load in all events from each location irrespective of their ap
 We also hope somehow to make the python scripts run automatically every night around midnight so that we can ensure that the website will be regularly updated without our having to update it manually.
 
 Finally, we should at some point add the capability for users/parents to add in their own events and import them into our map.
+
+Note: Minor changes might include removing redundancy in `collect-data.py`, especially considering the different ways to parse the character '-'. Also, I should see if it could be faster.

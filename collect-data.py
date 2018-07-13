@@ -211,6 +211,15 @@ def phillipsScrape():
 				when = (dt.datetime.combine(current, time[0]), dt.datetime.combine(current, time[1]))
 				table.append([title, when, where, details])
 				current += dt.timedelta(days = 1)
+		elif '-' in dtString:
+			dates = dtString.split('-')
+			begDate = parseDate(dates[0])
+			endDate = parseDate(dates[1])
+			current = begDate
+			while current <= endDate:
+				when = (dt.datetime.combine(current, time[0]), dt.datetime.combine(current, time[1]))
+				table.append([title, when, where, details])
+				current += dt.timedelta(days = 1)
 		else:
 			date = parseDate(dtString)
 			when = (dt.datetime.combine(date, time[0]), dt.datetime.combine(date, time[1]))
