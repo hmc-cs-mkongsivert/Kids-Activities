@@ -8,6 +8,7 @@ In terms of the actual files in this repository, most of the heavy lifting is do
 
 The website is updated automatically using the following bash script:
 ```bash
+#!/bin/bash
 cd ~/Kids-Activities
 python3 collect-data.py
 python3 make-table.py
