@@ -21,4 +21,4 @@ This script, paired with the tool Cron, allows the website to update automatical
 ## Next Steps
 At the moment, we load in all events from each location irrespective of their appropriateness for children. In time, we hope to be able not only to separate the children's events from the adults' events but also to separate the children's events by age range. In addition, we should at some point add the capability for users/parents to add in their own events and import them into our map.
 
-Note: Minor changes might include removing redundancy in `collect-data.py`, especially considering the different ways to parse the character '-'. Also, I should see if it could be faster.
+Note: Minor changes might include removing redundancy in `collect-data.py`. Also, I should see if it could be faster.
