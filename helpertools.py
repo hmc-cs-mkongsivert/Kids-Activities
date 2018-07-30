@@ -123,27 +123,21 @@ def parseTimeHelper(tString):
 def parseTime(tString):
 	'''takes in a string representing a time and returns a datetime object
 	representing that same date'''
+	dashes = ['–' ,'-', '&ndash;', 'to']
 	if '(' in tString:
 		#get rid of extraneous labels
 		return parseTime(tString.split('(')[0])
 
-	if '–' in tString:
-		interval = tString.split('–')
-		begin = parseTimeHelper(interval[0])
-		end = parseTimeHelper(interval[1])
-	elif '-' in tString:
-		interval = tString.split('-')
-		begin = parseTimeHelper(interval[0])
-		end = parseTimeHelper(interval[1])
-	elif '&ndash;' in tString:
-		interval = tString.split('&ndash;')
-		begin = parseTimeHelper(interval[0])
-		end = parseTimeHelper(interval[1])
-	elif 'to' in tString:
-		interval = tString.split('to')
-		begin = parseTimeHelper(interval[0])
-		end = parseTimeHelper(interval[1])
-	else:
+	begin = end = None
+
+	for dash in dashes:
+		if dash in tString:
+			interval = tString.split(dash)
+			begin = parseTimeHelper(interval[0])
+			end = parseTimeHelper(interval[1])
+		else:
+			continue
+	if begin == end:
 		begin = parseTimeHelper(tString)
 		end = dt.time(hour = begin.hour+2, minute = begin.minute)
 	return (begin, end)
