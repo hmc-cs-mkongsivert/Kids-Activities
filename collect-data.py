@@ -48,15 +48,9 @@ def blindWhinoScrape():
 def hirshhornScrape():
 	site = requests.get("https://hirshhorn.si.edu/exhibitions-events/")
 	siteText = removeWhitespace(site.text)
-#	exhibs = makeIndicesList(siteText, 'class="list-item-title balance-text"')
 	events = makeIndicesList(siteText, 'class="tribe-events-title list-item-title balance-text"')
 
 	table = []
-#	for i in [0]+exhibs[:-1]:
-#		title = between(siteText, i, '<h4 class="list-item-title balance-text">', '</h4>')
-#		time = 'time!'
-#		location = 'Hirshhorn Museum and Sculpture Garden'
-#		details = ''
 	for i in [0]+events[:-1]:
 		title = between(siteText, i, '<h4 class="tribe-events-title list-item-title balance-text">', '</h4>')
 		title = removeTag(title, 'a')
@@ -289,19 +283,20 @@ def tudorScrape():
 
 	table = []
 	mo = 0
-	for i in [0]+indices[:-1]:
+	for i in indices:
 		if mo+1 < len(moIndices):
 			if i > moIndices[mo+1]:
 				mo += 1
 		month = between(siteText, moIndices[mo], moMarker, '</h5>')
-		day = between(siteText, i, '</small><big>', '</big>')
+		#i is adjusted below because the date shows before the rest
+		day = between(siteText, i-40, '</small><big>', '</big>')
 		title = between(siteText, i, '<h4>', '</h4>')
 		title = removeTag(title, "a")
 		where = "Tudor Place Historic House and Garden"
 		details = '<a href = https://www.tudorplace.org/programs' + between(siteText, i, '<a href="', '>') + '>Click here for more details</a>'
 		
-		date = parseDate(day + ' ' + month) #TODO: add time of day
-		tString = between(siteText, i, '</a></h4><small>', "&#183;")
+		date = parseDate(day + ' ' + month)
+		tString = between(siteText, i, '<small>', "&#183;")
 		times = parseTime(tString)
 		when = (dt.datetime.combine(date,times[0]),dt.datetime.combine(date,times[1]))
 
