@@ -3,6 +3,7 @@ import requests
 import csv
 import datetime as dt
 import calendar as cal
+import timeit
 from helpertools import *
 
 def blindWhinoScrape():
@@ -13,7 +14,9 @@ def blindWhinoScrape():
 	BWSchedule = [None, None, (dt.time(17), dt.time(20)), None, None, (dt.time(12), dt.time(17)), (dt.time(12), dt.time(17))]
 
 	table = []
+	print("Blind Whino")
 	for i in [0]+indices[:-1]:
+		b = timeit.timeit()
 		title = between(siteText, i, '<h3>', '</h3>')
 		timeRough = between(siteText, i, '</h3><h3>', '</h3><p>')
 		location = "Blind Whino Art Annex"
@@ -42,6 +45,8 @@ def blindWhinoScrape():
 		dates = exhibitions(BWSchedule, opening[0], opening[1])
 		for when in dates:
 			table.append([title, when, location, details])
+		e = timeit.timeit()
+		print(e-b)
 
 	return table
 
@@ -51,7 +56,9 @@ def hirshhornScrape():
 	events = makeIndicesList(siteText, 'class="tribe-events-title list-item-title balance-text"')
 
 	table = []
+	print("Hirshhorn")
 	for i in [0]+events[:-1]:
+		b = timeit.timeit()
 		title = between(siteText, i, '<h4 class="tribe-events-title list-item-title balance-text">', '</h4>')
 		title = removeTag(title, 'a')
 		dtString = between(siteText, i, '<div class="tribe-events-duration list-item-date">', '</div>')
@@ -62,6 +69,8 @@ def hirshhornScrape():
 		time = parseTime(dtList[1])
 		when = (dt.datetime.combine(date, time[0]), dt.datetime.combine(date, time[1]))
 		table.append([title, when, where, details])
+		e = timeit.timeit()
+		print(e-b)
 
 	return table
 
@@ -72,6 +81,7 @@ def intlSpyScrape():
 
 	table = []
 	for i in [0]+indices[:-1]:
+		b = timeit.timeit()
 		title = between(siteText, i, '<div class="contain">', '<time')
 		title = removeTag(removeTag(title, 'a'), 'h3')
 		dtString = between(siteText, i, '<time datetime="', '">')
@@ -79,6 +89,8 @@ def intlSpyScrape():
 		where = 'International Spy Museum'
 		details = '<a href="' + between(siteText, i, '<a href="', '">') + '">Click here for details</a>'
 		table.append([title, when, where, details])
+		e = timeit.timeit()
+		print(e-b)
 
 	return table
 
@@ -96,6 +108,7 @@ def mtVernonScrape():
 		indices = makeIndicesList(siteText, '</h3>')
 
 		for i in indices[:-6]:
+			b = timeit.timeit()
 			title = between(siteText, i, '<h3>', '</h3>')
 			tString = between(siteText, i, '<time class="date">', '</time>')
 			where = "Mount Vernon"
@@ -114,6 +127,8 @@ def mtVernonScrape():
 				time = parseTime(tString)
 				when = (dt.datetime.combine(date, time[0]), dt.datetime.combine(date, time[1]))
 				table.append([title, when, where, details])
+			e = timeit.timeit()
+			print(e-b)
 
 	return table
 

@@ -129,7 +129,6 @@ def parseTime(tString):
 		return parseTime(tString.split('(')[0])
 
 	begin = end = None
-
 	for dash in dashes:
 		if dash in tString:
 			interval = tString.split(dash)
