@@ -76,13 +76,53 @@
 								</div>
 							</div>
 							<!-- Tables Begin Here -->
+							<div class="sideoverlay" id="natio">
+							<h3>National Mall</h3>
+							<table>
+							<tr>
+							<th>July 30, 2018 from 7:00 p.m. to 7:45 p.m.</th>
+							<th>The 14th Amendment</th>
+							</tr>
+							<tr>
+							<th>July 30, 2018 from 7:00 p.m. to 7:45 p.m.</th>
+							<th>The 14th Amendment</th>
+							</tr>
+							<tr>
+							<th>August 4, 2018 from 9:00 a.m. to 11:15 a.m.</th>
+							<th>“Good Morning” Beat the Heat Walk with a Ranger</th>
+							</tr>
+							<tr>
+							<th>August 4, 2018 from 7:00 p.m. to 9:00 p.m.</th>
+							<th>FDR & WWII</th>
+							</tr>
+							<tr>
+							<th>August 5, 2018 from 7:00 p.m. to 9:00 p.m.</th>
+							<th>"The Seminal Catastrophe of the Twentieth Century"</th>
+							</tr>
+							</table>
+							</div>
+							
+							<div class="sideoverlay" id="polit">
+							<h3>Politics and Prose Bookstore</h3>
+							<table>
+							<tr>
+							<th>July 30, 2018 from 7:00 p.m. to 8:00 p.m.</th>
+							<th>Jennifer Keishin Armstrong - Sex and the City and Us: How Four Single Women Changed the Way We Think, Live, and Love</th>
+							</tr>
+							<tr>
+							<th>July 30, 2018 from 7:00 p.m. to 8:00 p.m.</th>
+							<th>Chelsea Hodson - Tonight I&#039;m Someone Else: Essays &amp; Allie Rowbottom - Jell-O Girls: A Family History — at Politics and Prose at The Wharf</th>
+							</tr>
+							<tr>
+							<th>July 31, 2018 from 7:00 p.m. to 8:00 p.m.</th>
+							<th>Michael Arceneaux - I Can&#039;t Date Jesus: Love, Sex, Family, Race, and Other Reasons I&#039;ve Put My Faith in Beyoncé — in conversation with Demetria L. Lucas</th>
+							</tr>
+							</table>
+							</div>
+							
 							<div class="sideoverlay" id="mount">
 							<h3>Mount Vernon</h3>
 							<table>
-							<tr>
-							<th>July 30, 2018 from 3:15 p.m. to 5:15 p.m.</th>
-							<th>Story Time in Hands-on-History</th>
-							</tr>
 							<tr>
 							<th>July 31, 2018 from 12:00 a.m. to 2:00 a.m.</th>
 							<th>Hands-on-History Discovery Program</th>
@@ -810,50 +850,6 @@
 							</table>
 							</div>
 							
-							<div class="sideoverlay" id="natio">
-							<h3>National Mall</h3>
-							<table>
-							<tr>
-							<th>July 30, 2018 from 7:00 p.m. to 7:45 p.m.</th>
-							<th>The 14th Amendment</th>
-							</tr>
-							<tr>
-							<th>July 30, 2018 from 7:00 p.m. to 7:45 p.m.</th>
-							<th>The 14th Amendment</th>
-							</tr>
-							<tr>
-							<th>August 4, 2018 from 9:00 a.m. to 11:15 a.m.</th>
-							<th>“Good Morning” Beat the Heat Walk with a Ranger</th>
-							</tr>
-							<tr>
-							<th>August 4, 2018 from 7:00 p.m. to 9:00 p.m.</th>
-							<th>FDR & WWII</th>
-							</tr>
-							<tr>
-							<th>August 5, 2018 from 7:00 p.m. to 9:00 p.m.</th>
-							<th>"The Seminal Catastrophe of the Twentieth Century"</th>
-							</tr>
-							</table>
-							</div>
-							
-							<div class="sideoverlay" id="polit">
-							<h3>Politics and Prose Bookstore</h3>
-							<table>
-							<tr>
-							<th>July 30, 2018 from 7:00 p.m. to 8:00 p.m.</th>
-							<th>Jennifer Keishin Armstrong - Sex and the City and Us: How Four Single Women Changed the Way We Think, Live, and Love</th>
-							</tr>
-							<tr>
-							<th>July 30, 2018 from 7:00 p.m. to 8:00 p.m.</th>
-							<th>Chelsea Hodson - Tonight I&#039;m Someone Else: Essays &amp; Allie Rowbottom - Jell-O Girls: A Family History — at Politics and Prose at The Wharf</th>
-							</tr>
-							<tr>
-							<th>July 31, 2018 from 7:00 p.m. to 8:00 p.m.</th>
-							<th>Michael Arceneaux - I Can&#039;t Date Jesus: Love, Sex, Family, Race, and Other Reasons I&#039;ve Put My Faith in Beyoncé — in conversation with Demetria L. Lucas</th>
-							</tr>
-							</table>
-							</div>
-							
 							<div class="sideoverlay" id="unite">
 							<h3>United States Botanical Garden</h3>
 							<table>
@@ -1024,24 +1020,6 @@
 							accessToken: 'pk.eyJ1IjoibWtvbmdzaXZlcnQiLCJhIjoiY2ppNHljYTZlMGViYTNybzY1ODBrZHFteiJ9.cryeQAatX8rCKMgGo8rRNw'
 							}).addTo(map);
 							
-							var mount = document.getElementById('mount');
-							mountBool = false;
-							mount.style.visibility = 'hidden';
-							
-							function mountIn(e) {
-							mount.style.visibility = 'visible';
-							green(e);
-							}
-							function mountOut(e) {
-							if (!mountBool) {
-							mount.style.visibility = 'hidden';
-							cyan(e);
-							}
-							}
-							function mountClick(e) {
-							mountBool = mountBool ? false : true;
-							}
-							
 							var natio = document.getElementById('natio');
 							natioBool = false;
 							natio.style.visibility = 'hidden';
@@ -1076,6 +1054,24 @@
 							}
 							function politClick(e) {
 							politBool = politBool ? false : true;
+							}
+							
+							var mount = document.getElementById('mount');
+							mountBool = false;
+							mount.style.visibility = 'hidden';
+							
+							function mountIn(e) {
+							mount.style.visibility = 'visible';
+							green(e);
+							}
+							function mountOut(e) {
+							if (!mountBool) {
+							mount.style.visibility = 'hidden';
+							cyan(e);
+							}
+							}
+							function mountClick(e) {
+							mountBool = mountBool ? false : true;
 							}
 							
 							var unite = document.getElementById('unite');
@@ -1179,12 +1175,6 @@
 							popupContent = feature.properties.popupContent;
 							}
 							layer.bindPopup(popupContent);
-							if (feature.properties.name == 'mount'){layer.on({
-							mouseover: mountIn,
-							mouseout: mountOut,
-							click: mountClick
-							});
-							}
 							if (feature.properties.name == 'natio'){layer.on({
 							mouseover: natioIn,
 							mouseout: natioOut,
@@ -1195,6 +1185,12 @@
 							mouseover: politIn,
 							mouseout: politOut,
 							click: politClick
+							});
+							}
+							if (feature.properties.name == 'mount'){layer.on({
+							mouseover: mountIn,
+							mouseout: mountOut,
+							click: mountClick
 							});
 							}
 							if (feature.properties.name == 'unite'){layer.on({
@@ -1228,7 +1224,7 @@
 							});
 							}
 							}
-							L.geoJSON([mountevents, natioevents, politevents, uniteevents, interevents, blindevents, phillevents, hirshevents], {
+							L.geoJSON([natioevents, politevents, mountevents, uniteevents, interevents, blindevents, phillevents, hirshevents], {
 							style: function (feature) {
 							return feature.properties && feature.properties.style;
 							},onEachFeature: onEachFeature
