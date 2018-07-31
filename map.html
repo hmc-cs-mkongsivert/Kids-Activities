@@ -80,50 +80,6 @@
 							<h3>Mount Vernon</h3>
 							<table>
 							<tr>
-							<th>July 30, 2018 from 9:00 a.m. to 5:00 p.m.</th>
-							<th>Punt Construction</th>
-							</tr>
-							<tr>
-							<th>July 30, 2018 from 9:00 a.m. to 5:00 p.m.</th>
-							<th>Hemp at Mount Vernon</th>
-							</tr>
-							<tr>
-							<th>July 30, 2018 from 9:00 a.m. to 5:00 p.m.</th>
-							<th>&quot;History Has Its Eyes on You&quot;: George Washington &amp; Alexander Hamilton</th>
-							</tr>
-							<tr>
-							<th>July 30, 2018 from 9:00 a.m. to 5:00 p.m.</th>
-							<th>Be Washington: It's Your Turn to Lead</th>
-							</tr>
-							<tr>
-							<th>July 30, 2018 from 9:00 a.m. to 5:00 p.m.</th>
-							<th>Washington, Experimental Farmer</th>
-							</tr>
-							<tr>
-							<th>July 30, 2018 from 9:00 a.m. to 5:00 p.m.</th>
-							<th>National Treasure Tour</th>
-							</tr>
-							<tr>
-							<th>July 30, 2018 from 3:00 p.m. to 5:00 p.m.</th>
-							<th>Field Work Activity</th>
-							</tr>
-							<tr>
-							<th>July 30, 2018 from 3:00 p.m. to 5:00 p.m.</th>
-							<th>Gardens &amp; Groves Tour</th>
-							</tr>
-							<tr>
-							<th>July 30, 2018 from 3:00 p.m. to 5:00 p.m.</th>
-							<th>Tribute at the Slave Memorial</th>
-							</tr>
-							<tr>
-							<th>July 30, 2018 from 3:00 p.m. to 5:00 p.m.</th>
-							<th>Children's Afternoon Activity Time</th>
-							</tr>
-							<tr>
-							<th>July 30, 2018 from 3:00 p.m. to 5:00 p.m.</th>
-							<th>Special Events</th>
-							</tr>
-							<tr>
 							<th>July 30, 2018 from 3:15 p.m. to 5:15 p.m.</th>
 							<th>Story Time in Hands-on-History</th>
 							</tr>
@@ -854,16 +810,6 @@
 							</table>
 							</div>
 							
-							<div class="sideoverlay" id="newse">
-							<h3>Newseum</h3>
-							<table>
-							<tr>
-							<th>July 30, 2018 from 9:00 a.m. to 5:00 p.m.</th>
-							<th>First Amendment Highlights Tour</th>
-							</tr>
-							</table>
-							</div>
-							
 							<div class="sideoverlay" id="natio">
 							<h3>National Mall</h3>
 							<table>
@@ -1096,24 +1042,6 @@
 							mountBool = mountBool ? false : true;
 							}
 							
-							var newse = document.getElementById('newse');
-							newseBool = false;
-							newse.style.visibility = 'hidden';
-							
-							function newseIn(e) {
-							newse.style.visibility = 'visible';
-							green(e);
-							}
-							function newseOut(e) {
-							if (!newseBool) {
-							newse.style.visibility = 'hidden';
-							cyan(e);
-							}
-							}
-							function newseClick(e) {
-							newseBool = newseBool ? false : true;
-							}
-							
 							var natio = document.getElementById('natio');
 							natioBool = false;
 							natio.style.visibility = 'hidden';
@@ -1257,12 +1185,6 @@
 							click: mountClick
 							});
 							}
-							if (feature.properties.name == 'newse'){layer.on({
-							mouseover: newseIn,
-							mouseout: newseOut,
-							click: newseClick
-							});
-							}
 							if (feature.properties.name == 'natio'){layer.on({
 							mouseover: natioIn,
 							mouseout: natioOut,
@@ -1306,7 +1228,7 @@
 							});
 							}
 							}
-							L.geoJSON([mountevents, newseevents, natioevents, politevents, uniteevents, interevents, blindevents, phillevents, hirshevents], {
+							L.geoJSON([mountevents, natioevents, politevents, uniteevents, interevents, blindevents, phillevents, hirshevents], {
 							style: function (feature) {
 							return feature.properties && feature.properties.style;
 							},onEachFeature: onEachFeature
