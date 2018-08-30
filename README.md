@@ -18,7 +18,11 @@ git push
 ```
 This script, paired with the tool Cron, allows the website to update automatically every time the events change. (We still have to push manually, though.)
 
+### Details
+The Python files are written for Python 3.6. The file `collect-data.py` uses Python's `requests` library to pull the contents of the websites for each of several museums and cultural centers throughout the city. Then, the code looks for specific tags that each website uses to tag important details like the time and event information.
+
+## In Progress
+We are currently working on moving part of the project into PHP so that we can do things like 
+
 ## Next Steps
 At the moment, we load in all events from each location irrespective of their appropriateness for children. In time, we hope to be able not only to separate the children's events from the adults' events but also to separate the children's events by age range. In addition, we should at some point add the capability for users/parents to add in their own events and import them into our map.
-
-Note: Minor changes might include removing redundancy in `collect-data.py`. Also, I should see if it could be faster.
